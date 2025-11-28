@@ -1,0 +1,44 @@
+---
+import siteContent from '../data/siteContent.json';
+const tours = siteContent.tours;
+---
+
+<section id="tours" class="py-16 bg-white">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="text-center mb-10">
+      <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900">Popular Tour Packages</h2>
+      <div class="h-1 w-20 bg-red-600 mx-auto mt-4 rounded-full"></div>
+      <p class="text-gray-500 mt-2 text-sm">Custom curated pilgrimages, heritage drives, and spiritual routes.</p>
+    </div>
+
+    <div class="flex overflow-x-auto gap-6 px-2 pb-8 scrollbar-hide snap-x">
+      {tours.map((tour) => (
+        <div class="flex-none w-80 snap-center bg-white rounded-2xl shadow-md overflow-hidden group cursor-pointer hover:shadow-xl transition">
+          <div class="h-48 overflow-hidden relative">
+            <img src={tour.image} class="w-full h-full object-cover group-hover:scale-110 transition duration-700" />
+            <span class="absolute top-3 left-3 bg-black/70 text-white text-[10px] font-bold px-2 py-1 rounded backdrop-blur-sm">{tour.tag}</span>
+          </div>
+          <div class="p-5">
+            <h3 class="font-bold text-lg mb-2 text-gray-900">{tour.title}</h3>
+            <p class="text-xs text-gray-500 mb-4 flex items-center gap-2"><i class="far fa-clock"></i> {tour.duration}</p>
+            <p class="text-sm text-gray-500 mb-4">{tour.description}</p>
+            <div class="flex items-center text-red-600 font-bold text-sm uppercase tracking-wide">
+              View Details
+              <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition"></i>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+</style>

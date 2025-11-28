@@ -1,0 +1,100 @@
+---
+import siteContent from '../data/siteContent.json';
+const fleet = siteContent.fleet;
+---
+
+<section id="fleet" class="py-16 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Section Header -->
+    <div class="text-center mb-12">
+      <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+        Our Premium Fleet
+      </h2>
+      <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+        Choose from our well-maintained fleet of vehicles for your journey
+      </p>
+    </div>
+
+    <!-- Horizontal Scrolling Container -->
+    <div class="relative">
+      <!-- Scroll Container -->
+      <div class="overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-4">
+        <div class="flex space-x-6 px-2">
+          {fleet.map((vehicle) => (
+            <div class="flex-shrink-0 w-80 snap-center">
+              <div class="bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
+                <!-- Image -->
+                <div class="relative h-48 overflow-hidden">
+                  <img 
+                    src={vehicle.image} 
+                    alt={vehicle.name}
+                    class="w-full h-full object-cover"
+                  />
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                  <div class="absolute bottom-4 left-4">
+                    <h3 class="text-xl font-bold text-white">{vehicle.name}</h3>
+                  </div>
+                </div>
+
+                <!-- Content -->
+                <div class="p-6">
+                  <!-- Pricing -->
+                  <div class="flex items-center justify-between mb-4 pb-4 border-b border-gray-300">
+                    <div>
+                      <p class="text-sm text-gray-600">Rate per KM</p>
+                      <p class="text-2xl font-bold text-blue-600">{vehicle.rate}</p>
+                    </div>
+                    <div class="text-right">
+                      <p class="text-sm text-gray-600">Capacity</p>
+                      <p class="text-lg font-semibold text-gray-900">{vehicle.caps}</p>
+                      <p class="text-xs text-gray-500">{vehicle.bags}</p>
+                    </div>
+                  </div>
+
+                  <!-- Features -->
+                  <div class="space-y-2 text-sm text-gray-700">
+                    {vehicle.details.map((feature) => (
+                      <div class="flex items-center gap-2">
+                        <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        {feature}
+                      </div>
+                    ))}
+                  </div>
+
+                  <!-- Book Button -->
+                  <a 
+                    href={`https://wa.me/919952749408?text=Enquiry for ${vehicle.name}`}
+                    target="_blank"
+                    class="mt-6 block w-full bg-blue-600 text-white text-center font-semibold py-3 rounded-xl hover:bg-blue-700 transition"
+                  >
+                    Book Now
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Scroll Indicators (Optional) -->
+      <div class="flex justify-center mt-6 space-x-2">
+        {fleet.map((_, index) => (
+          <div class="w-2 h-2 rounded-full bg-gray-300"></div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Hide scrollbar but keep functionality */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+</style>

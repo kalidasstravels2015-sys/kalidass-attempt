@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "title": "Tirupati Balaji Darshan",
+    "type": "Temple",
+    "image": "https://images.unsplash.com/photo-1563116668-3c3228775f9f?q=80&w=600",
+    "kmOneWay": 160,
+    "duration": "2 Days",
+    "desc": "Complete darshan package with accommodation assistance."
+  },
+  {
+    "id": 2,
+    "title": "Kodaikanal Hills",
+    "type": "Mountain",
+    "image": "https://images.unsplash.com/photo-1596700414605-e45f1b1c7c9a?q=80&w=600",
+    "kmOneWay": 530,
+    "duration": "3 Days",
+    "desc": "Princess of Hills. Boating, Pine Forest, and misty views."
+  },
+  {
+    "id": 3,
+    "title": "Munnar Tea Gardens",
+    "type": "Mountain",
+    "image": "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?q=80&w=600",
+    "kmOneWay": 580,
+    "duration": "3 Days",
+    "desc": "Lush tea plantations, waterfalls, and breathtaking valley views."
+  },
+  {
+    "id": 4,
+    "title": "Rameshwaram Dham",
+    "type": "Temple",
+    "image": "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?q=80&w=600",
+    "kmOneWay": 575,
+    "duration": "2 Days",
+    "desc": "Sacred pilgrimage to one of the Char Dham. Temple and beach visit."
+  }
+]

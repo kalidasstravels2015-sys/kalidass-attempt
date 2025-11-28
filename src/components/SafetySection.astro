@@ -1,0 +1,85 @@
+---
+import siteContent from '../data/siteContent.json';
+const safetyItems = siteContent.awareness;
+---
+
+<section class="py-16 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Section Header -->
+    <div class="text-center mb-12">
+      <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+        Safety & Support
+      </h2>
+      <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+        Your safety and peace of mind matter to us
+      </p>
+    </div>
+
+    <!-- Safety Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {safetyItems.map((item) => (
+        <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300">
+          <!-- Icon -->
+          <div class="w-14 h-14 bg-white rounded-xl flex items-center justify-center mb-4 shadow-md">
+            {item.icon === 'shield' && (
+              <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+              </svg>
+            )}
+            {item.icon === 'government' && (
+              <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+              </svg>
+            )}
+            {item.icon === 'app' && (
+              <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 2h2a2 2 0 012 2v2M6 2H4a2 2 0 00-2 2v2m18 8-4 9H6l-4-9m18 0H2" />
+              </svg>
+            )}
+            {item.icon === 'phone' && (
+              <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10l2 2m0 0l-2 2m2-2h-6m1-4h4m-11 3a7 7 0 017-7h0a7 7 0 017 7v2a7 7 0 01-7 7" />
+              </svg>
+            )}
+          </div>
+
+          <!-- Title -->
+          <h3 class="text-lg font-bold text-gray-900 mb-2">
+            {item.title}
+          </h3>
+
+          <!-- Description -->
+          <p class="text-gray-700 text-sm mb-4">
+            {item.description}
+          </p>
+
+          <!-- Action Button/Link -->
+          {item.link && (
+            <a 
+              href={item.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center text-blue-600 hover:text-blue-700 font-semibold text-sm"
+            >
+              Visit Website
+              <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+              </svg>
+            </a>
+          )}
+          {item.phone && (
+            <a 
+              href={`tel:${item.phone}`}
+              class="inline-flex items-center text-blue-600 hover:text-blue-700 font-semibold text-sm"
+            >
+              Call {item.phone}
+              <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+              </svg>
+            </a>
+          )}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

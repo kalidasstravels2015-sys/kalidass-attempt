@@ -1,0 +1,130 @@
+---
+import siteContent from '../data/siteContent.json';
+const hero = siteContent.hero;
+---
+
+<section id="booking-panel" class="relative z-20 -mt-32 px-4 max-w-5xl mx-auto mb-20">
+    <div class="bg-white rounded-2xl shadow-2xl p-1 border-t-4 border-red-600">
+      <div class="flex border-b border-gray-100" role="tablist">
+        <button type="button" data-tab="airport" class="flex-1 py-4 text-center font-bold tracking-wide uppercase text-red-600 border-b-2 border-red-600 bg-red-50 transition" aria-pressed="true">
+          Airport Transfer
+        </button>
+        <button type="button" data-tab="oneway" class="flex-1 py-4 text-center font-bold tracking-wide uppercase text-gray-500 hover:text-red-600 transition" aria-pressed="false">
+          One Way
+        </button>
+        <button type="button" data-tab="round" class="flex-1 py-4 text-center font-bold tracking-wide uppercase text-gray-500 hover:text-red-600 transition" aria-pressed="false">
+          Round Trip
+        </button>
+      </div>
+    <div class="p-6 md:p-8 space-y-6">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div class="relative group">
+          <label class="text-xs font-bold text-gray-500 uppercase mb-1 block">Pickup</label>
+          <div class="flex items-center bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 focus-within:ring-2 ring-red-500 transition">
+            <i class="fas fa-map-marker-alt text-red-500 mr-3"></i>
+            <input type="text" id="pickup" placeholder="Enter City" class="bg-transparent w-full outline-none text-gray-700 font-medium" />
+          </div>
+        </div>
+        <div class="relative group">
+          <label class="text-xs font-bold text-gray-500 uppercase mb-1 block">Drop</label>
+          <div class="flex items-center bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 focus-within:ring-2 ring-red-500 transition">
+            <i class="fas fa-location-arrow text-red-500 mr-3"></i>
+            <input type="text" id="drop" placeholder="Enter Destination" class="bg-transparent w-full outline-none text-gray-700 font-medium" />
+          </div>
+        </div>
+        <div class="relative group">
+          <label id="date-label" class="text-xs font-bold text-gray-500 uppercase mb-1 block">Pickup Date &amp; Time</label>
+          <div class="flex items-center bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 focus-within:ring-2 ring-red-500 transition">
+            <i class="far fa-calendar-alt text-red-500 mr-3"></i>
+            <input type="datetime-local" id="date" class="bg-transparent w-full outline-none text-gray-700 font-medium" />
+          </div>
+        </div>
+        <div class="relative group hidden" id="return-field">
+          <label class="text-xs font-bold text-gray-500 uppercase mb-1 block">Return Date &amp; Time</label>
+          <div class="flex items-center bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 focus-within:ring-2 ring-red-500 transition">
+            <i class="far fa-calendar-check text-red-500 mr-3"></i>
+            <input type="datetime-local" id="return-date" class="bg-transparent w-full outline-none text-gray-700 font-medium" />
+          </div>
+        </div>
+      </div>
+      <button type="button" id="booking-cta" class="w-full bg-[#25D366] hover:bg-[#20bd5a] text-white text-lg font-bold py-4 rounded-xl shadow-lg flex items-center justify-center gap-3 transition transform active:scale-[0.99]">
+        <i class="fab fa-whatsapp text-2xl"></i>
+        Book on WhatsApp
+      </button>
+    </div>
+  </div>
+</section>
+
+<script>
+  const panel = document.getElementById('booking-panel');
+  const tabs = panel?.querySelectorAll('[data-tab]');
+  const bookingButton = document.getElementById('booking-cta');
+  const pickupInput = document.getElementById('pickup') as HTMLInputElement | null;
+  const dropInput = document.getElementById('drop') as HTMLInputElement | null;
+  const dateInput = document.getElementById('date') as HTMLInputElement | null;
+  const returnDateInput = document.getElementById('return-date') as HTMLInputElement | null;
+  let currentTripType = 'airport';
+  const returnField = document.getElementById('return-field');
+  const dateLabel = document.getElementById('date-label');
+
+  const toggleReturnField = (show) => {
+    if (!returnField) return;
+    returnField.classList.toggle('hidden', !show);
+    if (!show && returnDateInput) {
+      returnDateInput.value = '';
+    }
+  };
+
+  const setActiveTab = (tabId) => {
+    currentTripType = tabId;
+    tabs?.forEach((tab) => {
+      const isActive = tab.getAttribute('data-tab') === tabId;
+      tab.setAttribute('aria-pressed', isActive.toString());
+      tab.classList.toggle('text-red-600', isActive);
+      tab.classList.toggle('border-red-600', isActive);
+      tab.classList.toggle('border-b-2', isActive);
+      tab.classList.toggle('bg-red-50', isActive);
+      tab.classList.toggle('text-gray-500', !isActive);
+    });
+    toggleReturnField(tabId === 'round');
+    if (dateLabel) {
+      dateLabel.textContent = 'Pickup Date & Time';
+    }
+  };
+
+  tabs?.forEach((tab) => {
+    tab.addEventListener('click', () => setActiveTab(tab.getAttribute('data-tab') || 'oneway'));
+  });
+  setActiveTab('airport');
+
+  const bookRide = () => {
+    const pickup = pickupInput?.value.trim();
+    const drop = dropInput?.value.trim();
+    const date = dateInput?.value;
+    const returnDate = returnDateInput?.value;
+
+    if (!pickup || !drop) {
+      alert('Please enter both Pickup and Drop locations');
+      return;
+    }
+
+    const message = encodeURIComponent(
+      `*New Booking Inquiry*%0A--------------------%0A🚗 Type: ${currentTripType === 'airport' ? 'Airport Transfer' : currentTripType === 'round' ? 'Round Trip' : 'One Way'}%0A📍 Pickup: ${pickup}%0A🏁 Drop: ${drop}%0A📅 Date: ${date || 'Not specified'}${currentTripType === 'round' ? `%0A🔁 Return: ${returnDate || 'Not specified'}` : ''}`
+    );
+    window.open(`https://wa.me/919952749408?text=${message}`, '_blank');
+  };
+
+  bookingButton?.addEventListener('click', bookRide);
+
+  window.addEventListener('load', () => {
+    const googleMaps = (window as any).google;
+    if (googleMaps?.maps?.places) {
+      if (pickupInput) {
+        new googleMaps.maps.places.Autocomplete(pickupInput);
+      }
+      if (dropInput) {
+        new googleMaps.maps.places.Autocomplete(dropInput);
+      }
+    }
+  });
+</script>

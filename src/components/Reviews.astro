@@ -1,0 +1,48 @@
+---
+import siteContent from '../data/siteContent.json';
+const reviews = siteContent.reviews;
+---
+
+<section id="reviews" class="py-16 bg-gray-100">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
+        <div class="text-center mb-8">
+          <h2 class="text-2xl font-extrabold text-gray-900 flex items-center justify-center gap-3">
+            <span class="text-blue-500"><i class="fab fa-google"></i></span> Client Reviews
+          </h2>
+          <div class="h-1 w-16 bg-red-600 mx-auto mt-3 rounded-full"></div>
+          <div class="flex items-center justify-center gap-1 mt-3 bg-gray-50 inline-flex px-3 py-1 rounded-full mx-auto w-fit">
+            <span class="text-sm font-bold">5.0</span>
+            <i class="fas fa-star text-yellow-400 text-xs"></i>
+          </div>
+        </div>
+
+        <div class="flex overflow-x-auto gap-4 pb-4 scrollbar-hide snap-x">
+          {reviews.map((review) => (
+            <div class="flex-none w-64 bg-gray-50 p-4 rounded-xl border border-gray-100 snap-center">
+              <div class="flex items-center gap-2 mb-2">
+                <div class="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center text-white text-xs font-bold">{review.name.charAt(0)}</div>
+                <span class="text-sm font-bold">{review.name}</span>
+              </div>
+              <p class="text-xs text-gray-600 italic">"{review.quote}"</p>
+            </div>
+          ))}
+        </div>
+
+        <div class="text-center mt-4 pt-4 border-t border-gray-100">
+          <a href="https://g.page/r/CZAGU8mFBUoaEAE/review" target="_blank" class="text-blue-600 font-bold text-sm hover:underline">See More Reviews on Google →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+</style>

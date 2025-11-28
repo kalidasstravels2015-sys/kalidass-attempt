@@ -1,0 +1,86 @@
+---
+import siteContent from '../data/siteContent.json';
+const hero = siteContent.hero;
+const heroImages = hero.images ?? [
+  'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=1920'
+];
+---
+
+<section class="relative min-h-[90dvh] flex items-center justify-center overflow-hidden">
+  <!-- Background Slideshow -->
+  <div class="absolute inset-0 z-0">
+    <div class="hero-slides absolute inset-0 pointer-events-none" aria-hidden="true">
+      {heroImages.map((image, index) => (
+        <div
+          class="hero-slide"
+          style={`background-image: url(${image}); animation-delay: ${index * 6}s;`}
+        ></div>
+      ))}
+    </div>
+    <div class="absolute inset-0" style="background: linear-gradient(160deg, rgba(13,13,13,.9) 0%, rgba(242,34,34,.25) 50%, rgba(13,13,13,.7) 100%);"></div>
+  </div>
+
+  <div class="relative z-10 max-w-3xl mx-4 sm:mx-auto text-center space-y-5">
+    <p class="inline-flex items-center justify-center gap-2 text-sm font-semibold uppercase tracking-widest text-white/80">
+      <span class="color-theme_logo-1-hex">●</span>
+      {hero.badge}
+    </p>
+    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight">
+      {hero.title}
+    </h1>
+    <p class="text-lg sm:text-xl text-white/90">
+      {hero.highlight}
+    </p>
+  </div>
+
+  <!-- Scroll Indicator -->
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+    </svg>
+  </div>
+</section>
+
+<style is:inline>
+  .hero-slides {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    mix-blend-mode: normal;
+  }
+
+  .hero-slide {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transform: scale(1.08);
+    animation: heroCinematic 28s ease-in-out infinite;
+    animation-fill-mode: both;
+    filter: saturate(1.1);
+  }
+
+  @keyframes heroCinematic {
+    0% {
+      opacity: 0;
+      transform: scale(1.08);
+    }
+    10% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    30% {
+      opacity: 1;
+      transform: scale(1.02);
+    }
+    40% {
+      opacity: 0;
+      transform: scale(1.1);
+    }
+    100% {
+      opacity: 0;
+      transform: scale(1.08);
+    }
+  }
+</style>

@@ -1,0 +1,41 @@
+---
+import siteContent from '../data/siteContent.json';
+const drivers = siteContent.drivers;
+---
+
+<section class="py-16 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="text-center mb-10">
+      <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900">Our Professional Drivers</h2>
+      <div class="h-1 w-20 bg-red-600 mx-auto mt-4 rounded-full"></div>
+      <p class="text-gray-500 mt-2 text-sm">Experienced, verified, and multilingual drivers at your service.</p>
+    </div>
+
+    <div class="flex overflow-x-auto gap-6 pb-8 scrollbar-hide snap-x">
+      {drivers.map((driver) => (
+        <div class="flex-none w-72 snap-center bg-white rounded-2xl shadow-lg border border-gray-100 p-4 group hover:-translate-y-1 transition duration-300">
+          <div class="relative mb-4">
+            <img src={driver.image} class="w-full h-48 object-cover rounded-xl shadow-sm" />
+            <span class="absolute bottom-2 left-2 bg-green-600 text-white text-[10px] font-bold px-2 py-1 rounded shadow-sm">{driver.tag}</span>
+          </div>
+          <h3 class="font-bold text-lg text-gray-900">{driver.name}</h3>
+          <div class="text-sm text-gray-500 mt-2 space-y-1">
+            <p><i class="fas fa-hourglass-half w-5 text-gray-400"></i> {driver.experience}</p>
+            <p><i class="fas fa-language w-5 text-gray-400"></i> {driver.languages}</p>
+          </div>
+          <div class="flex text-yellow-400 mt-3 text-sm"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+</style>
