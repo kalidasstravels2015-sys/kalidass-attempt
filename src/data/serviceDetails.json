@@ -1,0 +1,555 @@
+[
+  {
+    "slug": "acting-driver-within-chennai",
+    "category": "Acting Driver Services",
+    "title": "Acting Driver – Within Chennai",
+    "overview": "Professional acting driver service for your personal car within Chennai city limits. Ideal for office commute, shopping, hospital visits, family travel, elderly support.",
+    "tariff": {
+      "headers": ["Duration", "Charges"],
+      "rows": [
+        ["2 Hours", "₹350"],
+        ["4 Hours", "₹500"],
+        ["8 Hours (Full Day)", "₹800"],
+        ["Extra Hour", "₹100/hr"],
+        ["Night Duty (10 PM – 5 AM)", "+₹150"]
+      ],
+      "note": "KM Not Counted — Only time-based."
+    },
+    "includes": ["Background-verified driver", "Manual & automatic car support", "Smooth & safe driving"],
+    "excludes": ["Parking", "Toll", "Food (not needed for city trips)"],
+    "faq": [
+      { "q": "Can I extend hours?", "a": "Yes. ₹100/hr." },
+      { "q": "Will the driver help with luggage?", "a": "Yes, light luggage." },
+      { "q": "Can I book last-minute?", "a": "Usually available; depends on peak time." }
+    ],
+    "notes": ["Service starts & ends at your location.", "No hidden charges."],
+    "whatsappMsg": "Hi, I need an Acting Driver within Chennai."
+  },
+  {
+    "slug": "acting-driver-outstation-one-way",
+    "category": "Acting Driver Services",
+    "title": "Acting Driver – Outstation One Way",
+    "overview": "Driver takes your personal car from Chennai to any destination outside Chennai (only drop-off, no return).",
+    "tariff": {
+      "headers": ["Component", "Rate"],
+      "rows": [
+        ["Base (first 150 km)", "₹1,500"],
+        ["Additional Distance", "₹10/km"],
+        ["Night Halt (if needed)", "₹400"]
+      ]
+    },
+    "includes": ["Professional highway driver", "Safe long-distance driving"],
+    "excludes": ["Driver food", "Return travel (if required)"],
+    "faq": [
+      { "q": "What if the trip cancels?", "a": "Before dispatch → Free. After dispatch → ₹300" },
+      { "q": "Can I get a return driver separately?", "a": "Yes, book separately." }
+    ],
+    "whatsappMsg": "Hi, I need an outstation one-way driver."
+  },
+  {
+    "slug": "acting-driver-outstation-round-trip",
+    "category": "Acting Driver Services",
+    "title": "Acting Driver – Outstation Round Trip",
+    "overview": "Driver accompanies your car for onward & return trip. Suitable for family functions, temple tours, business travel.",
+    "tariff": {
+      "headers": ["Vehicle Type", "Driver Bata", "Night Charge"],
+      "rows": [
+        ["Sedan", "₹500", "₹150"],
+        ["SUV", "₹600", "₹150"],
+        ["Crysta", "₹700", "₹150"]
+      ]
+    },
+    "faq": [
+      { "q": "How many hours is 1 day?", "a": "Up to 14 hours." },
+      { "q": "Is food mandatory for long trips?", "a": "If trip exceeds 10 hrs, food allowance appreciated." }
+    ],
+    "whatsappMsg": "Hi, I need an outstation round-trip acting driver."
+  },
+  {
+    "slug": "night-driving-driver",
+    "category": "Acting Driver Services",
+    "title": "Night Driving Driver",
+    "overview": "Night driving specialist for late-night events, airport trips, emergencies.",
+    "tariff": {
+      "headers": ["Duration", "Rate"],
+      "rows": [
+        ["Up to 3 hrs", "₹600"],
+        ["Extra hr", "₹150"]
+      ]
+    },
+    "includes": ["Night safety trained drivers", "Doorstep pickup"],
+    "faq": [
+      { "q": "Is waiting charge extra?", "a": "Yes, counted as extra hour." }
+    ],
+    "whatsappMsg": "Hi, I need a night driving driver."
+  },
+  {
+    "slug": "driver-for-senior-citizens",
+    "category": "Acting Driver Services",
+    "title": "Driver for Senior Citizens",
+    "overview": "Gentle, patient, verified drivers for elderly travel like temple trips, hospitals, day outings.",
+    "tariff": {
+      "headers": ["Duration", "Rate"],
+      "rows": [
+        ["4 Hours", "₹500"],
+        ["8 Hours", "₹800"],
+        ["Extra Hour", "₹100"]
+      ]
+    },
+    "includes": ["Assistance getting in/out", "Slow & steady driving", "Respectful behaviour"],
+    "faq": [
+      { "q": "Can driver accompany inside hospital?", "a": "Yes (short duration)." }
+    ],
+    "whatsappMsg": "Hi, I need a driver for senior citizen travel."
+  },
+  {
+    "slug": "office-commute-driver-monthly",
+    "category": "Acting Driver Services",
+    "title": "Office Commute Driver (Monthly)",
+    "overview": "Daily home → office → home driver arrangement.",
+    "tariff": {
+      "headers": ["Plan", "Pricing"],
+      "rows": [
+        ["1 Shift (pickup or drop)", "₹12,000/month"],
+        ["2 Shift (pickup + drop)", "₹15,000/month"]
+      ]
+    },
+    "notes": ["Limited to Chennai city limits", "Fuel borne by customer"],
+    "whatsappMsg": "Hi, I need a monthly office commute driver."
+  },
+  {
+    "slug": "monthly-car-with-driver-corporate",
+    "category": "Corporate Travel",
+    "title": "Monthly Car with Driver – Corporate",
+    "overview": "Ideal for companies wanting dedicated car + driver.",
+    "tariff": {
+      "headers": ["Vehicle", "Monthly Rate", "Includes"],
+      "rows": [
+        ["Sedan", "₹38,000", "10 hrs/day driver"],
+        ["Ertiga/SUV", "₹48,000", "10 hrs/day driver"],
+        ["Innova", "₹58,000", "10 hrs/day driver"]
+      ],
+      "note": "Fuel separate (actual usage)."
+    },
+    "faq": [
+      { "q": "What if driver is absent?", "a": "Replacement provided." }
+    ],
+    "whatsappMsg": "Hi, I need a monthly corporate car."
+  },
+  {
+    "slug": "employee-pickup-drop",
+    "category": "Corporate Travel",
+    "title": "Employee Pickup/Drop – Daily & Monthly",
+    "tariff": {
+      "headers": ["Service", "Rate"],
+      "rows": [
+        ["Per Trip", "₹350 – ₹500"],
+        ["Monthly", "₹10,000 – ₹14,000"]
+      ]
+    },
+    "includes": ["GPS route tracking", "Corporate etiquette-trained drivers", "Safety-first for women employees"],
+    "faq": [
+      { "q": "Are multiple stops allowed?", "a": "Yes, ₹50–₹100 per stop." }
+    ],
+    "whatsappMsg": "Need employee pickup/drop service."
+  },
+  {
+    "slug": "business-trip-car-rental",
+    "category": "Corporate Travel",
+    "title": "Business Trip Car Rental",
+    "tariff": {
+      "headers": ["Package", "Sedan", "SUV", "Crysta"],
+      "rows": [
+        ["4 Hrs / 40 km", "₹1,300", "₹1,800", "₹2,500"],
+        ["8 Hrs / 80 km", "₹2,000", "₹2,800", "₹3,800"],
+        ["Extra km", "₹13", "₹16", "₹20"]
+      ]
+    },
+    "faq": [
+      { "q": "Can I extend office hours?", "a": "Yes, extra hour charges apply." }
+    ],
+    "whatsappMsg": "Book business travel car."
+  },
+  {
+    "slug": "corporate-airport-transfer",
+    "category": "Corporate Travel",
+    "title": "Corporate Airport Transfer",
+    "tariff": {
+      "headers": ["Vehicle", "Rate"],
+      "rows": [
+        ["Sedan", "₹800"],
+        ["SUV", "₹1,200"],
+        ["Crysta", "₹1,700"]
+      ],
+      "note": "Parking extra."
+    },
+    "whatsappMsg": "Corporate airport transfer."
+  },
+  {
+    "slug": "airport-drop-sedan",
+    "category": "Airport Transfers",
+    "title": "Airport Drop – Sedan",
+    "tariff": {
+      "headers": ["Zone", "Fare"],
+      "rows": [
+        ["Most Chennai areas", "₹700 – ₹900"]
+      ],
+      "note": "Parking extra."
+    },
+    "faq": [
+      { "q": "How early to start?", "a": "2 hrs before domestic, 3 hrs for international." }
+    ],
+    "whatsappMsg": "Airport drop – Sedan."
+  },
+  {
+    "slug": "airport-drop-suv",
+    "category": "Airport Transfers",
+    "title": "Airport Drop – SUV",
+    "tariff": {
+      "headers": ["Fare"],
+      "rows": [
+        ["₹1,000 – ₹1,300"]
+      ]
+    },
+    "whatsappMsg": "Airport drop – SUV."
+  },
+  {
+    "slug": "airport-pickup-sedan",
+    "category": "Airport Transfers",
+    "title": "Airport Pickup – Sedan",
+    "tariff": {
+      "headers": ["Fare"],
+      "rows": [
+        ["₹900 – ₹1,100"]
+      ],
+      "note": "Includes 30 min free waiting."
+    },
+    "whatsappMsg": "Airport pickup – Sedan."
+  },
+  {
+    "slug": "airport-pickup-suv",
+    "category": "Airport Transfers",
+    "title": "Airport Pickup – SUV",
+    "tariff": {
+      "headers": ["Fare"],
+      "rows": [
+        ["₹1,400 – ₹1,700"]
+      ]
+    },
+    "whatsappMsg": "Airport pickup – SUV."
+  },
+  {
+    "slug": "airport-transfer-tempo-traveller",
+    "category": "Airport Transfers",
+    "title": "Airport Transfer – Tempo Traveller",
+    "tariff": {
+      "headers": ["Seating", "Rate"],
+      "rows": [
+        ["12 Seater", "₹3,000"],
+        ["17 Seater", "₹3,800"]
+      ]
+    },
+    "whatsappMsg": "Airport TT booking."
+  },
+  {
+    "slug": "airport-parcel-luggage-delivery",
+    "category": "Airport Transfers",
+    "title": "Airport Parcel/Luggage Delivery",
+    "tariff": {
+      "headers": ["Vehicle", "Rate"],
+      "rows": [
+        ["Bada Dost", "₹900 – ₹1,200"],
+        ["TT Van", "₹2,200"]
+      ]
+    },
+    "whatsappMsg": "Airport parcel drop."
+  },
+  {
+    "slug": "tirupati-package",
+    "category": "Temple Tours",
+    "title": "Tirupati Balaji Darshan Package",
+    "overview": "Complete darshan package with accommodation assistance and guided darshan.",
+    "tariff": {
+      "headers": ["Vehicle", "Total Fare"],
+      "rows": [
+        ["Etios/Dzire", "₹4,500"],
+        ["Innova", "₹6,500"],
+        ["Crysta", "₹7,500"],
+        ["Tempo Traveller", "₹9,500"]
+      ],
+      "note": "Includes Toll, Parking, Driver Bata. Excludes Darshan Tickets."
+    },
+    "includes": ["Doorstep Pickup & Drop", "Toll & Parking", "Driver Allowance"],
+    "excludes": ["Darshan Tickets", "Food & Accommodation"],
+    "whatsappMsg": "Hi, I need details for Tirupati Package."
+  },
+  {
+    "slug": "kanchipuram-temple-trip",
+    "category": "Temple Tours",
+    "title": "Kanchipuram Temple Trip (Half Day)",
+    "overview": "Based on 150 km coverage.",
+    "tariff": {
+      "headers": ["Vehicle", "Rate/km", "Driver Bata", "Est. Total"],
+      "rows": [
+        ["Sedan", "₹11/km", "₹500", "₹2,800 – ₹3,200"],
+        ["SUV", "₹16/km", "₹600", "₹4,000 – ₹4,500"],
+        ["Innova", "₹18/km", "₹700", "₹4,800 – ₹5,200"]
+      ]
+    },
+    "includes": ["150 km usage", "Parking guidance"],
+    "faq": [
+      { "q": "Best time?", "a": "Early morning." }
+    ],
+    "whatsappMsg": "Kanchipuram trip details."
+  },
+  {
+    "slug": "thiruvannamalai-girivalam-trip",
+    "category": "Temple Tours",
+    "title": "Thiruvannamalai Girivalam Trip",
+    "tariff": {
+      "headers": ["Vehicle", "Estimated Fare (Approx 250 km)"],
+      "rows": [
+        ["Sedan", "₹3,800–₹4,300"],
+        ["SUV", "₹5,000–₹5,600"],
+        ["Innova", "₹6,000–₹6,800"]
+      ]
+    },
+    "faq": [
+      { "q": "Night girivalam allowed?", "a": "Yes, safe drivers provided." }
+    ],
+    "whatsappMsg": "Thiruvannamalai trip details."
+  },
+  {
+    "slug": "chidambaram-temple-trip",
+    "category": "Temple Tours",
+    "title": "Chidambaram Temple Trip",
+    "overview": "440 km round trip package.",
+    "tariff": {
+      "headers": ["Vehicle", "Rate"],
+      "rows": [
+        ["Sedan", "₹5,100–₹5,600"],
+        ["SUV", "₹7,300–₹8,000"],
+        ["Crysta", "₹9,000–₹10,000"],
+        ["Tempo", "₹10,800–₹11,900"]
+      ]
+    },
+    "whatsappMsg": "Chidambaram trip details."
+  },
+  {
+    "slug": "rameswaram-2-days",
+    "category": "Temple Tours",
+    "title": "Rameswaram (2 Days)",
+    "tariff": {
+      "headers": ["Vehicle", "Rate (750 km)"],
+      "rows": [
+        ["Sedan", "₹11,500"],
+        ["SUV", "₹15,500"],
+        ["Innova", "₹17,500"]
+      ]
+    },
+    "whatsappMsg": "Rameswaram trip details."
+  },
+  {
+    "slug": "navagraha-tour",
+    "category": "Temple Tours",
+    "title": "Navagraha Tour (1 or 2 Days)",
+    "tariff": {
+      "headers": ["Duration", "Vehicle", "Rate"],
+      "rows": [
+        ["1 Day (350 km)", "Sedan", "₹6,500"],
+        ["2 Day (600 km)", "Sedan", "₹9,500"]
+      ]
+    },
+    "whatsappMsg": "Navagraha tour details."
+  },
+  {
+    "slug": "sabarimala-trip",
+    "category": "Temple Tours",
+    "title": "Sabarimala Trip (Season)",
+    "tariff": {
+      "headers": ["Vehicle", "Est. Fare"],
+      "rows": [
+        ["Sedan", "₹9,500 – ₹10,500"],
+        ["Innova", "₹15,500 – ₹17,000"]
+      ]
+    },
+    "whatsappMsg": "Sabarimala trip details."
+  },
+  {
+    "slug": "pondicherry-one-day-trip",
+    "category": "Temple Tours",
+    "title": "Pondicherry One-Day Trip",
+    "tariff": {
+      "headers": ["Vehicle", "Total Fare"],
+      "rows": [
+        ["Sedan", "₹4,800"],
+        ["SUV", "₹6,500"]
+      ]
+    },
+    "whatsappMsg": "Pondicherry trip details."
+  },
+  {
+    "slug": "vellore-golden-temple",
+    "category": "Temple Tours",
+    "title": "Vellore Golden Temple",
+    "tariff": {
+      "headers": ["Vehicle", "Total Fare"],
+      "rows": [
+        ["Sedan", "₹3,800"],
+        ["SUV", "₹5,000"]
+      ]
+    },
+    "whatsappMsg": "Vellore Golden Temple trip details."
+  },
+  {
+    "slug": "mahabalipuram-ecr-temple-route",
+    "category": "Temple Tours",
+    "title": "Mahabalipuram + ECR Temple Route",
+    "tariff": {
+      "headers": ["Vehicle", "Total Fare"],
+      "rows": [
+        ["Sedan", "₹2,500"],
+        ["SUV", "₹3,800"]
+      ]
+    },
+    "whatsappMsg": "Mahabalipuram trip details."
+  },
+  {
+    "slug": "sedan-rental-chennai",
+    "category": "Premium Fleet Rental",
+    "title": "Sedan Rental – Chennai",
+    "tariff": {
+      "headers": ["Package", "Rate"],
+      "rows": [
+        ["4 Hrs/40 km", "₹1,300"],
+        ["8 Hrs/80 km", "₹2,000"],
+        ["Outstation", "₹11/km"]
+      ]
+    },
+    "whatsappMsg": "Sedan rental booking."
+  },
+  {
+    "slug": "suv-ertiga-rental",
+    "category": "Premium Fleet Rental",
+    "title": "SUV / Ertiga Rental",
+    "tariff": {
+      "headers": ["Package", "Rate"],
+      "rows": [
+        ["4 Hrs", "₹1,800"],
+        ["8 Hrs", "₹2,600"],
+        ["Outstation", "₹16/km"]
+      ]
+    },
+    "whatsappMsg": "SUV rental booking."
+  },
+  {
+    "slug": "innova-rental",
+    "category": "Premium Fleet Rental",
+    "title": "Innova Rental",
+    "tariff": {
+      "headers": ["Package", "Rate"],
+      "rows": [
+        ["4 Hrs", "₹2,000"],
+        ["8 Hrs", "₹3,000"],
+        ["Outstation", "₹18/km"]
+      ]
+    },
+    "whatsappMsg": "Innova rental booking."
+  },
+  {
+    "slug": "innova-crysta-rental",
+    "category": "Premium Fleet Rental",
+    "title": "Innova Crysta Rental",
+    "tariff": {
+      "headers": ["Package", "Rate"],
+      "rows": [
+        ["4 Hrs", "₹2,500"],
+        ["8 Hrs", "₹3,800"],
+        ["Outstation", "₹20/km"]
+      ]
+    },
+    "whatsappMsg": "Innova Crysta rental booking."
+  },
+  {
+    "slug": "tempo-traveller-rental",
+    "category": "Premium Fleet Rental",
+    "title": "Tempo Traveller Rental",
+    "tariff": {
+      "headers": ["Seating", "Rate"],
+      "rows": [
+        ["12 Seater", "₹4,000"],
+        ["17 Seater", "₹5,000"]
+      ],
+      "note": "Outstation: ₹22/km"
+    },
+    "whatsappMsg": "Tempo Traveller rental booking."
+  },
+  {
+    "slug": "bada-dost-i4-goods-delivery",
+    "category": "Premium Fleet Rental",
+    "title": "Bada Dost i4 – Goods Delivery",
+    "tariff": {
+      "headers": ["Trip Type", "Rate"],
+      "rows": [
+        ["Chennai trip", "₹900 – ₹1,200"],
+        ["Outstation", "₹28/km"]
+      ]
+    },
+    "whatsappMsg": "Goods vehicle booking."
+  },
+  {
+    "slug": "one-day-chennai-city-tour",
+    "category": "Misc Services",
+    "title": "One-Day Chennai City Tour",
+    "tariff": {
+      "headers": ["Vehicle", "Rate"],
+      "rows": [
+        ["Sedan", "₹2,500"],
+        ["SUV", "₹3,800"]
+      ]
+    },
+    "whatsappMsg": "Chennai city tour booking."
+  },
+  {
+    "slug": "outstation-car-rental-per-km",
+    "category": "Misc Services",
+    "title": "Outstation Car Rental – Per Km Tariff",
+    "tariff": {
+      "headers": ["Vehicle", "Rate/km"],
+      "rows": [
+        ["Sedan", "₹11"],
+        ["SUV", "₹16"],
+        ["Innova", "₹18"],
+        ["Crysta", "₹20"]
+      ],
+      "note": "Driver bata as applicable."
+    },
+    "whatsappMsg": "Outstation car rental booking."
+  },
+  {
+    "slug": "luggage-parcel-delivery-chennai",
+    "category": "Misc Services",
+    "title": "Luggage / Parcel Delivery – Chennai",
+    "tariff": {
+      "headers": ["Vehicle", "Rate"],
+      "rows": [
+        ["Bada Dost", "₹900"],
+        ["TT Van", "₹2,200"]
+      ]
+    },
+    "whatsappMsg": "Luggage delivery booking."
+  },
+  {
+    "slug": "driver-car-for-weddings",
+    "category": "Misc Services",
+    "title": "Driver + Car for Weddings",
+    "tariff": {
+      "headers": ["Vehicle", "Rate"],
+      "rows": [
+        ["Sedan", "₹2,500"],
+        ["Innova", "₹4,500"]
+      ]
+    },
+    "whatsappMsg": "Wedding car booking."
+  }
+]

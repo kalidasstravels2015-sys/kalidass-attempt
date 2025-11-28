@@ -1,0 +1,105 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import serviceDetails from '../../../data/serviceDetails.json';
+
+export async function getStaticPaths() {
+  return [
+    { params: { category: 'acting-drivers' }, props: { title: 'Acting Drivers', description: 'Professional drivers for your personal vehicle' } },
+    { params: { category: 'corporate' }, props: { title: 'Corporate Travel', description: 'Reliable transport solutions for businesses' } },
+    { params: { category: 'airport-transfer' }, props: { title: 'Airport Transfer', description: 'Seamless airport pickups and drops' } },
+    { params: { category: 'temple-tours' }, props: { title: 'Temple Tours', description: 'Spiritual journeys across Tamil Nadu' } },
+  ];
+}
+
+const { category } = Astro.params;
+const { title, description } = Astro.props;
+
+// Logic to map the 36 services to the 4 main categories
+const getServicesForCategory = (catSlug) => {
+  return serviceDetails.filter(service => {
+    const cat = service.category;
+    const slug = service.slug;
+
+    if (catSlug === 'acting-drivers') {
+      return cat === 'Acting Driver Services' || slug === 'driver-car-for-weddings';
+    }
+    if (catSlug === 'corporate') {
+      return cat === 'Corporate Travel' || cat === 'Premium Fleet Rental' || slug === 'outstation-car-rental-per-km';
+    }
+    if (catSlug === 'airport-transfer') {
+      return cat === 'Airport Transfers' || slug === 'luggage-parcel-delivery-chennai';
+    }
+    if (catSlug === 'temple-tours') {
+      return cat === 'Temple Tours' || slug === 'one-day-chennai-city-tour';
+    }
+    return false;
+  });
+};
+
+const categoryServices = getServicesForCategory(category);
+---
+
+<Layout title={`${title} - Kalidass Travels`}>
+  <main class="bg-gray-50 min-h-screen pb-20">
+    <!-- Hero Header -->
+    <div class="bg-black text-white pt-32 pb-16 px-6 relative overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-br from-red-900/40 to-black z-0"></div>
+      <div class="max-w-7xl mx-auto relative z-10 text-center">
+        <span class="inline-block py-1 px-3 rounded-full bg-red-600/20 border border-red-500/30 text-red-400 text-xs font-semibold tracking-wider mb-4 uppercase">
+          Service Category
+        </span>
+        <h1 class="text-3xl md:text-5xl font-bold mb-4 leading-tight">{title}</h1>
+        <p class="text-gray-300 text-lg max-w-2xl mx-auto">{description}</p>
+      </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 relative z-20">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {categoryServices.map((service) => (
+          <a 
+            href={`/services/${service.slug}`}
+            class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 group flex flex-col h-full"
+          >
+            <div class="flex-1">
+              <div class="flex items-center justify-between mb-4">
+                <span class="text-xs font-bold text-red-600 bg-red-50 px-2 py-1 rounded uppercase tracking-wide">
+                  {service.category}
+                </span>
+                <i class="fa-solid fa-arrow-right text-gray-300 group-hover:text-red-600 transition-colors"></i>
+              </div>
+              <h3 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-red-600 transition-colors">
+                {service.title}
+              </h3>
+              {service.overview && (
+                <p class="text-gray-500 text-sm line-clamp-3 mb-4">
+                  {service.overview}
+                </p>
+              )}
+              
+              <!-- Mini Tariff Preview -->
+              {service.tariff && service.tariff.rows.length > 0 && (
+                <div class="bg-gray-50 rounded p-3 text-xs text-gray-600 mb-4">
+                  <div class="flex justify-between font-semibold border-b border-gray-200 pb-1 mb-1">
+                    <span>{service.tariff.headers[0]}</span>
+                    <span>{service.tariff.headers[service.tariff.headers.length - 1]}</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span>{service.tariff.rows[0][0]}</span>
+                    <span class="font-bold text-gray-900">{service.tariff.rows[0][service.tariff.rows[0].length - 1]}</span>
+                  </div>
+                </div>
+              )}
+            </div>
+            
+            <div class="mt-auto pt-4 border-t border-gray-100 flex items-center justify-between text-sm font-medium">
+              <span class="text-gray-600">View Details</span>
+              <span class="text-red-600 group-hover:translate-x-1 transition-transform">
+                Book Now &rarr;
+              </span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </main>
+</Layout>

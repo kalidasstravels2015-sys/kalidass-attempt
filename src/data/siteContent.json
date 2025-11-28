@@ -5,13 +5,10 @@
     "highlight": "Premium family-run taxi service specializing in Temple Pilgrimages, Corporate Travel & Heritage Tours.",
     "description": "We combine professional drivers, sanitized vehicles, and transparent WhatsApp support to keep every pilgrimage or corporate journey calm and reliable.",
     "images": [
-      "/images/hero/Kanyakumari.jpg",
-      "/images/hero/Rameshwaram.jpg",
-      "/images/hero/airavatesvara.webp",
-      "/images/hero/kanchipuram.jpg",
-      "/images/hero/madurai.jpg",
-      "/images/hero/coimbatore.webp"
-
+      "https://kalidasstravels.in/wp-content/uploads/2025/11/airavatesvara-temple-1654590752_541a0582f2c9f6d5530a.webp",
+      "https://kalidasstravels.in/wp-content/uploads/2025/11/coimbatore-1656092595_19e9fcebd774ab38d0a5.webp",
+      "https://kalidasstravels.in/wp-content/uploads/2025/11/Best-Tourist-Places-to-Visit-in-Tamil-nadu-1024x683-1.jpg",
+      "https://kalidasstravels.in/wp-content/uploads/2025/11/madurai.jpg"
     ],
     "cto": "Call Now",
     "phone": "+91 90923 03060",
@@ -21,22 +18,30 @@
     {
       "title": "Acting Drivers",
       "description": "Professional, verified drivers for your personal car on a daily or hourly basis.",
-      "icon": "user-tie"
+      "icon": "user-tie",
+      "image": "/images/services/acting-drivers.jpg",
+      "link": "/services/category/acting-drivers"
     },
     {
       "title": "Corporate",
       "description": "Employee pickup/drop, site visits, and flexible monthly contracts that keep operations on time.",
-      "icon": "building"
+      "icon": "building",
+      "image": "/images/services/corporate.jpg",
+      "link": "/services/category/corporate"
     },
     {
       "title": "Airport Transfer",
       "description": "Reliable, on-time drops to Chennai Airport and airport transfers for outstation teams.",
-      "icon": "plane"
+      "icon": "plane",
+      "image": "/images/services/airport-transfer.jpg",
+      "link": "/services/category/airport-transfer"
     },
     {
       "title": "Temple Tours",
       "description": "Round trips for Tirupati, Navagraha, and heritage temple circuits with local expertise.",
-      "icon": "gopuram"
+      "icon": "gopuram",
+      "image": "/images/services/temple-tours.jpg",
+      "link": "/services/category/temple-tours"
     }
   ],
   "fleet": [
