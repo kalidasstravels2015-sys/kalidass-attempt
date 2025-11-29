@@ -64,31 +64,19 @@ export const GET: APIRoute = async ({ params, request }) => {
   const fontPath = path.resolve("./public/fonts/NotoSans-Bold.ttf");
   const fontData = readFileSync(fontPath);
 
-  const markup = html`
-    <div
-      style="display: flex; height: 100%; width: 100%; background-color: #fff; position: relative;"
-    >
-      <!-- Background Image -->
-      ${imageBuffer ? `<img
-        src="${imageBuffer}"
-        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.4;"
-      />` : ''}
+  const htmlString = `
+    <div style="display: flex; height: 100%; width: 100%; background-color: #fff; position: relative;">
+      ${imageBuffer ? `<img src="${imageBuffer}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.4;" />` : ''}
       
-      <!-- Content Container -->
-      <div
-        style="display: flex; flex-direction: column; justify-content: center; padding: 80px; width: 100%; height: 100%;"
-      >
-        <!-- Logo -->
+      <div style="display: flex; flex-direction: column; justify-content: center; padding: 80px; width: 100%; height: 100%;">
         <div style="display: flex; align-items: center; margin-bottom: 40px;">
            <span style="font-size: 30px; color: #dc2626; font-weight: bold; background: white; padding: 10px 20px; border-radius: 50px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">Kalidass Travels</span>
         </div>
 
-        <!-- Title -->
-        <h1 style="font-size: 70px; font-weight: bold; color: #000; margin: 0; line-height: 1.1; text-shadow: 2px 2px 0px #fff; max-width: 90%;">
+        <h1 style="display: flex; font-size: 70px; font-weight: bold; color: #000; margin: 0; line-height: 1.1; text-shadow: 2px 2px 0px #fff; max-width: 90%;">
           ${service.title}
         </h1>
 
-        <!-- Tagline / Price -->
         <div style="display: flex; margin-top: 30px;">
            <span style="font-size: 35px; color: #fff; background-color: #dc2626; padding: 15px 30px; border-radius: 15px; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.2);">
              ${service.category === 'Temple Tours' ? 'Pilgrimage Special' : 'Premium Service'}
@@ -96,10 +84,11 @@ export const GET: APIRoute = async ({ params, request }) => {
         </div>
       </div>
       
-      <!-- Footer Strip -->
-      <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 20px; background: #dc2626;"></div>
+      <div style="display: flex; position: absolute; bottom: 0; left: 0; width: 100%; height: 20px; background: #dc2626;"></div>
     </div>
   `;
+
+  const markup = html(htmlString);
 
   const svg = await satori(markup, {
     width: 1200,
