@@ -86,7 +86,7 @@ const hero = siteContent.hero;
   const returnField = document.getElementById('return-field');
   const dateLabel = document.getElementById('date-label');
 
-  const toggleReturnField = (show) => {
+  const toggleReturnField = (show: boolean) => {
     if (!returnField) return;
     returnField.classList.toggle('hidden', !show);
     if (!show && returnDateInput) {
@@ -94,7 +94,7 @@ const hero = siteContent.hero;
     }
   };
 
-  const setActiveTab = (tabId) => {
+  const setActiveTab = (tabId: string) => {
     currentTripType = tabId;
     tabs?.forEach((tab) => {
       const isActive = tab.getAttribute('data-tab') === tabId;
@@ -130,20 +130,41 @@ const hero = siteContent.hero;
     const message = encodeURIComponent(
       `*New Booking Inquiry*%0A--------------------%0A🚗 Type: ${currentTripType === 'airport' ? 'Airport Transfer' : currentTripType === 'round' ? 'Round Trip' : 'One Way'}%0A📍 Pickup: ${pickup}%0A🏁 Drop: ${drop}%0A📅 Date: ${date || 'Not specified'}${currentTripType === 'round' ? `%0A🔁 Return: ${returnDate || 'Not specified'}` : ''}`
     );
-    window.open(`https://wa.me/919952749408?text=${message}`, '_blank');
+    window.open(`https://wa.me/919092303060?text=${message}`, '_blank');
   };
 
   bookingButton?.addEventListener('click', bookRide);
 
-  window.addEventListener('load', () => {
-    const googleMaps = (window as any).google;
-    if (googleMaps?.maps?.places) {
-      if (pickupInput) {
-        new googleMaps.maps.places.Autocomplete(pickupInput);
-      }
-      if (dropInput) {
-        new googleMaps.maps.places.Autocomplete(dropInput);
-      }
+  // Google Maps Autocomplete Integration
+  const initAutocomplete = () => {
+    const google = (window as any).google;
+    if (!google || !google.maps || !google.maps.places) return;
+
+    const options = {
+      componentRestrictions: { country: 'in' },
+      fields: ['address_components', 'geometry', 'icon', 'name'],
+      strictBounds: false,
+    };
+
+    if (pickupInput) new google.maps.places.Autocomplete(pickupInput, options);
+    if (dropInput) new google.maps.places.Autocomplete(dropInput, options);
+  };
+
+  const loadGoogleMaps = () => {
+    if ((window as any).google?.maps?.places) {
+      initAutocomplete();
+      return;
     }
-  });
+    
+    const script = document.createElement('script');
+    // IMPORTANT: Replace YOUR_API_KEY with your actual Google Maps API Key
+    script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBPpRgTPIkv20IMdaBqqdlz0S0FEGU5400&libraries=places&loading=async`;
+    script.async = true;
+    script.defer = true;
+    script.onload = initAutocomplete;
+    document.head.appendChild(script);
+  };
+
+  // Initialize Google Maps
+  loadGoogleMaps();
 </script>
