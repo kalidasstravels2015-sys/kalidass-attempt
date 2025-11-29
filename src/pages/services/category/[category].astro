@@ -8,6 +8,7 @@ export async function getStaticPaths() {
     { params: { category: 'corporate' }, props: { title: 'Corporate Travel', description: 'Reliable transport solutions for businesses' } },
     { params: { category: 'airport-transfer' }, props: { title: 'Airport Transfer', description: 'Seamless airport pickups and drops' } },
     { params: { category: 'temple-tours' }, props: { title: 'Temple Tours', description: 'Spiritual journeys across Tamil Nadu' } },
+    { params: { category: 'popular-destinations' }, props: { title: 'Popular Destinations', description: 'Explore heritage sites, beaches, and city tours' } },
   ];
 }
 
@@ -30,7 +31,17 @@ const getServicesForCategory = (catSlug) => {
       return cat === 'Airport Transfers' || slug === 'luggage-parcel-delivery-chennai';
     }
     if (catSlug === 'temple-tours') {
-      return cat === 'Temple Tours' || slug === 'one-day-chennai-city-tour';
+      return cat === 'Temple Tours';
+    }
+    if (catSlug === 'popular-destinations') {
+      const destinations = [
+        "pondicherry-one-day-trip",
+        "mahabalipuram-ecr-temple-route",
+        "one-day-chennai-city-tour",
+        "kanchipuram-temple-trip",
+        "vellore-golden-temple"
+      ];
+      return destinations.includes(slug);
     }
     return false;
   });

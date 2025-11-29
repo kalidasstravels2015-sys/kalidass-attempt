@@ -7,21 +7,20 @@ const fleet = siteContent.fleet;
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <!-- Section Header -->
     <div class="text-center mb-12">
-      <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+      <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 inline-block relative mb-4">
         Our Premium Fleet
+        <div class="absolute bottom-[-10px] left-1/2 transform -translate-x-1/2 w-20 h-1.5 bg-red-600 rounded-full"></div>
       </h2>
-      <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+      <p class="text-lg text-gray-600 max-w-2xl mx-auto mt-4">
         Choose from our well-maintained fleet of vehicles for your journey
       </p>
     </div>
 
-    <!-- Horizontal Scrolling Container -->
+    <!-- Fleet Grid/Scroll Container -->
     <div class="relative">
-      <!-- Scroll Container -->
-      <div class="overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-4">
-        <div class="flex space-x-6 px-2">
+      <div class="flex overflow-x-auto snap-x snap-mandatory pb-6 space-x-6 px-4 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-8 md:space-x-0 md:overflow-visible md:pb-0">
           {fleet.map((vehicle) => (
-            <div class="flex-shrink-0 w-80 snap-center">
+            <div class="flex-shrink-0 w-80 snap-center md:w-auto md:snap-align-none">
               <div class="bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
                 <!-- Image -->
                 <div class="relative h-48 overflow-hidden">
@@ -75,11 +74,10 @@ const fleet = siteContent.fleet;
               </div>
             </div>
           ))}
-        </div>
       </div>
 
-      <!-- Scroll Indicators (Optional) -->
-      <div class="flex justify-center mt-6 space-x-2">
+      <!-- Scroll Indicators (Mobile Only) -->
+      <div class="flex justify-center mt-6 space-x-2 md:hidden">
         {fleet.map((_, index) => (
           <div class="w-2 h-2 rounded-full bg-gray-300"></div>
         ))}

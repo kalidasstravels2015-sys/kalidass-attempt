@@ -1,4 +1,6 @@
-[
+import json
+
+data = [
   {
     "slug": "acting-driver-within-chennai",
     "category": "Acting Driver Services",
@@ -266,7 +268,6 @@
     "slug": "airport-pickup-sedan",
     "category": "Airport Transfers",
     "title": "Airport Pickup – Sedan",
-    "overview": "Arrive in Chennai without the hassle of finding a cab. Our driver will wait for you at the arrival terminal with a placard, ready to assist with your luggage and drive you safely to your destination.",
     "tariff": {
       "headers": ["Fare"],
       "rows": [
@@ -440,7 +441,6 @@
     "slug": "navagraha-tour",
     "category": "Temple Tours",
     "title": "Navagraha Temple Tour (1 Day or 2 Days)",
-    "overview": "A complete spiritual journey covering the nine planetary temples (Navagrahas) around Kumbakonam. This trip is designed to help you complete your pariharams and prayers with peace of mind.",
     "tariff": {
       "headers": ["Duration", "Vehicle", "Est. Fare"],
       "rows": [
@@ -452,11 +452,6 @@
         ["2-Day Trip (~600–650 km)", "Innova", "₹15,000 – ₹17,000"]
       ]
     },
-    "includes": ["Experienced driver familiar with temple routes", "Clean & AC vehicle", "Parking & Toll assistance"],
-    "faq": [
-        { "q": "Can we cover all 9 temples in 1 day?", "a": "It is very tight. We recommend 2 days for a relaxed darshan." },
-        { "q": "Where does the trip start?", "a": "Pickup from Chennai or Kumbakonam railway station." }
-    ],
     "whatsappMsg": "Navagraha trip details please."
   },
   {
@@ -478,9 +473,8 @@
   },
   {
     "slug": "pondicherry-one-day-trip",
-    "category": "Misc Services",
+    "category": "Temple Tours",
     "title": "Pondicherry Day Trip",
-    "overview": "Escape to the French Riviera of the East. Visit the serene Auroville, the beautiful Promenade Beach, Manakula Vinayagar Temple, and the French Colony. Perfect for a one-day getaway with family or friends.",
     "tariff": {
       "headers": ["Vehicle", "Total Fare"],
       "rows": [
@@ -490,14 +484,12 @@
       ],
       "note": "270 km round trip"
     },
-    "includes": ["Sightseeing at major spots", "Flexible stops on ECR road", "AC Vehicle"],
     "whatsappMsg": "Pondicherry trip details."
   },
   {
     "slug": "vellore-golden-temple",
     "category": "Temple Tours",
     "title": "Vellore Golden Temple Trip",
-    "overview": "Visit the magnificent Sripuram Golden Temple, covered in 1500 kg of pure gold. A spiritual marvel located in Vellore, ideal for a day trip from Chennai.",
     "tariff": {
       "headers": ["Vehicle", "Fare"],
       "rows": [
@@ -507,14 +499,12 @@
       ],
       "note": "260 km approx"
     },
-    "includes": ["Pickup & Drop from Chennai", "Driver allowance", "Toll & Parking assistance"],
     "whatsappMsg": "Vellore Golden Temple trip."
   },
   {
     "slug": "mahabalipuram-ecr-temple-route",
     "category": "Temple Tours",
     "title": "Mahabalipuram & ECR Temples (Half-Day / Full-Day)",
-    "overview": "Explore the UNESCO World Heritage sites of Mahabalipuram including the Shore Temple, Five Rathas, and Arjuna's Penance. Enjoy a scenic drive along the East Coast Road (ECR) with options to visit other temples en route.",
     "tariff": {
       "headers": ["Vehicle", "Half-Day", "Full-Day"],
       "rows": [
@@ -524,14 +514,12 @@
       ],
       "note": "KM calculated based on ECR route."
     },
-    "includes": ["Sightseeing assistance", "Flexible timings", "Comfortable AC car"],
     "whatsappMsg": "Mahabalipuram trip booking."
   },
   {
     "slug": "sedan-rental-chennai",
     "category": "Premium Fleet Rental",
     "title": "Sedan Car Rental (Chennai)",
-    "overview": "Rent a comfortable Sedan (Dzire / Etios / Aura) for your local travel needs in Chennai. Whether it's for shopping, visiting relatives, or attending functions, our sedans offer a smooth ride.",
     "tariff": {
       "headers": ["Package", "Price"],
       "rows": [
@@ -541,14 +529,12 @@
       ],
       "note": "Outstation: ₹13/km. Driver bata ₹500/day. Min 250 km/day applies (standard everywhere in Chennai)"
     },
-    "includes": ["Chauffeur driven", "Clean interiors", "AC comfort"],
     "whatsappMsg": "Need Sedan rental."
   },
   {
     "slug": "suv-ertiga-rental",
     "category": "Premium Fleet Rental",
     "title": "SUV / Ertiga / XL6 Rental",
-    "overview": "Spacious 6/7 seater SUVs like Ertiga or XL6, perfect for small families or groups. Enjoy extra legroom and luggage space for a comfortable journey within the city or outstation.",
     "tariff": {
       "headers": ["Package", "Price"],
       "rows": [
@@ -558,14 +544,12 @@
       ],
       "note": "Outstation: ₹16/km + driver bata ₹600/day"
     },
-    "includes": ["6/7 Seater capacity", "Dual AC", "Experienced driver"],
     "whatsappMsg": "SUV / Ertiga rental booking."
   },
   {
     "slug": "innova-rental",
     "category": "Premium Fleet Rental",
     "title": "Innova Rental",
-    "overview": "The Toyota Innova is the gold standard for comfort and reliability. Ideal for corporate travel, long-distance trips, and family vacations where comfort is a priority.",
     "tariff": {
       "headers": ["Hours", "Price"],
       "rows": [
@@ -575,14 +559,12 @@
       ],
       "note": "Outstation: ₹18/km + driver bata ₹700/day"
     },
-    "includes": ["Captain seats (optional)", "Superior suspension", "Ample luggage space"],
     "whatsappMsg": "Innova rental needed."
   },
   {
     "slug": "innova-crysta-rental",
     "category": "Premium Fleet Rental",
     "title": "Innova Crysta Rental",
-    "overview": "Experience premium luxury with the Innova Crysta. Powerful performance, sophisticated interiors, and top-notch safety features make this the best choice for VIPs and luxury seekers.",
     "tariff": {
       "headers": ["Hours", "Price"],
       "rows": [
@@ -592,14 +574,12 @@
       ],
       "note": "Outstation: ₹20/km (premium MPV). Driver bata ₹700/day"
     },
-    "includes": ["Premium leather interiors", "Ambient lighting", "Top-class comfort"],
     "whatsappMsg": "Crysta booking."
   },
   {
     "slug": "tempo-traveller-rental",
     "category": "Premium Fleet Rental",
     "title": "Tempo Traveller Rental (12–17 Seater)",
-    "overview": "Travelling with a large group? Our Tempo Travellers (12 to 17 seaters) ensure everyone travels together in comfort. Features push-back seats, individual AC vents, and entertainment systems.",
     "tariff": {
       "headers": ["Seating", "Price"],
       "rows": [
@@ -609,7 +589,6 @@
       ],
       "note": "Outstation: ₹24/km + driver bata ₹1,000/day. Min 300 km/day recommended for group trips."
     },
-    "includes": ["Push-back seats", "High roof for standing height", "Music system"],
     "whatsappMsg": "TT booking."
   },
   {
@@ -683,7 +662,6 @@
     "slug": "driver-car-for-weddings",
     "category": "Misc Services",
     "title": "Driver + Car for Wedding Events",
-    "overview": "Make your special day perfect with our premium wedding car services. We provide clean, decorated (optional) luxury cars with well-groomed chauffeurs to ensure the bride, groom, and guests arrive in style.",
     "tariff": {
       "headers": ["Vehicle", "Rate"],
       "rows": [
@@ -694,7 +672,9 @@
       ],
       "note": "Decoration available on request (extra)."
     },
-    "includes": ["Well-dressed driver", "Spotless vehicle", "Punctual service"],
     "whatsappMsg": "Wedding event car needed."
   }
 ]
+
+with open('src/data/serviceDetails.json', 'w', encoding='utf-8') as f:
+    json.dump(data, f, indent=2, ensure_ascii=False)

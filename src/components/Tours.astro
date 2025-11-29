@@ -1,35 +1,130 @@
 ---
-import siteContent from '../data/siteContent.json';
-const tours = siteContent.tours;
+import serviceDetails from '../data/serviceDetails.json';
+
+// 1. Temple Trips (Strictly religious/pilgrimage)
+const templeTripsSlugs = [
+  "tirupati-package",
+  "thiruvannamalai-girivalam-trip",
+  "rameswaram-2-days",
+  "navagraha-tour",
+  "sabarimala-trip",
+  "chidambaram-temple-trip"
+];
+
+const templeTrips = serviceDetails.filter(service => templeTripsSlugs.includes(service.slug));
+
+// 2. Popular Destinations (Leisure, Heritage, City)
+const destinationSlugs = [
+  "pondicherry-one-day-trip",
+  "mahabalipuram-ecr-temple-route",
+  "one-day-chennai-city-tour",
+  "kanchipuram-temple-trip",
+  "vellore-golden-temple"
+];
+
+const popularDestinations = serviceDetails.filter(service => destinationSlugs.includes(service.slug));
+
+// Image Mapping
+const tourImages: Record<string, string> = {
+  "tirupati-package": "/images/temple/Tirupati-Balaji.jpg",
+  "thiruvannamalai-girivalam-trip": "/images/temple/Thiruvannamalai-Girivalam.jpg",
+  "rameswaram-2-days": "/images/temple/Rameswaram.avif",
+  "navagraha-tour": "/images/temple/Navagraha.jpg",
+  "kanchipuram-temple-trip": "/images/temple/Kanchipuram-Temple.jpg",
+  "chidambaram-temple-trip": "/images/temple/Chidambaram-Natarajar-Temple.jpg",
+  "sabarimala-trip": "/images/temple/Sabarimala-Temple.jpg",
+  "pondicherry-one-day-trip": "https://images.pexels.com/photos/32009229/pexels-photo-32009229.jpeg?auto=compress&cs=tinysrgb&w=800",
+  "vellore-golden-temple": "/images/temple/Vellore-Golden.jpg",
+  "mahabalipuram-ecr-temple-route": "/images/temple/Mahabalipuram-ECR-Temples.jpg",
+  "one-day-chennai-city-tour": "/images/temple/chennai-city.jpg" 
+};
 ---
 
-<section id="tours" class="py-16 bg-white">
+<section id="tours" class="py-16 bg-gray-50">
   <div class="max-w-7xl mx-auto px-4">
-    <div class="text-center mb-10">
-      <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900">Popular Tour Packages</h2>
-      <div class="h-1 w-20 bg-red-600 mx-auto mt-4 rounded-full"></div>
-      <p class="text-gray-500 mt-2 text-sm">Custom curated pilgrimages, heritage drives, and spiritual routes.</p>
+    
+    <!-- SECTION 1: POPULAR TEMPLE TRIPS -->
+    <div class="mb-16">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 inline-block relative mb-4">
+          Popular Temple Trips
+          <div class="absolute bottom-[-10px] left-1/2 transform -translate-x-1/2 w-20 h-1.5 bg-red-600 rounded-full"></div>
+        </h2>
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto mt-4">
+          Sacred pilgrimages and spiritual journeys.
+        </p>
+      </div>
+
+      <div class="flex overflow-x-auto gap-6 px-2 pb-8 scrollbar-hide snap-x">
+        {templeTrips.map((tour) => (
+          <a href={`/services/${tour.slug}`} class="flex-none w-80 snap-center bg-white rounded-2xl shadow-md overflow-hidden group cursor-pointer hover:shadow-xl transition">
+            <div class="h-48 overflow-hidden relative">
+              <img 
+                src={tourImages[tour.slug] || "https://images.unsplash.com/photo-1596700414605-e45f1b1c7c9a?q=80&w=600"} 
+                alt={tour.title}
+                class="w-full h-full object-cover group-hover:scale-110 transition duration-700" 
+              />
+              <span class="absolute top-3 left-3 bg-orange-600 text-white text-[10px] font-bold px-2 py-1 rounded backdrop-blur-sm">PILGRIMAGE</span>
+            </div>
+            <div class="p-5">
+              <h3 class="font-bold text-lg mb-2 text-gray-900 line-clamp-1">{tour.title}</h3>
+              <p class="text-sm text-gray-500 mb-4 line-clamp-2">{tour.overview}</p>
+              <div class="flex items-center text-red-600 font-bold text-sm uppercase tracking-wide">
+                View Details
+                <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition"></i>
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+      <div class="text-center mt-6">
+        <a href="/services/category/temple-tours" class="inline-flex items-center text-red-600 font-bold text-sm hover:text-red-700 transition">
+          View All <i class="fas fa-arrow-right ml-2"></i>
+        </a>
+      </div>
     </div>
 
-    <div class="flex overflow-x-auto gap-6 px-2 pb-8 scrollbar-hide snap-x">
-      {tours.map((tour) => (
-        <div class="flex-none w-80 snap-center bg-white rounded-2xl shadow-md overflow-hidden group cursor-pointer hover:shadow-xl transition">
-          <div class="h-48 overflow-hidden relative">
-            <img src={tour.image} class="w-full h-full object-cover group-hover:scale-110 transition duration-700" />
-            <span class="absolute top-3 left-3 bg-black/70 text-white text-[10px] font-bold px-2 py-1 rounded backdrop-blur-sm">{tour.tag}</span>
-          </div>
-          <div class="p-5">
-            <h3 class="font-bold text-lg mb-2 text-gray-900">{tour.title}</h3>
-            <p class="text-xs text-gray-500 mb-4 flex items-center gap-2"><i class="far fa-clock"></i> {tour.duration}</p>
-            <p class="text-sm text-gray-500 mb-4">{tour.description}</p>
-            <div class="flex items-center text-red-600 font-bold text-sm uppercase tracking-wide">
-              View Details
-              <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition"></i>
+    <!-- SECTION 2: POPULAR DESTINATIONS -->
+    <div>
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 inline-block relative mb-4">
+          Popular Destinations
+          <div class="absolute bottom-[-10px] left-1/2 transform -translate-x-1/2 w-20 h-1.5 bg-blue-600 rounded-full"></div>
+        </h2>
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto mt-4">
+          Explore heritage sites, beaches, and city tours.
+        </p>
+      </div>
+
+      <div class="flex overflow-x-auto gap-6 px-2 pb-8 scrollbar-hide snap-x">
+        {popularDestinations.map((tour) => (
+          <a href={`/services/${tour.slug}`} class="flex-none w-80 snap-center bg-white rounded-2xl shadow-md overflow-hidden group cursor-pointer hover:shadow-xl transition">
+            <div class="h-48 overflow-hidden relative">
+              <img 
+                src={tourImages[tour.slug] || "https://images.unsplash.com/photo-1596700414605-e45f1b1c7c9a?q=80&w=600"} 
+                alt={tour.title}
+                class="w-full h-full object-cover group-hover:scale-110 transition duration-700" 
+              />
+              <span class="absolute top-3 left-3 bg-blue-600 text-white text-[10px] font-bold px-2 py-1 rounded backdrop-blur-sm">DESTINATION</span>
             </div>
-          </div>
-        </div>
-      ))}
+            <div class="p-5">
+              <h3 class="font-bold text-lg mb-2 text-gray-900 line-clamp-1">{tour.title}</h3>
+              <p class="text-sm text-gray-500 mb-4 line-clamp-2">{tour.overview}</p>
+              <div class="flex items-center text-blue-600 font-bold text-sm uppercase tracking-wide">
+                View Details
+                <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition"></i>
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+      <div class="text-center mt-6">
+        <a href="/services/category/popular-destinations" class="inline-flex items-center text-blue-600 font-bold text-sm hover:text-blue-700 transition">
+          View All <i class="fas fa-arrow-right ml-2"></i>
+        </a>
+      </div>
     </div>
+
   </div>
 </section>
 
