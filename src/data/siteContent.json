@@ -7,7 +7,6 @@
     "images": [
       "/images/hero/airavatesvara.webp",
       "/images/hero/coimbatore.webp",
-      "/images/hero/Tamil-Nadu-1-scaled.avif",
       "/images/hero/madurai.jpg"
     ],
     "cto": "Call Now",
@@ -229,12 +228,12 @@
       "name": "Mani Perumal",
       "experience": "12 Years Experience",
       "languages": "Tamil, English",
-      "tag": "Verified",
-      "image": "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=400",
+      "tag": "Owner & Driver",
+      "image": "/images/mani-perumal.jpg",
       "name_ta": "Mani Perumal",
       "experience_ta": "12 Years Experience",
       "languages_ta": "Tamil, English",
-      "tag_ta": "Verified"
+      "tag_ta": "Owner & Driver"
     }
   ],
   "reviews": [

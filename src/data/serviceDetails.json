@@ -639,7 +639,7 @@
         "a_ta": "Yes → ₹50–₹100 per extra stop."
       }
     ],
-    "whatsappMsg": "Need staff pickup/drop service.",
+    "whatsappMsg": "Hi, I am interested in Employee Pickup & Drop services.",
     "title_ta": "Employee பிக்கப் & டிராப்",
     "category_ta": "கார்ப்பரேட் பயணம்",
     "overview_ta": "A safe and punctual system for daily staff movement. We are fully transparent so HR can plan without worry.",
@@ -719,7 +719,7 @@
         "a_ta": "Yes, extra hours billed as extra km + ₹100/hr."
       }
     ],
-    "whatsappMsg": "Book car for business meetings.",
+    "whatsappMsg": "Hi, I would like to book a car for a Business Trip.",
     "title_ta": "Business Trip Car Rental",
     "category_ta": "கார்ப்பரேட் பயணம்",
     "overview_ta": "Perfect for meetings, client visits, and day-long travel."
@@ -787,7 +787,7 @@
       ],
       "dressCode": "Chauffeurs in formal attire with placards for easy identification."
     },
-    "whatsappMsg": "Corporate airport transfer required.",
+    "whatsappMsg": "Hi, I require a Corporate Airport Transfer.",
     "title_ta": "கார்ப்பரேட் விமான நிலைய சவாரி",
     "category_ta": "கார்ப்பரேட் பயணம்",
     "overview_ta": "Friendly, simple, reassuring and fully transparent.",
@@ -864,7 +864,7 @@
         "a_ta": "Domestic → 2 hours before. International → 3 hours before."
       }
     ],
-    "whatsappMsg": "Airport Drop – Sedan.",
+    "whatsappMsg": "Hi, I would like to book an Airport Drop (Sedan).",
     "title_ta": "Airport டிராப் – செடான்",
     "category_ta": "விமான நிலைய சவாரி",
     "overview_ta": "Airport travel should feel peaceful, not stressful. We keep all charges upfront.",
@@ -906,7 +906,7 @@
     "notes": [
       "Note: SUVs are assigned when: - more luggage - smoother ride preferred - more comfort needed"
     ],
-    "whatsappMsg": "Airport Drop – SUV.",
+    "whatsappMsg": "Hi, I would like to book an Airport Drop (SUV).",
     "title_ta": "Airport டிராப் – எஸ்யூவி",
     "category_ta": "விமான நிலைய சவாரி",
     "overview_ta": "Ideal for families with luggage or corporate teams.",
@@ -955,7 +955,7 @@
       ],
       "dressCode": "Professional drivers with placards."
     },
-    "whatsappMsg": "Airport Pickup – Sedan.",
+    "whatsappMsg": "Hi, I would like to book an Airport Pickup (Sedan).",
     "title_ta": "Airport பிக்கப் – செடான்",
     "category_ta": "விமான நிலைய சவாரி",
     "overview_ta": "Arrive in சென்னை without the hassle of finding a cab. Our driver will wait for you at the arrival terminal with a placard, ready to assist with your luggage and drive you safely to your destination.",
@@ -1001,7 +1001,7 @@
       ],
       "dressCode": "Professional drivers with placards."
     },
-    "whatsappMsg": "Airport Pickup – SUV.",
+    "whatsappMsg": "Hi, I would like to book an Airport Pickup (SUV).",
     "title_ta": "Airport பிக்கப் – எஸ்யூவி",
     "category_ta": "விமான நிலைய சவாரி",
     "overview_ta": "Ideal for 3–5 people, luggage-friendly."
@@ -1044,7 +1044,7 @@
     "notes": [
       "Hint: Luggage space is limited in TT. Tell us in advance if you have 8+ big suitcases so we can plan better."
     ],
-    "whatsappMsg": "Airport TT Booking.",
+    "whatsappMsg": "Hi, I would like to book a Tempo Traveller for Airport Transfer.",
     "title_ta": "விமான நிலைய சவாரி – டெம்போ டிராவலர்",
     "category_ta": "விமான நிலைய சவாரி",
     "overview_ta": "Perfect for group arrivals, wedding guests, family trips.",
@@ -1087,7 +1087,7 @@
         ]
       ]
     },
-    "whatsappMsg": "Airport Parcel Delivery.",
+    "whatsappMsg": "Hi, I need assistance with Airport Parcel / Luggage Delivery.",
     "title_ta": "Airport Parcel / Luggage Delivery",
     "category_ta": "விமான நிலைய சவாரி",
     "overview_ta": "Useful for heavy luggage, shifting, airport parcel pickup."
@@ -1385,7 +1385,7 @@
         "a_ta": "Yes — we send only experienced highway drivers."
       }
     ],
-    "whatsappMsg": "Need Thiruvannamalai Girivalam trip.",
+    "whatsappMsg": "Hi, I am interested in the Thiruvannamalai Girivalam Trip.",
     "title_ta": "திருவண்ணாமலை Girivalam (1 Day / Night Trip)",
     "category_ta": "கோவில் சுற்றுலா",
     "overview_ta": "A peaceful spiritual trip for Girivalam or temple darshan.\n\nTrip Info\n- சென்னை → திருவண்ணாமலை → சென்னை\n- 250 km approx\n- Popular for Pournami Girivalam",
@@ -1457,7 +1457,7 @@
         "Dikshitars are the hereditary priests here."
       ]
     },
-    "whatsappMsg": "Chidambaram trip details.",
+    "whatsappMsg": "Hi, I would like details about the Chidambaram Natarajar Temple Trip.",
     "title_ta": "சிதம்பரம் Natarajar Temple Trip",
     "category_ta": "கோவில் சுற்றுலா",
     "overview_ta": "A spiritually rich trip with a relaxed journey."
@@ -1542,7 +1542,7 @@
         "Dr. APJ Abdul Kalam Memorial is a must-visit."
       ]
     },
-    "whatsappMsg": "Book Rameswaram 2-day package.",
+    "whatsappMsg": "Hi, I would like to book the Rameswaram (2-Day Trip).",
     "title_ta": "ராமேஸ்வரம் (2-Day Trip)",
     "category_ta": "கோவில் சுற்றுலா",
     "overview_ta": "Long, peaceful coastal travel. Suitable for families & senior devotees."
@@ -1658,7 +1658,7 @@
         "Hire a local guide for optimal route planning."
       ]
     },
-    "whatsappMsg": "Navagraha trip details please.",
+    "whatsappMsg": "Hi, I would like details about the Navagraha Temple Tour.",
     "title_ta": "நவகிரக Temple Tour (1 Day or 2 Days)",
     "category_ta": "கோவில் சுற்றுலா",
     "overview_ta": "A complete spiritual journey covering the nine planetary temples (நவகிரகs) around Kumbakonam. This trip is designed to help you complete your pariharams and prayers with peace of mind.",
@@ -1732,7 +1732,7 @@
         "Doli service is available for elderly people."
       ]
     },
-    "whatsappMsg": "Sabarimala trip booking.",
+    "whatsappMsg": "Hi, I would like to book the Sabarimala Trip.",
     "title_ta": "சபரிமலை Trip (Season சேவை)",
     "category_ta": "கோவில் சுற்றுலா",
     "overview_ta": "High-demand route — safety and comfort first."
@@ -1798,7 +1798,7 @@
         "Auroville Matrimandir viewing requires prior booking."
       ]
     },
-    "whatsappMsg": "Pondicherry trip details.",
+    "whatsappMsg": "Hi, I would like details about the Pondicherry Day Trip.",
     "title_ta": "பாண்டிச்சேரி Day Trip",
     "category_ta": "பிற சேவைகள்",
     "overview_ta": "Escape to the French Riviera of the East. Visit the serene Auroville, the beautiful Promenade Beach, Manakula Vinayagar Temple, and the French Colony. Perfect for a one-day getaway with family or friends.",
@@ -1869,7 +1869,7 @@
         "Star-shaped path requires a 1.5 km walk."
       ]
     },
-    "whatsappMsg": "Vellore Golden Temple trip.",
+    "whatsappMsg": "Hi, I am interested in the Vellore Golden Temple Trip.",
     "title_ta": "வேலூர் Golden Temple Trip",
     "category_ta": "கோவில் சுற்றுலா",
     "overview_ta": "Visit the magnificent Sripuram Golden Temple, covered in 1500 kg of pure gold. A spiritual marvel located in வேலூர், ideal for a day trip from சென்னை.",
@@ -1948,7 +1948,7 @@
         "Don't miss the Shore Temple at sunset."
       ]
     },
-    "whatsappMsg": "Mahabalipuram trip booking.",
+    "whatsappMsg": "Hi, I would like to book the Mahabalipuram & ECR Temples trip.",
     "title_ta": "மகாபலிபுரம் & ECR Temples (Half-Day / Full-Day)",
     "category_ta": "கோவில் சுற்றுலா",
     "overview_ta": "Explore the UNESCO World Heritage sites of மகாபலிபுரம் including the Shore Temple, Five Rathas, and Arjuna's Penance. Enjoy a scenic drive along the East Coast Road (ECR) with options to visit other temples en route.",
@@ -2008,7 +2008,7 @@
       "Clean interiors",
       "AC comfort"
     ],
-    "whatsappMsg": "Need Sedan rental.",
+    "whatsappMsg": "Hi, I would like to rent a Sedan in Chennai.",
     "title_ta": "செடான் Car Rental (சென்னை)",
     "category_ta": "பிரீமியம் வாகன வாடகை",
     "overview_ta": "Rent a comfortable செடான் (Dzire / Etios / Aura) for your local travel needs in சென்னை. Whether it's for shopping, visiting relatives, or attending functions, our sedans offer a smooth ride.",
@@ -2068,7 +2068,7 @@
       "Dual AC",
       "Experienced driver"
     ],
-    "whatsappMsg": "SUV / Ertiga rental booking.",
+    "whatsappMsg": "Hi, I would like to rent an SUV / Ertiga.",
     "title_ta": "எஸ்யூவி / Ertiga / XL6 Rental",
     "category_ta": "பிரீமியம் வாகன வாடகை",
     "overview_ta": "Spacious 6/7 seater எஸ்யூவிs like Ertiga or XL6, perfect for small families or groups. Enjoy extra legroom and luggage space for a comfortable journey within the city or outstation.",
@@ -2128,7 +2128,7 @@
       "Superior suspension",
       "Ample luggage space"
     ],
-    "whatsappMsg": "Innova rental needed.",
+    "whatsappMsg": "Hi, I would like to rent an Innova.",
     "title_ta": "இன்னோவா Rental",
     "category_ta": "பிரீமியம் வாகன வாடகை",
     "overview_ta": "The Toyota இன்னோவா is the gold standard for comfort and reliability. Ideal for corporate travel, long-distance trips, and family vacations where comfort is a priority.",
@@ -2188,7 +2188,7 @@
       "Ambient lighting",
       "Top-class comfort"
     ],
-    "whatsappMsg": "Crysta booking.",
+    "whatsappMsg": "Hi, I would like to rent an Innova Crysta.",
     "title_ta": "இன்னோவா கிறிஸ்டா Rental",
     "category_ta": "பிரீமியம் வாகன வாடகை",
     "overview_ta": "Experience premium luxury with the இன்னோவா கிறிஸ்டா. Powerful performance, sophisticated interiors, and top-notch safety features make this the best choice for VIPs and luxury seekers.",
@@ -2248,7 +2248,7 @@
       "High roof for standing height",
       "Music system"
     ],
-    "whatsappMsg": "TT booking.",
+    "whatsappMsg": "Hi, I would like to rent a Tempo Traveller.",
     "title_ta": "டெம்போ டிராவலர் Rental (12–17 Seater)",
     "category_ta": "பிரீமியம் வாகன வாடகை",
     "overview_ta": "Travelling with a large group? Our டெம்போ டிராவலர்s (12 to 17 seaters) ensure everyone travels together in comfort. Features push-back seats, individual AC vents, and entertainment systems.",
@@ -2301,7 +2301,7 @@
         ]
       ]
     },
-    "whatsappMsg": "Bada Dost booking.",
+    "whatsappMsg": "Hi, I would like to book a Bada Dost i4 for Goods Delivery.",
     "title_ta": "பட தோஸ்த் i4 – Goods Delivery",
     "category_ta": "பிரீமியம் வாகன வாடகை",
     "overview_ta": "Ideal for airport luggage, shifting small goods, parcel runs."
@@ -2362,7 +2362,7 @@
         "Try authentic South Indian filter coffee."
       ]
     },
-    "whatsappMsg": "City tour booking.",
+    "whatsappMsg": "Hi, I would like to book the Chennai City Sightseeing (1 Day Trip).",
     "title_ta": "சென்னை City Sightseeing (1 Day Trip)",
     "category_ta": "பிற சேவைகள்",
     "overview_ta": "Explore சென்னை’s iconic locations with a flexible plan."
@@ -2431,7 +2431,7 @@
     "notes": [
       "Why we show everything openly: To build trust. To avoid confusion. To make planning easy for families."
     ],
-    "whatsappMsg": "Outstation car rental enquiry.",
+    "whatsappMsg": "Hi, I have an enquiry about Outstation Car Rental.",
     "title_ta": "Outstation Car Rental (Per Km கட்டணம்)",
     "category_ta": "பிற சேவைகள்",
     "overview_ta": "This is our master transparent tariff page.",
@@ -2476,7 +2476,7 @@
       ],
       "note_ta": "Waiting: ₹100/hr"
     },
-    "whatsappMsg": "Chennai parcel delivery.",
+    "whatsappMsg": "Hi, I need Parcel / Luggage Delivery in Chennai.",
     "title_ta": "Parcel / Luggage Delivery in சென்னை",
     "category_ta": "பிற சேவைகள்",
     "overview_ta": "Local goods movement, urgent parcels, luggage transfers."
@@ -2539,7 +2539,7 @@
       "Spotless vehicle",
       "Punctual service"
     ],
-    "whatsappMsg": "Wedding event car needed.",
+    "whatsappMsg": "Hi, I am interested in Driver + Car services for a Wedding Event.",
     "title_ta": "Driver + Car for Wedding Events",
     "category_ta": "பிற சேவைகள்",
     "overview_ta": "Make your special day perfect with our premium wedding car services. We provide clean, decorated (optional) luxury cars with well-groomed chauffeurs to ensure the bride, groom, and guests arrive in style.",
