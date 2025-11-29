@@ -22,7 +22,7 @@ export const GET: APIRoute = async ({ params, request }) => {
   const tourImages: Record<string, string> = {
     "tirupati-package": "/images/temple/Tirupati-Balaji.jpg",
     "thiruvannamalai-girivalam-trip": "/images/temple/Thiruvannamalai-Girivalam.jpg",
-    "rameswaram-2-days": "/images/temple/Rameswaram.avif",
+    "rameswaram-2-days": "/images/temple/Rameswaram.jpg",
     "navagraha-tour": "/images/temple/Navagraha.jpg",
     "kanchipuram-temple-trip": "/images/temple/Kanchipuram-Temple.jpg",
     "chidambaram-temple-trip": "/images/temple/Chidambaram-Natarajar-Temple.jpg",
@@ -52,7 +52,15 @@ export const GET: APIRoute = async ({ params, request }) => {
       // Read local file
       try {
           const imagePath = path.resolve(`./public${heroImage}`);
-          imageBuffer = `data:image/jpeg;base64,${readFileSync(imagePath).toString('base64')}`;
+          const fileBuffer = readFileSync(imagePath);
+          
+          // Convert to JPEG using sharp to ensure compatibility (especially for AVIF)
+          const jpegBuffer = await sharp(fileBuffer)
+            .resize({ width: 1200, fit: 'inside', withoutEnlargement: true }) 
+            .jpeg({ quality: 80 })
+            .toBuffer();
+
+          imageBuffer = `data:image/jpeg;base64,${jpegBuffer.toString('base64')}`;
       } catch (e) {
           console.error(`Failed to load image: ${heroImage}`, e);
           // Fallback or empty
