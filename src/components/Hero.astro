@@ -23,13 +23,16 @@ const heroImages = hero.images ?? [
   <div class="relative z-10 max-w-3xl mx-4 sm:mx-auto text-center space-y-5">
     <p class="inline-flex items-center justify-center gap-2 text-sm font-semibold uppercase tracking-widest text-white/80">
       <span class="color-theme_logo-1-hex">●</span>
-      {hero.badge}
+      <span class="lang-en">{hero.badge}</span>
+      <span class="lang-ta hidden">{hero.badge_ta}</span>
     </p>
     <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight">
-      {hero.title}
+      <span class="lang-en">{hero.title}</span>
+      <span class="lang-ta hidden">{hero.title_ta}</span>
     </h1>
     <p class="text-lg sm:text-xl text-white/90">
-      {hero.highlight}
+      <span class="lang-en">{hero.highlight}</span>
+      <span class="lang-ta hidden">{hero.highlight_ta}</span>
     </p>
   </div>
 

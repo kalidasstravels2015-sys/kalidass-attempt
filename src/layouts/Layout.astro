@@ -148,29 +148,67 @@ const fullImage = image.startsWith('http') ? image : `${siteUrl}${image}`;
 
           <!-- Desktop Menu -->
           <div class="hidden md:flex space-x-8">
-            <a href="#trips" class="header-link">Trips</a>
-            <a href="#fleet" class="header-link">Fleet</a>
-            <a href="#services" class="header-link">Services</a>
-            <a href="#contact" class="header-link">Contact</a>
+            <a href="#trips" class="header-link">
+              <span class="lang-en">Trips</span>
+              <span class="lang-ta hidden">பயணங்கள்</span>
+            </a>
+            <a href="#fleet" class="header-link">
+              <span class="lang-en">Fleet</span>
+              <span class="lang-ta hidden">வாகனங்கள்</span>
+            </a>
+            <a href="#services" class="header-link">
+              <span class="lang-en">Services</span>
+              <span class="lang-ta hidden">சேவைகள்</span>
+            </a>
+            <a href="#contact" class="header-link">
+              <span class="lang-en">Contact</span>
+              <span class="lang-ta hidden">தொடர்புக்கு</span>
+            </a>
           </div>
 
           <!-- CTA Button (Desktop) -->
-          <div class="hidden md:block">
+          <div class="hidden md:flex items-center gap-4">
+            <!-- Language Toggle (Desktop) -->
+            <button 
+              id="lang-toggle-desktop" 
+              class="flex items-center gap-2 px-3 py-1.5 rounded-full border border-gray-200 hover:border-red-600 transition-colors group"
+              aria-label="Switch Language"
+            >
+              <span class="text-sm font-bold text-gray-700 group-hover:text-red-600 lang-en">தமிழ்</span>
+              <span class="text-sm font-bold text-gray-700 group-hover:text-red-600 lang-ta hidden">ENG</span>
+              <i class="fa-solid fa-language text-gray-400 group-hover:text-red-600"></i>
+            </button>
+
             <a 
               href="https://wa.me/919092303060?text=Hi, I need travel assistance"
               target="_blank"
               class="primary-cta inline-flex items-center justify-center"
             >
-              Book Now
+              <span class="lang-en">Book Now</span>
+              <span class="lang-ta hidden">முன்பதிவு</span>
             </a>
           </div>
 
-          <!-- Mobile Menu Button -->
-          <button id="mobile-menu-btn" class="md:hidden text-gray-700 focus:outline-none">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-            </svg>
-          </button>
+          <!-- Mobile Controls -->
+          <div class="flex items-center gap-4 md:hidden">
+            <!-- Language Toggle (Mobile) -->
+            <button 
+              id="lang-toggle-mobile" 
+              class="flex items-center gap-1.5 px-2 py-1 rounded-lg border border-gray-200 active:bg-gray-50"
+              aria-label="Switch Language"
+            >
+              <span class="text-xs font-bold text-gray-800 lang-en">தமிழ்</span>
+              <span class="text-xs font-bold text-gray-800 lang-ta hidden">ENG</span>
+              <i class="fa-solid fa-language text-gray-500 text-sm"></i>
+            </button>
+
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-btn" class="text-gray-700 focus:outline-none">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
     </nav>
@@ -192,28 +230,56 @@ const fullImage = image.startsWith('http') ? image : `${siteUrl}${image}`;
 
         <!-- Navigation Links -->
         <div class="px-8 py-4 space-y-4 flex-grow">
-          <a href="/" class="block text-base font-medium text-gray-800 hover:text-red-600 border-b border-gray-100 pb-2 transition-colors">Home</a>
-          <a href="/#trips" class="block text-base font-medium text-gray-800 hover:text-red-600 border-b border-gray-100 pb-2 transition-colors">Trips</a>
-          <a href="/#fleet" class="block text-base font-medium text-gray-800 hover:text-red-600 border-b border-gray-100 pb-2 transition-colors">Fleet</a>
+          <a href="/" class="block text-base font-medium text-gray-800 hover:text-red-600 border-b border-gray-100 pb-2 transition-colors">
+            <span class="lang-en">Home</span>
+            <span class="lang-ta hidden">முகப்பு</span>
+          </a>
+          <a href="/#trips" class="block text-base font-medium text-gray-800 hover:text-red-600 border-b border-gray-100 pb-2 transition-colors">
+            <span class="lang-en">Trips</span>
+            <span class="lang-ta hidden">பயணங்கள்</span>
+          </a>
+          <a href="/#fleet" class="block text-base font-medium text-gray-800 hover:text-red-600 border-b border-gray-100 pb-2 transition-colors">
+            <span class="lang-en">Fleet</span>
+            <span class="lang-ta hidden">வாகனங்கள்</span>
+          </a>
           
           <!-- Services Accordion -->
           <div class="border-b border-gray-100 pb-2">
             <button id="services-menu-toggle" class="flex items-center justify-between w-full text-base font-medium text-gray-800 hover:text-red-600 transition-colors focus:outline-none">
-              <span>Services</span>
+              <span class="lang-en">Services</span>
+              <span class="lang-ta hidden">சேவைகள்</span>
               <svg id="services-chevron" class="w-4 h-4 transform transition-transform duration-200 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
               </svg>
             </button>
             <div id="services-submenu" class="mt-2 ml-4 space-y-2 border-l-2 border-gray-100 pl-4">
-              <a href="/services/category/acting-drivers" class="block text-sm text-gray-600 hover:text-red-600">Acting Drivers</a>
-              <a href="/services/category/corporate" class="block text-sm text-gray-600 hover:text-red-600">Corporate Travel</a>
-              <a href="/services/category/airport-transfer" class="block text-sm text-gray-600 hover:text-red-600">Airport Transfer</a>
-              <a href="/services/category/temple-tours" class="block text-sm text-gray-600 hover:text-red-600">Temple Tours</a>
-              <a href="/services/category/popular-destinations" class="block text-sm text-gray-600 hover:text-red-600">Popular Destinations</a>
+              <a href="/services/category/acting-drivers" class="block text-sm text-gray-600 hover:text-red-600">
+                <span class="lang-en">Acting Drivers</span>
+                <span class="lang-ta hidden">ஆக்டிங் டிரைவர்கள்</span>
+              </a>
+              <a href="/services/category/corporate" class="block text-sm text-gray-600 hover:text-red-600">
+                <span class="lang-en">Corporate Travel</span>
+                <span class="lang-ta hidden">கார்ப்பரேட் பயணம்</span>
+              </a>
+              <a href="/services/category/airport-transfer" class="block text-sm text-gray-600 hover:text-red-600">
+                <span class="lang-en">Airport Transfer</span>
+                <span class="lang-ta hidden">விமான நிலைய சவாரி</span>
+              </a>
+              <a href="/services/category/temple-tours" class="block text-sm text-gray-600 hover:text-red-600">
+                <span class="lang-en">Temple Tours</span>
+                <span class="lang-ta hidden">கோவில் சுற்றுலா</span>
+              </a>
+              <a href="/services/category/popular-destinations" class="block text-sm text-gray-600 hover:text-red-600">
+                <span class="lang-en">Popular Destinations</span>
+                <span class="lang-ta hidden">பிரபலமான இடங்கள்</span>
+              </a>
             </div>
           </div>
 
-          <a href="/#contact" class="block text-base font-medium text-gray-800 hover:text-red-600 border-b border-gray-100 pb-2 transition-colors">Contact</a>
+          <a href="/#contact" class="block text-base font-medium text-gray-800 hover:text-red-600 border-b border-gray-100 pb-2 transition-colors">
+            <span class="lang-en">Contact</span>
+            <span class="lang-ta hidden">தொடர்புக்கு</span>
+          </a>
           
           <!-- Proprietor Card -->
           <div class="pt-6 pb-4 text-center">
@@ -336,6 +402,39 @@ const fullImage = image.startsWith('http') ? image : `${siteUrl}${image}`;
         servicesSubmenu?.classList.toggle('hidden');
         servicesChevron?.classList.toggle('rotate-180');
       });
+
+      // Language Toggle Logic
+      const langToggleDesktop = document.getElementById('lang-toggle-desktop');
+      const langToggleMobile = document.getElementById('lang-toggle-mobile');
+      
+      function toggleLanguage() {
+        const isTamil = document.body.classList.toggle('lang-ta');
+        localStorage.setItem('preferred-lang', isTamil ? 'ta' : 'en');
+        
+        // Toggle visibility of all lang elements
+        document.querySelectorAll('.lang-en').forEach(el => {
+          el.classList.toggle('hidden', isTamil);
+        });
+        document.querySelectorAll('.lang-ta').forEach(el => {
+          el.classList.toggle('hidden', !isTamil);
+        });
+      }
+
+      // Initialize Language
+      function initLanguage() {
+        const savedLang = localStorage.getItem('preferred-lang');
+        if (savedLang === 'ta') {
+          document.body.classList.add('lang-ta');
+          document.querySelectorAll('.lang-en').forEach(el => el.classList.add('hidden'));
+          document.querySelectorAll('.lang-ta').forEach(el => el.classList.remove('hidden'));
+        }
+      }
+
+      langToggleDesktop?.addEventListener('click', toggleLanguage);
+      langToggleMobile?.addEventListener('click', toggleLanguage);
+      
+      // Run on load
+      initLanguage();
     </script>
   </body>
 </html>

@@ -5,43 +5,61 @@ const hero = siteContent.hero;
 
 <section id="booking-panel" class="relative z-20 -mt-32 px-4 max-w-5xl mx-auto mb-20">
     <div class="bg-white rounded-2xl shadow-2xl p-1 border-t-4 border-red-600">
-      <h2 class="text-2xl font-bold text-center text-gray-800 py-4 border-b border-gray-100">Book Your Ride</h2>
+      <h2 class="text-2xl font-bold text-center text-gray-800 py-4 border-b border-gray-100">
+        <span class="lang-en">Book Your Ride</span>
+        <span class="lang-ta hidden">உங்கள் பயணத்தை முன்பதிவு செய்யுங்கள்</span>
+      </h2>
       <div class="flex border-b border-gray-100" role="tablist">
         <button type="button" data-tab="airport" class="flex-1 py-4 text-center font-bold tracking-wide uppercase text-red-600 border-b-2 border-red-600 bg-red-50 transition" aria-pressed="true">
-          Airport Transfer
+          <span class="lang-en">Airport Transfer</span>
+          <span class="lang-ta hidden">விமான நிலைய சவாரி</span>
         </button>
         <button type="button" data-tab="oneway" class="flex-1 py-4 text-center font-bold tracking-wide uppercase text-gray-500 hover:text-red-600 transition" aria-pressed="false">
-          One Way
+          <span class="lang-en">One Way</span>
+          <span class="lang-ta hidden">ஒரு வழி</span>
         </button>
         <button type="button" data-tab="round" class="flex-1 py-4 text-center font-bold tracking-wide uppercase text-gray-500 hover:text-red-600 transition" aria-pressed="false">
-          Round Trip
+          <span class="lang-en">Round Trip</span>
+          <span class="lang-ta hidden">இரு வழி</span>
         </button>
       </div>
     <div class="p-6 md:p-8 space-y-6">
       <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
         <div class="relative group">
-          <label class="text-xs font-bold text-gray-500 uppercase mb-1 block">Pickup</label>
+          <label class="text-xs font-bold text-gray-500 uppercase mb-1 block">
+            <span class="lang-en">Pickup</span>
+            <span class="lang-ta hidden">பிக்கப்</span>
+          </label>
           <div class="flex items-center bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 focus-within:ring-2 ring-red-500 transition">
             <i class="fas fa-map-marker-alt text-red-500 mr-3"></i>
             <input type="text" id="pickup" placeholder="Enter City" class="bg-transparent w-full outline-none text-gray-700 font-medium" />
           </div>
         </div>
         <div class="relative group">
-          <label class="text-xs font-bold text-gray-500 uppercase mb-1 block">Drop</label>
+          <label class="text-xs font-bold text-gray-500 uppercase mb-1 block">
+            <span class="lang-en">Drop</span>
+            <span class="lang-ta hidden">டிராப்</span>
+          </label>
           <div class="flex items-center bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 focus-within:ring-2 ring-red-500 transition">
             <i class="fas fa-location-arrow text-red-500 mr-3"></i>
             <input type="text" id="drop" placeholder="Enter Destination" class="bg-transparent w-full outline-none text-gray-700 font-medium" />
           </div>
         </div>
         <div class="relative group">
-          <label id="date-label" class="text-xs font-bold text-gray-500 uppercase mb-1 block">Pickup Date &amp; Time</label>
+          <label id="date-label" class="text-xs font-bold text-gray-500 uppercase mb-1 block">
+            <span class="lang-en">Pickup Date &amp; Time</span>
+            <span class="lang-ta hidden">பிக்கப் தேதி & நேரம்</span>
+          </label>
           <div class="flex items-center bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 focus-within:ring-2 ring-red-500 transition">
             <i class="far fa-calendar-alt text-red-500 mr-3"></i>
             <input type="datetime-local" id="date" class="bg-transparent w-full outline-none text-gray-700 font-medium" />
           </div>
         </div>
         <div class="relative group hidden" id="return-field">
-          <label class="text-xs font-bold text-gray-500 uppercase mb-1 block">Return Date &amp; Time</label>
+          <label class="text-xs font-bold text-gray-500 uppercase mb-1 block">
+            <span class="lang-en">Return Date &amp; Time</span>
+            <span class="lang-ta hidden">திரும்பும் தேதி & நேரம்</span>
+          </label>
           <div class="flex items-center bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 focus-within:ring-2 ring-red-500 transition">
             <i class="far fa-calendar-check text-red-500 mr-3"></i>
             <input type="datetime-local" id="return-date" class="bg-transparent w-full outline-none text-gray-700 font-medium" />
