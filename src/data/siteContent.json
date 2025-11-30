@@ -195,23 +195,23 @@
   ],
   "drivers": [
     {
-      "name": "Mani Perumal",
+      "name": "Perumal Manikumar",
       "experience": "12 Years Experience",
       "languages": "Tamil, English",
       "tag": "Owner",
       "image": "/images/drivers/mani-perumal.jpg",
-      "name_ta": "Mani Perumal",
+      "name_ta": "Perumal Manikumar",
       "experience_ta": "12 Years Experience",
       "languages_ta": "Tamil, English",
       "tag_ta": "Owner"
     },
     {
-      "name": "Karthik P",
+      "name": "Perumal Karthik Kumar",
       "experience": "10 Years Experience",
       "languages": "Tamil, English, Hindi",
       "tag": "Managing Partner",
       "image": "https://placehold.co/400x300/e2e8f0/94a3b8?text=Partner",
-      "name_ta": "Karthik P",
+      "name_ta": "Perumal Karthik Kumar",
       "experience_ta": "10 Years Experience",
       "languages_ta": "Tamil, English, Hindi",
       "tag_ta": "Managing Partner"
