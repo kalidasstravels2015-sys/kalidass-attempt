@@ -1,7 +1,6 @@
 ---
 import { MapPin, Navigation, Calendar, Bed, Info, Calculator, ArrowRight, Check, ChevronDown } from 'lucide-react';
 import tnBusFares from '../data/tnBusFares.json';
-import ActingDriverTariff from './ActingDriverTariff.jsx';
 ---
 
 <div class="bg-white rounded-3xl shadow-xl border border-slate-200 overflow-hidden max-w-md mx-auto font-sans">
@@ -167,20 +166,6 @@ import ActingDriverTariff from './ActingDriverTariff.jsx';
         </p>
       </div>
 
-    </div>
-
-    <!-- Tariff Card Toggle -->
-    <div class="pt-2">
-        <details class="group">
-            <summary class="flex items-center justify-between cursor-pointer text-xs font-bold text-indigo-600 hover:text-indigo-700 select-none py-2">
-                <span class="lang-en">View Tariff Card</span>
-                <span class="lang-ta hidden">கட்டண அட்டை காண்க</span>
-                <ChevronDown className="w-4 h-4 transition-transform group-open:rotate-180" />
-            </summary>
-            <div class="mt-2">
-                <ActingDriverTariff client:visible />
-            </div>
-        </details>
     </div>
 
   </div>

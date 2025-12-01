@@ -103,9 +103,9 @@ export default function ActingDrivers() {
       <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-24 relative z-20">
         <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
           
-          {/* Card A: Highway Co-Pilot */}
+          {/* Card A: Highway Acting Driver */}
           <ServiceCard 
-            title="Highway Co-Pilot"
+            title="Highway Acting Driver"
             title_ta="நெடுஞ்சாலை துணை ஓட்டுநர்"
             subtitle="Outstation Night Driver"
             subtitle_ta="வெளியூர் இரவு ஓட்டுநர்"
