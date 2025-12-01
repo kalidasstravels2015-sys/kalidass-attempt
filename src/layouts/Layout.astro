@@ -9,41 +9,53 @@ interface Props {
   schema?: object;
 }
 
-const { 
-  title = 'Kalidass Travels - Premium Travel Experience',
-  description = 'Premium travel and cab services across South India. Professional drivers, comfortable vehicles, affordable rates.',
-  image = '/images/logo.png',
+const {
+  title = "Kalidass Travels - Premium Travel Experience",
+  description = "Premium travel and cab services across South India. Professional drivers, comfortable vehicles, affordable rates.",
+  image = "/images/logo.png",
   ogImage,
-  type = 'website',
+  type = "website",
   url = Astro.url.href,
-  schema
+  schema,
 } = Astro.props;
 
-const siteUrl = 'https://kalidasstravels.in';
-const fullImage = ogImage ? (ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`) : (image.startsWith('http') ? image : `${siteUrl}${image}`);
+const siteUrl = "https://kalidasstravels.in";
+const fullImage = ogImage
+  ? ogImage.startsWith("http")
+    ? ogImage
+    : `${siteUrl}${ogImage}`
+  : image.startsWith("http")
+    ? image
+    : `${siteUrl}${image}`;
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7GRFK61JZH"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7GRFK61JZH"
+    ></script>
     <script is:inline>
       window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
 
-      gtag('config', 'G-7GRFK61JZH');
+      gtag("config", "G-7GRFK61JZH");
     </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <link rel="canonical" href={url} />
-    
+
     <!-- Fonts: Noto Sans (English) & Noto Sans Tamil (Tamil) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;700;800&family=Noto+Sans+Tamil:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;700;800&family=Noto+Sans+Tamil:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
 
     <title>{title}</title>
 
@@ -66,43 +78,81 @@ const fullImage = ogImage ? (ogImage.startsWith('http') ? ogImage : `${siteUrl}$
     <meta property="twitter:image" content={fullImage} />
 
     <!-- Schema.org JSON-LD -->
-    {schema && (
-      <script type="application/ld+json" set:html={JSON.stringify(schema)} />
-    )}
+    {
+      schema && (
+        <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+      )
+    }
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
     <style is:inline>
       /* Color Theme Swatches in Hex */
-      .color-theme_logo-1-hex { color: #F22222; }
-      .color-theme_logo-2-hex { color: #F24141; }
-      .color-theme_logo-3-hex { color: #F27777; }
-      .color-theme_logo-4-hex { color: #F2F2F2; }
-      .color-theme_logo-5-hex { color: #0D0D0D; }
+      .color-theme_logo-1-hex {
+        color: #f22222;
+      }
+      .color-theme_logo-2-hex {
+        color: #f24141;
+      }
+      .color-theme_logo-3-hex {
+        color: #f27777;
+      }
+      .color-theme_logo-4-hex {
+        color: #f2f2f2;
+      }
+      .color-theme_logo-5-hex {
+        color: #0d0d0d;
+      }
 
       /* Color Theme Swatches in RGBA */
-      .color-theme_logo-1-rgba { color: rgba(242, 34, 34, 1); }
-      .color-theme_logo-2-rgba { color: rgba(242, 65, 65, 1); }
-      .color-theme_logo-3-rgba { color: rgba(242, 119, 119, 1); }
-      .color-theme_logo-4-rgba { color: rgba(242, 242, 242, 1); }
-      .color-theme_logo-5-rgba { color: rgba(13, 13, 13, 1); }
+      .color-theme_logo-1-rgba {
+        color: rgba(242, 34, 34, 1);
+      }
+      .color-theme_logo-2-rgba {
+        color: rgba(242, 65, 65, 1);
+      }
+      .color-theme_logo-3-rgba {
+        color: rgba(242, 119, 119, 1);
+      }
+      .color-theme_logo-4-rgba {
+        color: rgba(242, 242, 242, 1);
+      }
+      .color-theme_logo-5-rgba {
+        color: rgba(13, 13, 13, 1);
+      }
 
       /* Color Theme Swatches in HSLA */
-      .color-theme_logo-1-hsla { color: hsla(0, 88, 54, 1); }
-      .color-theme_logo-2-hsla { color: hsla(0, 87, 60, 1); }
-      .color-theme_logo-3-hsla { color: hsla(0, 82, 70, 1); }
-      .color-theme_logo-4-hsla { color: hsla(0, 0, 94, 1); }
-      .color-theme_logo-5-hsla { color: hsla(0, 0, 5, 1); }
+      .color-theme_logo-1-hsla {
+        color: hsla(0, 88, 54, 1);
+      }
+      .color-theme_logo-2-hsla {
+        color: hsla(0, 87, 60, 1);
+      }
+      .color-theme_logo-3-hsla {
+        color: hsla(0, 82, 70, 1);
+      }
+      .color-theme_logo-4-hsla {
+        color: hsla(0, 0, 94, 1);
+      }
+      .color-theme_logo-5-hsla {
+        color: hsla(0, 0, 5, 1);
+      }
 
       :root {
-        --theme-red: #F22222;
-        --theme-red-bright: #F24141;
-        --theme-rose: #F27777;
-        --theme-cream: #F2F2F2;
-        --theme-dark: #0D0D0D;
+        --theme-red: #f22222;
+        --theme-red-bright: #f24141;
+        --theme-rose: #f27777;
+        --theme-cream: #f2f2f2;
+        --theme-dark: #0d0d0d;
       }
 
       body {
@@ -126,7 +176,11 @@ const fullImage = ogImage ? (ogImage.startsWith('http') ? ogImage : `${siteUrl}$
       }
 
       .primary-cta {
-        background: linear-gradient(135deg, var(--theme-red), var(--theme-red-bright));
+        background: linear-gradient(
+          135deg,
+          var(--theme-red),
+          var(--theme-red-bright)
+        );
         color: #fff;
         font-weight: 600;
         border-radius: 999px;
@@ -155,29 +209,55 @@ const fullImage = ogImage ? (ogImage.startsWith('http') ? ogImage : `${siteUrl}$
   </head>
   <body class="font-sans antialiased">
     <!-- Seasonal Offer Ticker (Dismissible) -->
-    <div id="seasonal-offer" class="bg-gradient-to-r from-orange-400 to-red-500 text-white text-sm py-2 px-4 relative z-50 hidden">
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <div class="flex-1 text-center font-medium">
-                <span class="animate-pulse mr-2">🕉️</span> 
-                <span class="hidden md:inline">Sabarimala Season 2025-26 Started! </span>
-                Book your Mandala Pooja Trip now. 
-                <a href="/services/sabarimala-trip" class="underline ml-2 font-bold hover:text-yellow-200">View Package &rarr;</a>
-            </div>
-            <button id="close-offer" class="ml-4 text-white/80 hover:text-white focus:outline-none" aria-label="Close offer">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-            </button>
+    <div
+      id="seasonal-offer"
+      class="bg-gradient-to-r from-orange-400 to-red-500 text-white text-sm py-2 px-4 relative z-50 hidden"
+    >
+      <div class="max-w-7xl mx-auto flex justify-between items-center">
+        <div class="flex-1 text-center font-medium">
+          <span class="animate-pulse mr-2">🕉️</span>
+          <span class="hidden md:inline"
+            >Sabarimala Season 2025-26 Started!
+          </span>
+          Book your Mandala Pooja Trip now.
+          <a
+            href="/services/sabarimala-trip"
+            class="underline ml-2 font-bold hover:text-yellow-200"
+            >View Package &rarr;</a
+          >
         </div>
+        <button
+          id="close-offer"
+          class="ml-4 text-white/80 hover:text-white focus:outline-none"
+          aria-label="Close offer"
+        >
+          <svg
+            class="w-4 h-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            ><path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"></path></svg
+          >
+        </button>
+      </div>
     </div>
     <script is:inline>
-        // Show offer only if not dismissed previously
-        if (!sessionStorage.getItem('offerDismissed')) {
-            const offer = document.getElementById('seasonal-offer');
-            if (offer) offer.classList.remove('hidden');
-        }
-        document.getElementById('close-offer')?.addEventListener('click', () => {
-            document.getElementById('seasonal-offer').style.display = 'none';
-            sessionStorage.setItem('offerDismissed', 'true');
-        });
+      // Show offer only if not dismissed previously AND not on corporate page
+      const isCorporatePage = window.location.pathname.includes(
+        "/services/category/corporate",
+      );
+      if (!sessionStorage.getItem("offerDismissed") && !isCorporatePage) {
+        const offer = document.getElementById("seasonal-offer");
+        if (offer) offer.classList.remove("hidden");
+      }
+      document.getElementById("close-offer")?.addEventListener("click", () => {
+        document.getElementById("seasonal-offer").style.display = "none";
+        sessionStorage.setItem("offerDismissed", "true");
+      });
     </script>
 
     <!-- Navbar -->
@@ -187,7 +267,11 @@ const fullImage = ogImage ? (ogImage.startsWith('http') ? ogImage : `${siteUrl}$
           <!-- Logo -->
           <div class="flex-shrink-0 flex items-center gap-3">
             <a href="/" aria-label="Kalidass Travels home">
-              <img src="/images/logo.png" alt="Kalidass Travels logo" class="h-12 w-auto object-contain" />
+              <img
+                src="/images/logo.png"
+                alt="Kalidass Travels logo"
+                class="h-12 w-auto object-contain"
+              />
             </a>
           </div>
 
@@ -214,22 +298,30 @@ const fullImage = ogImage ? (ogImage.startsWith('http') ? ogImage : `${siteUrl}$
           <!-- CTA Button (Desktop) -->
           <div class="hidden md:flex items-center gap-4">
             <!-- Language Toggle (Desktop) -->
-            <button 
-              id="lang-toggle-desktop" 
+            <button
+              id="lang-toggle-desktop"
               class="flex items-center gap-2 px-3 py-1.5 rounded-full border border-gray-200 hover:border-red-600 transition-colors group"
               aria-label="Switch Language"
             >
-              <span class="text-sm font-bold text-gray-700 group-hover:text-red-600 lang-en">தமிழ்</span>
-              <span class="text-sm font-bold text-gray-700 group-hover:text-red-600 lang-ta hidden">ENG</span>
-              <i class="fa-solid fa-language text-gray-400 group-hover:text-red-600"></i>
+              <span
+                class="text-sm font-bold text-gray-700 group-hover:text-red-600 lang-en"
+                >தமிழ்</span
+              >
+              <span
+                class="text-sm font-bold text-gray-700 group-hover:text-red-600 lang-ta hidden"
+                >ENG</span
+              >
+              <i
+                class="fa-solid fa-language text-gray-400 group-hover:text-red-600"
+              ></i>
             </button>
           </div>
 
           <!-- Mobile Controls -->
           <div class="flex items-center gap-6 md:hidden">
             <!-- Language Toggle (Mobile) -->
-            <button 
-              id="lang-toggle-mobile" 
+            <button
+              id="lang-toggle-mobile"
               class="flex items-center gap-2 px-3 py-1.5 rounded-full border border-red-100 bg-red-50 text-red-700 active:bg-red-100 transition-colors shadow-sm"
               aria-label="Switch Language"
             >
@@ -239,9 +331,21 @@ const fullImage = ogImage ? (ogImage.startsWith('http') ? ogImage : `${siteUrl}$
             </button>
 
             <!-- Mobile Menu Button -->
-            <button id="mobile-menu-btn" class="text-gray-700 focus:outline-none">
-              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            <button
+              id="mobile-menu-btn"
+              class="text-gray-700 focus:outline-none"
+            >
+              <svg
+                class="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16"></path>
               </svg>
             </button>
           </div>
@@ -249,84 +353,157 @@ const fullImage = ogImage ? (ogImage.startsWith('http') ? ogImage : `${siteUrl}$
       </div>
     </nav>
 
-      <!-- Mobile Menu Overlay -->
-      <div id="mobile-menu-overlay" class="fixed inset-0 bg-black/50 z-50 hidden transition-opacity opacity-0"></div>
+    <!-- Mobile Menu Overlay -->
+    <div
+      id="mobile-menu-overlay"
+      class="fixed inset-0 bg-black/50 z-50 hidden transition-opacity opacity-0"
+    >
+    </div>
 
-      <!-- Mobile Menu Drawer -->
-      <div id="mobile-menu-drawer" class="fixed top-0 right-0 w-[85%] max-w-sm h-full bg-white z-50 transform translate-x-full transition-transform duration-300 shadow-2xl flex flex-col overflow-y-auto">
-        
-        <!-- Header -->
-        <div class="flex justify-end p-6">
-          <button id="close-menu-btn" class="text-gray-500 hover:text-red-600 transition-colors focus:outline-none">
-            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+    <!-- Mobile Menu Drawer -->
+    <div
+      id="mobile-menu-drawer"
+      class="fixed top-0 right-0 w-[85%] max-w-sm h-full bg-white z-50 transform translate-x-full transition-transform duration-300 shadow-2xl flex flex-col overflow-y-auto"
+    >
+      <!-- Header -->
+      <div class="flex justify-end p-6">
+        <button
+          id="close-menu-btn"
+          class="text-gray-500 hover:text-red-600 transition-colors focus:outline-none"
+        >
+          <svg
+            class="w-8 h-8"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Navigation Links -->
+      <div class="px-8 py-4 space-y-4 flex-grow">
+        <a
+          href="/"
+          class="block text-base font-medium text-gray-800 hover:text-red-600 border-b border-gray-100 pb-2 transition-colors"
+        >
+          <span class="lang-en">Home</span>
+          <span class="lang-ta hidden">முகப்பு</span>
+        </a>
+        <a
+          href="/#trips"
+          class="block text-base font-medium text-gray-800 hover:text-red-600 border-b border-gray-100 pb-2 transition-colors"
+        >
+          <span class="lang-en">Trips</span>
+          <span class="lang-ta hidden">பயணங்கள்</span>
+        </a>
+        <a
+          href="/#fleet"
+          class="block text-base font-medium text-gray-800 hover:text-red-600 border-b border-gray-100 pb-2 transition-colors"
+        >
+          <span class="lang-en">Fleet</span>
+          <span class="lang-ta hidden">வாகனங்கள்</span>
+        </a>
+
+        <!-- Services Accordion -->
+        <div class="border-b border-gray-100 pb-2">
+          <button
+            id="services-menu-toggle"
+            class="flex items-center justify-between w-full text-base font-medium text-gray-800 hover:text-red-600 transition-colors focus:outline-none"
+          >
+            <span class="lang-en">Services</span>
+            <span class="lang-ta hidden">சேவைகள்</span>
+            <svg
+              id="services-chevron"
+              class="w-4 h-4 transform transition-transform duration-200 rotate-180"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 9l-7 7-7-7"></path>
             </svg>
           </button>
+          <div
+            id="services-submenu"
+            class="mt-2 ml-4 space-y-2 border-l-2 border-gray-100 pl-4"
+          >
+            <a
+              href="/services/category/acting-drivers"
+              class="block text-sm text-gray-600 hover:text-red-600"
+            >
+              <span class="lang-en">Acting Drivers</span>
+              <span class="lang-ta hidden">ஆக்டிங் டிரைவர்கள்</span>
+            </a>
+            <a
+              href="/services/category/corporate"
+              class="block text-sm text-gray-600 hover:text-red-600"
+            >
+              <span class="lang-en">Corporate Travel</span>
+              <span class="lang-ta hidden">கார்ப்பரேட் பயணம்</span>
+            </a>
+            <a
+              href="/services/category/airport-transfer"
+              class="block text-sm text-gray-600 hover:text-red-600"
+            >
+              <span class="lang-en">Airport Transfer</span>
+              <span class="lang-ta hidden">விமான நிலைய சவாரி</span>
+            </a>
+            <a
+              href="/services/category/temple-tours"
+              class="block text-sm text-gray-600 hover:text-red-600"
+            >
+              <span class="lang-en">Temple Tours</span>
+              <span class="lang-ta hidden">கோவில் சுற்றுலா</span>
+            </a>
+            <a
+              href="/services/category/popular-destinations"
+              class="block text-sm text-gray-600 hover:text-red-600"
+            >
+              <span class="lang-en">Popular Destinations</span>
+              <span class="lang-ta hidden">பிரபலமான இடங்கள்</span>
+            </a>
+          </div>
         </div>
 
-        <!-- Navigation Links -->
-        <div class="px-8 py-4 space-y-4 flex-grow">
-          <a href="/" class="block text-base font-medium text-gray-800 hover:text-red-600 border-b border-gray-100 pb-2 transition-colors">
-            <span class="lang-en">Home</span>
-            <span class="lang-ta hidden">முகப்பு</span>
-          </a>
-          <a href="/#trips" class="block text-base font-medium text-gray-800 hover:text-red-600 border-b border-gray-100 pb-2 transition-colors">
-            <span class="lang-en">Trips</span>
-            <span class="lang-ta hidden">பயணங்கள்</span>
-          </a>
-          <a href="/#fleet" class="block text-base font-medium text-gray-800 hover:text-red-600 border-b border-gray-100 pb-2 transition-colors">
-            <span class="lang-en">Fleet</span>
-            <span class="lang-ta hidden">வாகனங்கள்</span>
-          </a>
-          
-          <!-- Services Accordion -->
-          <div class="border-b border-gray-100 pb-2">
-            <button id="services-menu-toggle" class="flex items-center justify-between w-full text-base font-medium text-gray-800 hover:text-red-600 transition-colors focus:outline-none">
-              <span class="lang-en">Services</span>
-              <span class="lang-ta hidden">சேவைகள்</span>
-              <svg id="services-chevron" class="w-4 h-4 transform transition-transform duration-200 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-              </svg>
-            </button>
-            <div id="services-submenu" class="mt-2 ml-4 space-y-2 border-l-2 border-gray-100 pl-4">
-              <a href="/services/category/acting-drivers" class="block text-sm text-gray-600 hover:text-red-600">
-                <span class="lang-en">Acting Drivers</span>
-                <span class="lang-ta hidden">ஆக்டிங் டிரைவர்கள்</span>
-              </a>
-              <a href="/services/category/corporate" class="block text-sm text-gray-600 hover:text-red-600">
-                <span class="lang-en">Corporate Travel</span>
-                <span class="lang-ta hidden">கார்ப்பரேட் பயணம்</span>
-              </a>
-              <a href="/services/category/airport-transfer" class="block text-sm text-gray-600 hover:text-red-600">
-                <span class="lang-en">Airport Transfer</span>
-                <span class="lang-ta hidden">விமான நிலைய சவாரி</span>
-              </a>
-              <a href="/services/category/temple-tours" class="block text-sm text-gray-600 hover:text-red-600">
-                <span class="lang-en">Temple Tours</span>
-                <span class="lang-ta hidden">கோவில் சுற்றுலா</span>
-              </a>
-              <a href="/services/category/popular-destinations" class="block text-sm text-gray-600 hover:text-red-600">
-                <span class="lang-en">Popular Destinations</span>
-                <span class="lang-ta hidden">பிரபலமான இடங்கள்</span>
-              </a>
-            </div>
-          </div>
+        <a
+          href="/#contact"
+          class="block text-base font-medium text-gray-800 hover:text-red-600 border-b border-gray-100 pb-2 transition-colors"
+        >
+          <span class="lang-en">Contact</span>
+          <span class="lang-ta hidden">தொடர்புக்கு</span>
+        </a>
 
-          <a href="/#contact" class="block text-base font-medium text-gray-800 hover:text-red-600 border-b border-gray-100 pb-2 transition-colors">
-            <span class="lang-en">Contact</span>
-            <span class="lang-ta hidden">தொடர்புக்கு</span>
-          </a>
-          
-          <!-- Proprietor Card -->
-          <div class="pt-6 pb-4 text-center">
-            <div class="relative mx-auto w-32 h-40 mb-3 rounded-2xl overflow-hidden shadow-lg border-4 border-white">
-              <img src="/images/mani-perumal.jpg" alt="Proprietor" class="w-full h-full object-cover" />
-            </div>
-            <h3 class="text-xl font-bold text-gray-900 mb-1">Perumal Manikumar</h3>
-            <p class="text-xs tracking-[0.2em] text-gray-500 uppercase font-semibold">PROPRIETOR</p>
+        <!-- Proprietor Card -->
+        <div class="pt-6 pb-4 text-center">
+          <div
+            class="relative mx-auto w-32 h-40 mb-3 rounded-2xl overflow-hidden shadow-lg border-4 border-white"
+          >
+            <img
+              src="/images/mani-perumal.jpg"
+              alt="Proprietor"
+              class="w-full h-full object-cover"
+            />
           </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-1">
+            Perumal Manikumar
+          </h3>
+          <p
+            class="text-xs tracking-[0.2em] text-gray-500 uppercase font-semibold"
+          >
+            PROPRIETOR
+          </p>
         </div>
       </div>
+    </div>
 
     <!-- Main Content -->
     <main>
@@ -337,21 +514,24 @@ const fullImage = ogImage ? (ogImage.startsWith('http') ? ogImage : `${siteUrl}$
     <footer class="bg-black text-white py-12">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex flex-col items-center text-center">
-          
           <!-- Logo -->
           <div class="mb-6 bg-white p-2 rounded">
-            <img src="/images/logo.png" alt="Kalidass Travels" class="h-12 w-auto" />
+            <img
+              src="/images/logo.png"
+              alt="Kalidass Travels"
+              class="h-12 w-auto"
+            />
           </div>
 
           <!-- Address -->
           <p class="text-sm md:text-base mb-2 font-medium">
             Bhel Nagar, Medavakkam, Chennai 600100, Tamil Nadu – India
           </p>
-          
+
           <!-- Google Maps Link -->
-          <a 
-            href="https://maps.google.com/?q=Kalidass+Travels+Medavakkam+Chennai" 
-            target="_blank" 
+          <a
+            href="https://maps.google.com/?q=Kalidass+Travels+Medavakkam+Chennai"
+            target="_blank"
             class="text-blue-400 hover:text-blue-300 text-sm mb-8 font-medium"
           >
             View on Google Maps
@@ -365,105 +545,120 @@ const fullImage = ogImage ? (ogImage.startsWith('http') ? ogImage : `${siteUrl}$
             &copy; {new Date().getFullYear()} Kalidass Travels | All rights reserved.
           </p>
           <p class="text-sm text-gray-400 mt-1">
-            Built by <a href="https://wa.me/919952749408?text=Hi%20Saravn,%20I%20saw%20your%20work%20on%20Kalidass%20Travels%20website." target="_blank" class="font-bold bg-gradient-to-r from-indigo-300 to-purple-300 bg-clip-text text-transparent hover:opacity-80 transition-opacity">Saravn</a>
+            Built by <a
+              href="https://wa.me/919952749408?text=Hi%20Saravn,%20I%20saw%20your%20work%20on%20Kalidass%20Travels%20website."
+              target="_blank"
+              class="font-bold bg-gradient-to-r from-indigo-300 to-purple-300 bg-clip-text text-transparent hover:opacity-80 transition-opacity"
+              >Saravn</a
+            >
           </p>
-
         </div>
       </div>
 
       <!-- Floating Action Buttons -->
       <!-- Android Style Call Button -->
       <a href="tel:+919092303060" class="fixed bottom-6 right-6 z-50 group">
-          <div class="absolute inset-0 bg-[#4285F4] rounded-full animate-ping opacity-75"></div>
-          <div class="relative bg-[#4285F4] hover:bg-[#3367D6] text-white p-4 rounded-full shadow-lg transition-all transform group-hover:scale-110 flex items-center justify-center w-16 h-16 border-2 border-white">
-              <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 00-1.01.24l-1.57 1.97c-2.83-1.49-5.15-3.8-6.62-6.63l1.97-1.57c.23-.29.33-.66.24-1.01-.36-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3.28 3 3.93 3 4.74c0 9.27 7.55 16.82 16.82 16.82.81 0 1.46-.65 1.46-1.19v-3.72c0-.54-.45-.99-.99-.99z"/>
-              </svg>
-          </div>
+        <div
+          class="absolute inset-0 bg-[#4285F4] rounded-full animate-ping opacity-75"
+        >
+        </div>
+        <div
+          class="relative bg-[#4285F4] hover:bg-[#3367D6] text-white p-4 rounded-full shadow-lg transition-all transform group-hover:scale-110 flex items-center justify-center w-16 h-16 border-2 border-white"
+        >
+          <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+            <path
+              d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 00-1.01.24l-1.57 1.97c-2.83-1.49-5.15-3.8-6.62-6.63l1.97-1.57c.23-.29.33-.66.24-1.01-.36-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3.28 3 3.93 3 4.74c0 9.27 7.55 16.82 16.82 16.82.81 0 1.46-.65 1.46-1.19v-3.72c0-.54-.45-.99-.99-.99z"
+            ></path>
+          </svg>
+        </div>
       </a>
     </footer>
 
     <!-- Mobile Menu Toggle Script -->
     <script>
-      const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-      const closeMenuBtn = document.getElementById('close-menu-btn');
-      const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
-      const mobileMenuDrawer = document.getElementById('mobile-menu-drawer');
-      const mobileLinks = mobileMenuDrawer?.querySelectorAll('a');
+      const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+      const closeMenuBtn = document.getElementById("close-menu-btn");
+      const mobileMenuOverlay = document.getElementById("mobile-menu-overlay");
+      const mobileMenuDrawer = document.getElementById("mobile-menu-drawer");
+      const mobileLinks = mobileMenuDrawer?.querySelectorAll("a");
 
       function openMenu() {
         if (mobileMenuOverlay && mobileMenuDrawer) {
-          mobileMenuOverlay.classList.remove('hidden');
+          mobileMenuOverlay.classList.remove("hidden");
           // small delay to allow display:block to apply before opacity transition
           setTimeout(() => {
-              mobileMenuOverlay.classList.remove('opacity-0');
-              mobileMenuDrawer.classList.remove('translate-x-full');
+            mobileMenuOverlay.classList.remove("opacity-0");
+            mobileMenuDrawer.classList.remove("translate-x-full");
           }, 10);
-          document.body.style.overflow = 'hidden'; // Prevent background scrolling
+          document.body.style.overflow = "hidden"; // Prevent background scrolling
         }
       }
 
       function closeMenu() {
         if (mobileMenuOverlay && mobileMenuDrawer) {
-          mobileMenuOverlay.classList.add('opacity-0');
-          mobileMenuDrawer.classList.add('translate-x-full');
-          
+          mobileMenuOverlay.classList.add("opacity-0");
+          mobileMenuDrawer.classList.add("translate-x-full");
+
           setTimeout(() => {
-              mobileMenuOverlay.classList.add('hidden');
+            mobileMenuOverlay.classList.add("hidden");
           }, 300); // Match transition duration
-          document.body.style.overflow = '';
+          document.body.style.overflow = "";
         }
       }
 
-      mobileMenuBtn?.addEventListener('click', openMenu);
-      closeMenuBtn?.addEventListener('click', closeMenu);
-      mobileMenuOverlay?.addEventListener('click', closeMenu);
+      mobileMenuBtn?.addEventListener("click", openMenu);
+      closeMenuBtn?.addEventListener("click", closeMenu);
+      mobileMenuOverlay?.addEventListener("click", closeMenu);
 
-      mobileLinks?.forEach(link => {
-        link.addEventListener('click', closeMenu);
+      mobileLinks?.forEach((link) => {
+        link.addEventListener("click", closeMenu);
       });
 
       // Services Menu Toggle
-      const servicesToggle = document.getElementById('services-menu-toggle');
-      const servicesSubmenu = document.getElementById('services-submenu');
-      const servicesChevron = document.getElementById('services-chevron');
+      const servicesToggle = document.getElementById("services-menu-toggle");
+      const servicesSubmenu = document.getElementById("services-submenu");
+      const servicesChevron = document.getElementById("services-chevron");
 
-      servicesToggle?.addEventListener('click', (e) => {
+      servicesToggle?.addEventListener("click", (e) => {
         e.stopPropagation();
-        servicesSubmenu?.classList.toggle('hidden');
-        servicesChevron?.classList.toggle('rotate-180');
+        servicesSubmenu?.classList.toggle("hidden");
+        servicesChevron?.classList.toggle("rotate-180");
       });
 
       // Language Toggle Logic
-      const langToggleDesktop = document.getElementById('lang-toggle-desktop');
-      const langToggleMobile = document.getElementById('lang-toggle-mobile');
-      
+      const langToggleDesktop = document.getElementById("lang-toggle-desktop");
+      const langToggleMobile = document.getElementById("lang-toggle-mobile");
+
       function toggleLanguage() {
-        const isTamil = document.body.classList.toggle('lang-ta');
-        localStorage.setItem('preferred-lang', isTamil ? 'ta' : 'en');
-        
+        const isTamil = document.body.classList.toggle("lang-ta");
+        localStorage.setItem("preferred-lang", isTamil ? "ta" : "en");
+
         // Toggle visibility of all lang elements
-        document.querySelectorAll('.lang-en').forEach(el => {
-          el.classList.toggle('hidden', isTamil);
+        document.querySelectorAll(".lang-en").forEach((el) => {
+          el.classList.toggle("hidden", isTamil);
         });
-        document.querySelectorAll('.lang-ta').forEach(el => {
-          el.classList.toggle('hidden', !isTamil);
+        document.querySelectorAll(".lang-ta").forEach((el) => {
+          el.classList.toggle("hidden", !isTamil);
         });
       }
 
       // Initialize Language
       function initLanguage() {
-        const savedLang = localStorage.getItem('preferred-lang');
-        if (savedLang === 'ta') {
-          document.body.classList.add('lang-ta');
-          document.querySelectorAll('.lang-en').forEach(el => el.classList.add('hidden'));
-          document.querySelectorAll('.lang-ta').forEach(el => el.classList.remove('hidden'));
+        const savedLang = localStorage.getItem("preferred-lang");
+        if (savedLang === "ta") {
+          document.body.classList.add("lang-ta");
+          document
+            .querySelectorAll(".lang-en")
+            .forEach((el) => el.classList.add("hidden"));
+          document
+            .querySelectorAll(".lang-ta")
+            .forEach((el) => el.classList.remove("hidden"));
         }
       }
 
-      langToggleDesktop?.addEventListener('click', toggleLanguage);
-      langToggleMobile?.addEventListener('click', toggleLanguage);
-      
+      langToggleDesktop?.addEventListener("click", toggleLanguage);
+      langToggleMobile?.addEventListener("click", toggleLanguage);
+
       // Run on load
       initLanguage();
     </script>

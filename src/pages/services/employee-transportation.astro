@@ -1,0 +1,796 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+const title = "Employee Transportation Services (ETS)";
+const description =
+    "Safe, punctual daily commute solutions for your workforce with automated rostering, real-time tracking, and route optimization.";
+
+const schema = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: title,
+    description: description,
+    provider: {
+        "@type": "Organization",
+        name: "Kalidass Travels",
+    },
+};
+---
+
+<Layout
+    title={`${title} - Kalidass Travels`}
+    description={description}
+    schema={schema}
+>
+    <main class="bg-slate-50 min-h-screen">
+        <!-- Hero Section -->
+        <section
+            class="relative bg-gradient-to-br from-blue-900 via-blue-800 to-slate-900 text-white pt-32 pb-20 px-6"
+        >
+            <div class="max-w-5xl mx-auto text-center">
+                <div
+                    class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/20 border border-blue-400/30 text-blue-200 text-xs font-bold uppercase mb-6"
+                >
+                    <i class="fa-solid fa-users-line"></i> Corporate Solution
+                </div>
+                <h1
+                    class="text-4xl md:text-6xl font-extrabold mb-6 leading-tight"
+                >
+                    Monthly Car With Driver<br class="hidden md:block" />
+                    <span class="text-blue-300">(Corporate Plan)</span>
+                </h1>
+                <p class="text-xl text-slate-200 max-w-3xl mx-auto mb-10">
+                    Your company deserves reliable travel with no surprises. We
+                    share all charges upfront — no sudden add-ons, no confusion.
+                </p>
+                <div class="flex flex-wrap gap-4 justify-center">
+                    <a
+                        href="#contact"
+                        class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 px-8 rounded-lg shadow-lg transition-all"
+                    >
+                        Request ETS Proposal
+                    </a>
+                    <a
+                        href="#pricing"
+                        class="bg-white/10 hover:bg-white/20 text-white font-semibold py-4 px-8 rounded-lg border border-white/20 backdrop-blur-sm transition-all"
+                    >
+                        View Pricing
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Transparent Monthly Pricing -->
+        <section id="pricing" class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2
+                        class="text-3xl md:text-4xl font-bold text-slate-900 mb-4"
+                    >
+                        Transparent Monthly Pricing
+                    </h2>
+                    <div class="w-20 h-1 bg-blue-600 mx-auto rounded-full">
+                    </div>
+                </div>
+
+                <div class="max-w-5xl mx-auto">
+                    <!-- Pricing Table -->
+                    <div
+                        class="bg-white rounded-xl shadow-lg overflow-hidden border border-slate-200"
+                    >
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead
+                                    class="bg-slate-100 border-b border-slate-200"
+                                >
+                                    <tr>
+                                        <th
+                                            class="px-6 py-4 text-left text-sm font-bold text-slate-700"
+                                            >Vehicle Type</th
+                                        >
+                                        <th
+                                            class="px-6 py-4 text-left text-sm font-bold text-slate-700"
+                                            >Price Breakdown<br /><span
+                                                class="text-xs font-normal text-slate-500"
+                                                >(Chennai)</span
+                                            ></th
+                                        >
+                                        <th
+                                            class="px-6 py-4 text-left text-sm font-bold text-slate-700"
+                                            >Fuel Policy</th
+                                        >
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-200">
+                                    <!-- Sedan -->
+                                    <tr
+                                        class="hover:bg-slate-50 transition-colors"
+                                    >
+                                        <td class="px-6 py-6">
+                                            <div
+                                                class="font-bold text-slate-900 text-lg"
+                                            >
+                                                Sedan
+                                            </div>
+                                            <div class="text-sm text-slate-500">
+                                                (Dzire/Etios)
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-6">
+                                            <div
+                                                class="text-2xl font-bold text-green-600 mb-2"
+                                            >
+                                                ₹ 44,000 <span
+                                                    class="text-sm text-slate-500 font-normal"
+                                                    >(+ GST)</span
+                                                >
+                                            </div>
+                                            <details class="group">
+                                                <summary
+                                                    class="cursor-pointer text-blue-600 font-semibold text-sm flex items-center gap-2 hover:text-blue-700"
+                                                >
+                                                    <i
+                                                        class="fa-solid fa-chevron-down group-open:rotate-180 transition-transform text-xs"
+                                                    ></i>
+                                                    <span
+                                                        >View Price Breakdown</span
+                                                    >
+                                                </summary>
+                                                <div
+                                                    class="mt-3 space-y-1 text-sm text-slate-600 ml-5"
+                                                >
+                                                    <div>
+                                                        Car: <span
+                                                            class="font-semibold"
+                                                            >₹24,000</span
+                                                        >
+                                                        <span
+                                                            class="text-xs text-slate-500"
+                                                            >(Rental +
+                                                            Maintenance)</span
+                                                        >
+                                                    </div>
+                                                    <div>
+                                                        Driver: <span
+                                                            class="font-semibold"
+                                                            >₹20,000</span
+                                                        >
+                                                        <span
+                                                            class="text-xs text-slate-500"
+                                                            >(Salary + Bata)</span
+                                                        >
+                                                    </div>
+                                                </div>
+                                            </details>
+                                        </td>
+                                        <td class="px-6 py-6">
+                                            <div
+                                                class="text-slate-700 font-medium"
+                                            >
+                                                Client pays actuals (Logbook)
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <!-- SUV -->
+                                    <tr
+                                        class="hover:bg-slate-50 transition-colors"
+                                    >
+                                        <td class="px-6 py-6">
+                                            <div
+                                                class="font-bold text-slate-900 text-lg"
+                                            >
+                                                SUV
+                                            </div>
+                                            <div class="text-sm text-slate-500">
+                                                (Innova Crysta)
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-6">
+                                            <div
+                                                class="text-2xl font-bold text-green-600 mb-2"
+                                            >
+                                                ₹ 70,000 <span
+                                                    class="text-sm text-slate-500 font-normal"
+                                                    >(+ GST)</span
+                                                >
+                                            </div>
+                                            <details class="group">
+                                                <summary
+                                                    class="cursor-pointer text-blue-600 font-semibold text-sm flex items-center gap-2 hover:text-blue-700"
+                                                >
+                                                    <i
+                                                        class="fa-solid fa-chevron-down group-open:rotate-180 transition-transform text-xs"
+                                                    ></i>
+                                                    <span
+                                                        >View Price Breakdown</span
+                                                    >
+                                                </summary>
+                                                <div
+                                                    class="mt-3 space-y-1 text-sm text-slate-600 ml-5"
+                                                >
+                                                    <div>
+                                                        Car: <span
+                                                            class="font-semibold"
+                                                            >₹48,000</span
+                                                        >
+                                                        <span
+                                                            class="text-xs text-slate-500"
+                                                            >(Rental +
+                                                            Maintenance)</span
+                                                        >
+                                                    </div>
+                                                    <div>
+                                                        Driver: <span
+                                                            class="font-semibold"
+                                                            >₹22,000</span
+                                                        >
+                                                        <span
+                                                            class="text-xs text-slate-500"
+                                                            >(Premium Badge)</span
+                                                        >
+                                                    </div>
+                                                </div>
+                                            </details>
+                                        </td>
+                                        <td class="px-6 py-6">
+                                            <div
+                                                class="text-slate-700 font-medium"
+                                            >
+                                                Client pays actuals (Logbook)
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Tempo Traveller -->
+                                    <tr
+                                        class="hover:bg-slate-50 transition-colors"
+                                    >
+                                        <td class="px-6 py-6">
+                                            <div
+                                                class="font-bold text-slate-900 text-lg"
+                                            >
+                                                Tempo Traveller
+                                            </div>
+                                            <div class="text-sm text-slate-500">
+                                                (12-14 Str)
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-6">
+                                            <div
+                                                class="text-2xl font-bold text-green-600 mb-2"
+                                            >
+                                                ₹ 78,000 <span
+                                                    class="text-sm text-slate-500 font-normal"
+                                                    >(+ GST)</span
+                                                >
+                                            </div>
+                                            <details class="group">
+                                                <summary
+                                                    class="cursor-pointer text-blue-600 font-semibold text-sm flex items-center gap-2 hover:text-blue-700"
+                                                >
+                                                    <i
+                                                        class="fa-solid fa-chevron-down group-open:rotate-180 transition-transform text-xs"
+                                                    ></i>
+                                                    <span
+                                                        >View Price Breakdown</span
+                                                    >
+                                                </summary>
+                                                <div
+                                                    class="mt-3 space-y-1 text-sm text-slate-600 ml-5"
+                                                >
+                                                    <div>
+                                                        Van: <span
+                                                            class="font-semibold"
+                                                            >₹52,000</span
+                                                        >
+                                                        <span
+                                                            class="text-xs text-slate-500"
+                                                            >(Rental +
+                                                            Maintenance)</span
+                                                        >
+                                                    </div>
+                                                    <div>
+                                                        Driver: <span
+                                                            class="font-semibold"
+                                                            >₹26,000</span
+                                                        >
+                                                        <span
+                                                            class="text-xs text-slate-500"
+                                                            >(Heavy License)</span
+                                                        >
+                                                    </div>
+                                                </div>
+                                            </details>
+                                        </td>
+                                        <td class="px-6 py-6">
+                                            <div
+                                                class="text-slate-700 font-medium"
+                                            >
+                                                Client pays actuals (Logbook)
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Pricing Note -->
+                    <div class="mt-6 text-center">
+                        <p class="text-slate-600 text-sm">
+                            <i
+                                class="fa-solid fa-info-circle text-blue-600 mr-2"
+                            ></i>
+                            Fuel, Tolls & Parking billed at actuals. Mileage logged
+                            daily.
+                        </p>
+                    </div>
+
+                    <!-- Why Hire Us - Compact Checklist -->
+                    <div
+                        class="mt-16 bg-gradient-to-br from-blue-50 to-slate-50 rounded-2xl p-8 border border-blue-100"
+                    >
+                        <div class="text-center mb-8">
+                            <h3
+                                class="text-2xl md:text-3xl font-bold text-slate-900 mb-2"
+                            >
+                                Why Hire Us
+                            </h3>
+                            <p class="text-base text-slate-600">
+                                We manage the liability and logistics. You focus
+                                on business.
+                            </p>
+                        </div>
+
+                        <div
+                            class="grid md:grid-cols-2 gap-x-8 gap-y-4 max-w-4xl mx-auto"
+                        >
+                            <!-- Audit-Ready Billing -->
+                            <div class="flex items-start gap-3">
+                                <div
+                                    class="flex-shrink-0 w-12 h-12 rounded-lg flex items-center justify-center text-blue-600"
+                                >
+                                    <i class="fa-solid fa-file-invoice text-3xl"
+                                    ></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-slate-900 mb-1">
+                                        Audit-Ready Billing
+                                    </h4>
+                                    <p class="text-sm text-slate-600">
+                                        Consolidated GST invoice with attached
+                                        Fuel, Toll & Parking bills (at actuals).
+                                        Mileage logged daily in digital trip
+                                        sheets.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- 100% Statutory Compliance -->
+                            <div class="flex items-start gap-3">
+                                <div
+                                    class="flex-shrink-0 w-12 h-12 rounded-lg flex items-center justify-center text-blue-600"
+                                >
+                                    <i
+                                        class="fa-solid fa-scale-balanced text-3xl"
+                                    ></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-slate-900 mb-1">
+                                        100% Statutory Compliance
+                                    </h4>
+                                    <p class="text-sm text-slate-600">
+                                        We follow Central Govt Minimum Wages. PF
+                                        & ESI filed diligently for all staff.
+                                        Your company carries zero legal
+                                        liability.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Strict Driver Vetting -->
+                            <div class="flex items-start gap-3">
+                                <div
+                                    class="flex-shrink-0 w-12 h-12 rounded-lg flex items-center justify-center text-blue-600"
+                                >
+                                    <i class="fa-solid fa-user-shield text-3xl"
+                                    ></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-slate-900 mb-1">
+                                        Strict Driver Vetting
+                                    </h4>
+                                    <p class="text-sm text-slate-600">
+                                        Safety is non-negotiable. Mandatory
+                                        Police Verification Certificate (PVC)
+                                        obtained for every driver and renewed
+                                        every 2 years.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- 60-Min Backup Promise -->
+                            <div class="flex items-start gap-3">
+                                <div
+                                    class="flex-shrink-0 w-12 h-12 rounded-lg flex items-center justify-center text-blue-600"
+                                >
+                                    <i class="fa-solid fa-clock text-3xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-slate-900 mb-1">
+                                        60-Min Backup Promise
+                                    </h4>
+                                    <p class="text-sm text-slate-600">
+                                        Vehicle breakdown? Driver sick? We
+                                        guarantee a backup vehicle reaches your
+                                        office in less than 60 minutes.
+                                        Operations never stop.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Tamil Nadu Wide Support -->
+                            <div class="flex items-start gap-3">
+                                <div
+                                    class="flex-shrink-0 w-12 h-12 rounded-lg flex items-center justify-center text-blue-600"
+                                >
+                                    <i
+                                        class="fa-solid fa-map-location-dot text-3xl"
+                                    ></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-slate-900 mb-1">
+                                        Tamil Nadu Wide Support
+                                    </h4>
+                                    <p class="text-sm text-slate-600">
+                                        Seamless fleet operations across
+                                        Chennai, Coimbatore, Madurai, and Hosur.
+                                        One vendor agreement for all your TN
+                                        branches.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Dedicated Fleet Manager -->
+                            <div class="flex items-start gap-3">
+                                <div
+                                    class="flex-shrink-0 w-12 h-12 rounded-lg flex items-center justify-center text-blue-600"
+                                >
+                                    <i class="fa-solid fa-user-tie text-3xl"
+                                    ></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-slate-900 mb-1">
+                                        Dedicated Fleet Manager
+                                    </h4>
+                                    <p class="text-sm text-slate-600">
+                                        No call centers. You get direct mobile
+                                        access to a dedicated supervisor who
+                                        manages your roster and drivers daily.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="py-20 bg-slate-50">
+            <div class="max-w-4xl mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2
+                        class="text-3xl md:text-4xl font-bold text-slate-900 mb-4"
+                    >
+                        Frequently Asked Questions
+                    </h2>
+                    <div class="w-20 h-1 bg-blue-600 mx-auto rounded-full">
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <!-- FAQ 1 -->
+                    <details
+                        class="group bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden"
+                    >
+                        <summary
+                            class="flex items-center justify-between p-6 cursor-pointer list-none"
+                        >
+                            <div class="flex items-center gap-4">
+                                <div
+                                    class="flex-shrink-0 w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-sm"
+                                >
+                                    1
+                                </div>
+                                <h3 class="font-bold text-slate-900 text-lg">
+                                    Will you submit the PF/ESI ECR copies for
+                                    our audit?
+                                </h3>
+                            </div>
+                            <span
+                                class="transition-transform duration-300 group-open:rotate-180"
+                            >
+                                <i
+                                    class="fa-solid fa-chevron-down text-blue-600"
+                                ></i>
+                            </span>
+                        </summary>
+                        <div
+                            class="px-6 pb-6 pt-0 ml-12 text-slate-600 leading-relaxed"
+                        >
+                            <p>
+                                Yes. Since we strictly follow Central Government
+                                Minimum Wages, we are happy to submit the
+                                monthly ECR (Electronic Challan Return) copies
+                                and wage registers whenever your compliance team
+                                requests them.
+                            </p>
+                        </div>
+                    </details>
+
+                    <!-- FAQ 2 -->
+                    <details
+                        class="group bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden"
+                    >
+                        <summary
+                            class="flex items-center justify-between p-6 cursor-pointer list-none"
+                        >
+                            <div class="flex items-center gap-4">
+                                <div
+                                    class="flex-shrink-0 w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-sm"
+                                >
+                                    2
+                                </div>
+                                <h3 class="font-bold text-slate-900 text-lg">
+                                    Do you provide supporting documents for
+                                    variable charges (Fuel/Tolls)?
+                                </h3>
+                            </div>
+                            <span
+                                class="transition-transform duration-300 group-open:rotate-180"
+                            >
+                                <i
+                                    class="fa-solid fa-chevron-down text-blue-600"
+                                ></i>
+                            </span>
+                        </summary>
+                        <div
+                            class="px-6 pb-6 pt-0 ml-12 text-slate-600 leading-relaxed"
+                        >
+                            <p>
+                                Yes. We attach original fuel bills, toll
+                                receipts, and parking tickets along with the
+                                digital trip sheets to your monthly invoice. You
+                                pay exactly what the receipt says at actuals.
+                            </p>
+                        </div>
+                    </details>
+
+                    <!-- FAQ 3 -->
+                    <details
+                        class="group bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden"
+                    >
+                        <summary
+                            class="flex items-center justify-between p-6 cursor-pointer list-none"
+                        >
+                            <div class="flex items-center gap-4">
+                                <div
+                                    class="flex-shrink-0 w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-sm"
+                                >
+                                    3
+                                </div>
+                                <h3 class="font-bold text-slate-900 text-lg">
+                                    Can you provide Police Verification
+                                    Certificates (PVC) for the drivers?
+                                </h3>
+                            </div>
+                            <span
+                                class="transition-transform duration-300 group-open:rotate-180"
+                            >
+                                <i
+                                    class="fa-solid fa-chevron-down text-blue-600"
+                                ></i>
+                            </span>
+                        </summary>
+                        <div
+                            class="px-6 pb-6 pt-0 ml-12 text-slate-600 leading-relaxed"
+                        >
+                            <p>
+                                Yes. We do not deploy any driver without a
+                                background check. Valid PVC copies, along with
+                                driving license details and address proof, are
+                                submitted to your Security/Admin team before
+                                onboarding.
+                            </p>
+                        </div>
+                    </details>
+
+                    <!-- FAQ 4 -->
+                    <details
+                        class="group bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden"
+                    >
+                        <summary
+                            class="flex items-center justify-between p-6 cursor-pointer list-none"
+                        >
+                            <div class="flex items-center gap-4">
+                                <div
+                                    class="flex-shrink-0 w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-sm"
+                                >
+                                    4
+                                </div>
+                                <h3 class="font-bold text-slate-900 text-lg">
+                                    Is your invoice valid for claiming GST Input
+                                    Tax Credit?
+                                </h3>
+                            </div>
+                            <span
+                                class="transition-transform duration-300 group-open:rotate-180"
+                            >
+                                <i
+                                    class="fa-solid fa-chevron-down text-blue-600"
+                                ></i>
+                            </span>
+                        </summary>
+                        <div
+                            class="px-6 pb-6 pt-0 ml-12 text-slate-600 leading-relaxed"
+                        >
+                            <p>
+                                Yes. We issue a proper commercial GST tax
+                                invoice with the correct SAC code. Your finance
+                                team can claim full Input Tax Credit (ITC)
+                                without issues.
+                            </p>
+                        </div>
+                    </details>
+
+                    <!-- FAQ 5 -->
+                    <details
+                        class="group bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden"
+                    >
+                        <summary
+                            class="flex items-center justify-between p-6 cursor-pointer list-none"
+                        >
+                            <div class="flex items-center gap-4">
+                                <div
+                                    class="flex-shrink-0 w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-sm"
+                                >
+                                    5
+                                </div>
+                                <h3 class="font-bold text-slate-900 text-lg">
+                                    Do all vehicles have valid commercial
+                                    permits?
+                                </h3>
+                            </div>
+                            <span
+                                class="transition-transform duration-300 group-open:rotate-180"
+                            >
+                                <i
+                                    class="fa-solid fa-chevron-down text-blue-600"
+                                ></i>
+                            </span>
+                        </summary>
+                        <div
+                            class="px-6 pb-6 pt-0 ml-12 text-slate-600 leading-relaxed"
+                        >
+                            <p>
+                                Yes. Every vehicle on our roster holds a valid
+                                "Yellow Board" registration, Fitness Certificate
+                                (FC), and Commercial Insurance. We ensure your
+                                company carries zero legal liability.
+                            </p>
+                        </div>
+                    </details>
+
+                    <!-- FAQ 6 -->
+                    <details
+                        class="group bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden"
+                    >
+                        <summary
+                            class="flex items-center justify-between p-6 cursor-pointer list-none"
+                        >
+                            <div class="flex items-center gap-4">
+                                <div
+                                    class="flex-shrink-0 w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-sm"
+                                >
+                                    6
+                                </div>
+                                <h3 class="font-bold text-slate-900 text-lg">
+                                    What is your SLA (Service Level Agreement)
+                                    for breakdowns?
+                                </h3>
+                            </div>
+                            <span
+                                class="transition-transform duration-300 group-open:rotate-180"
+                            >
+                                <i
+                                    class="fa-solid fa-chevron-down text-blue-600"
+                                ></i>
+                            </span>
+                        </summary>
+                        <div
+                            class="px-6 pb-6 pt-0 ml-12 text-slate-600 leading-relaxed"
+                        >
+                            <p>
+                                We adhere to a strict 60-minute replacement
+                                guarantee. In case of a mechanical failure or
+                                driver unavailability, a backup vehicle is
+                                dispatched immediately to ensure your operations
+                                continue.
+                            </p>
+                        </div>
+                    </details>
+
+                    <!-- FAQ 7 -->
+                    <details
+                        class="group bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden"
+                    >
+                        <summary
+                            class="flex items-center justify-between p-6 cursor-pointer list-none"
+                        >
+                            <div class="flex items-center gap-4">
+                                <div
+                                    class="flex-shrink-0 w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-sm"
+                                >
+                                    7
+                                </div>
+                                <h3 class="font-bold text-slate-900 text-lg">
+                                    Can we sign a single contract for multiple
+                                    Tamil Nadu branches?
+                                </h3>
+                            </div>
+                            <span
+                                class="transition-transform duration-300 group-open:rotate-180"
+                            >
+                                <i
+                                    class="fa-solid fa-chevron-down text-blue-600"
+                                ></i>
+                            </span>
+                        </summary>
+                        <div
+                            class="px-6 pb-6 pt-0 ml-12 text-slate-600 leading-relaxed"
+                        >
+                            <p>
+                                Yes. We support multi-city operations (Chennai,
+                                Coimbatore, Madurai, Hosur). You can sign one
+                                master agreement for all locations to
+                                standardize your billing and service quality.
+                            </p>
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer / Sticky CTA -->
+        <section id="contact" class="bg-slate-900 text-white py-16">
+            <div class="max-w-4xl mx-auto px-6 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold mb-6">
+                    Ready to Transform Your Employee Commute?
+                </h2>
+                <p class="text-slate-300 text-lg mb-10">
+                    Get a customized ETS proposal tailored to your company's
+                    needs. Free consultation with our transport experts.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a
+                        href="tel:+919092303060"
+                        class="inline-flex items-center justify-center gap-3 bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 px-8 rounded-lg transition-all"
+                    >
+                        <i class="fa-solid fa-phone"></i> Call ETS Desk
+                    </a>
+                    <a
+                        href="mailto:bookings@kalidasstravels.in?subject=ETS Inquiry"
+                        class="inline-flex items-center justify-center gap-3 bg-transparent border border-slate-600 hover:bg-slate-800 text-white font-bold py-4 px-8 rounded-lg transition-all"
+                    >
+                        <i class="fa-solid fa-envelope"></i> Email Us
+                    </a>
+                </div>
+                <p class="text-slate-400 text-sm mt-6">
+                    Response within 2 hours during business hours
+                </p>
+            </div>
+        </section>
+    </main>
+</Layout>

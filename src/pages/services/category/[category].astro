@@ -5,7 +5,7 @@ import serviceDetails from '../../../data/serviceDetails.json';
 export async function getStaticPaths() {
   return [
     { params: { category: 'acting-drivers' }, props: { title: 'Acting Drivers', description: 'Professional drivers for your personal vehicle' } },
-    { params: { category: 'corporate' }, props: { title: 'Corporate Travel', description: 'Reliable transport solutions for businesses' } },
+    { params: { category: 'corporate' }, props: { title: 'Corporate Employee Transport Services', description: 'Reliable, compliant, and cost-effective transport solutions for businesses' } },
     { params: { category: 'airport-transfer' }, props: { title: 'Airport Transfer', description: 'Seamless airport pickups and drops' } },
     { params: { category: 'temple-tours' }, props: { title: 'Temple Tours', description: 'Spiritual journeys across Tamil Nadu' } },
     { params: { category: 'popular-destinations' }, props: { title: 'Popular Destinations', description: 'Explore heritage sites, beaches, and city tours' } },
@@ -97,125 +97,272 @@ const schema = {
   image={heroImage}
   schema={schema}
 >
-  <main class="bg-gray-50 min-h-screen py-20">
-    <!-- Hero Header -->
-    <div class="bg-black text-white pt-32 pb-16 px-6 relative overflow-hidden">
-      <div class="absolute inset-0 bg-gradient-to-br from-red-900/40 to-black z-0"></div>
-      <div class="max-w-7xl mx-auto relative z-10 text-center">
-        <span class="inline-block py-1 px-3 rounded-full bg-red-600/20 border border-red-500/30 text-red-400 text-xs font-semibold tracking-wider mb-4 uppercase">
-          Service Category
-        </span>
-        <h1 class="text-3xl md:text-5xl font-bold mb-4 leading-tight">{title}</h1>
-        <p class="text-gray-300 text-lg max-w-2xl mx-auto">{description}</p>
-      </div>
-    </div>
-
-    <!-- Dedicated Corporate Section (only for corporate category) -->
-    {category === 'corporate' && (
-      <section class="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-8 mb-12 mt-[-4rem] relative z-30 border border-gray-100">
-        <h2 class="text-2xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-          <i class="fa-solid fa-building text-red-600"></i> Corporate Services
-        </h2>
-        <ul class="list-disc pl-6 text-gray-800 space-y-2 mb-6">
-          <li><b>Employee Transportation:</b> Monthly Cab Services, Shift Pickups, Safe Staff Movement</li>
-          <li><b>Event Support:</b> Shuttle services for corporate events, conferences, and offsites</li>
-          <li><b>Billing:</b> <span class="font-semibold text-green-700">GST Invoicing Available</span> for all corporate clients</li>
-        </ul>
-        <div class="flex flex-col md:flex-row gap-4 items-center">
-          <a href="#corporate-quote" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg shadow transition text-lg">Get a Corporate Quote</a>
-          <span class="text-gray-500 text-sm">Quick response guaranteed</span>
+  {category === 'corporate' ? (
+    <main class="bg-slate-50 min-h-screen font-sans">
+      <!-- Corporate Hero Section -->
+      <section class="relative bg-slate-900 text-white pt-32 pb-24 px-6 overflow-hidden">
+        <div class="absolute inset-0 z-0">
+          <div class="absolute inset-0 bg-gradient-to-r from-slate-900 via-slate-900/95 to-slate-900/40 z-10"></div>
+          <img src="/images/services/corporate.jpg" alt="Corporate Mobility" class="w-full h-full object-cover opacity-30" />
+        </div>
+        
+        <div class="max-w-7xl mx-auto relative z-20 text-center md:text-left">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-400/20 text-blue-300 text-xs font-bold tracking-widest uppercase mb-6">
+            <span class="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></span>
+            Enterprise Solutions
+          </div>
+          <h1 class="text-4xl md:text-6xl font-extrabold mb-6 tracking-tight leading-tight">
+            The Complete <br class="hidden md:block" />
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-200">Corporate Mobility Suite</span>
+          </h1>
+          <p class="text-lg md:text-xl text-slate-300 max-w-2xl mb-10 leading-relaxed">
+            One strategic partner for all your business travel needs. From automated daily commutes to premium executive movement, we drive your business forward.
+          </p>
+          <div class="flex flex-wrap gap-4 justify-center md:justify-start">
+            <a href="#contact-expert" class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 px-8 rounded-lg shadow-lg shadow-blue-900/20 transition-all transform hover:-translate-y-1">
+              Consult an Expert
+            </a>
+            <a href="#branch-grid" class="bg-white/5 hover:bg-white/10 text-white font-semibold py-4 px-8 rounded-lg border border-white/10 backdrop-blur-sm transition-all">
+              View Services
+            </a>
+          </div>
         </div>
       </section>
-    )}
 
-    <!-- Corporate Quote Form (only for corporate category) -->
-    {category === 'corporate' && (
-      <section id="corporate-quote" class="max-w-2xl mx-auto bg-gray-50 rounded-xl shadow p-8 mb-12 border border-gray-100">
-        <h3 class="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-          <i class="fa-solid fa-envelope text-blue-600"></i> Get a Corporate Quote
-        </h3>
-        <form name="corporate-quote" method="POST" data-netlify="true" class="space-y-4">
-          <input type="hidden" name="form-name" value="corporate-quote" />
-          <div>
-            <label class="block text-gray-700 font-semibold mb-1">Company Name</label>
-            <input type="text" name="company" required class="w-full border border-gray-300 rounded px-4 py-2 focus:ring-2 focus:ring-blue-400" placeholder="Your Company Name" />
-          </div>
-          <div>
-            <label class="block text-gray-700 font-semibold mb-1">Number of Employees</label>
-            <input type="number" name="employees" min="1" required class="w-full border border-gray-300 rounded px-4 py-2 focus:ring-2 focus:ring-blue-400" placeholder="e.g. 50" />
-          </div>
-          <div>
-            <label class="block text-gray-700 font-semibold mb-1">Type of Service Needed</label>
-            <select name="service" required class="w-full border border-gray-300 rounded px-4 py-2 focus:ring-2 focus:ring-blue-400">
-              <option value="Employee Transportation">Employee Transportation</option>
-              <option value="Event Support">Event Support</option>
-              <option value="Monthly Cab">Monthly Cab</option>
-              <option value="Other">Other</option>
-            </select>
-          </div>
-          <div>
-            <label class="block text-gray-700 font-semibold mb-1">Contact Email / Phone</label>
-            <input type="text" name="contact" required class="w-full border border-gray-300 rounded px-4 py-2 focus:ring-2 focus:ring-blue-400" placeholder="Email or Phone" />
-          </div>
-          <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg shadow transition">Request Quote</button>
-        </form>
+      <!-- Trusted By Strip -->
+      <section class="bg-white py-12 border-b border-slate-100">
+        <div class="max-w-7xl mx-auto px-6">
+          <h3 class="text-center text-sm font-bold text-slate-500 uppercase tracking-wider mb-6">Trusted by Leading Organizations</h3>
+          <p class="text-center text-slate-600 max-w-3xl mx-auto">
+            Supporting Chennai's IT & Manufacturing sectors with 24/7 mobility solutions. Serving businesses from startups to established enterprises with reliable, compliant transport services.
+          </p>
+        </div>
       </section>
-    )}
 
-    <!-- Existing Service Cards -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 relative z-20">
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {categoryServices.map((service) => (
-          <a 
-            href={`/services/${service.slug}`}
-            class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 group flex flex-col h-full overflow-hidden"
-          >
-            <div class="h-48 overflow-hidden relative">
-              <img 
-                src={serviceImages[service.slug] || serviceCategoryImages[service.category] || '/images/logo.png'} 
-                alt={service.title} 
-                class="w-full h-full object-cover group-hover:scale-105 transition duration-500" 
-              />
-              <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80"></div>
-            </div>
-            <div class="p-6 flex-1 flex flex-col">
-              <div class="flex items-center justify-between mb-4">
-                <span class="text-xs font-bold text-red-600 bg-red-50 px-2 py-1 rounded uppercase tracking-wide">
-                  {service.category}
-                </span>
-                <i class="fa-solid fa-arrow-right text-gray-300 group-hover:text-red-600 transition-colors"></i>
+      <!-- Main Service Grid (The Branch) -->
+      <section id="branch-grid" class="max-w-7xl mx-auto px-6 -mt-16 relative z-30 pb-20">
+        <div class="grid md:grid-cols-2 gap-6">
+          
+          <!-- Card 1: Employee Transportation -->
+          <div class="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-slate-100 relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-32 h-32 bg-blue-50 rounded-bl-full -mr-10 -mt-10 transition-transform group-hover:scale-110"></div>
+            <div class="relative z-10">
+              <div class="w-14 h-14 bg-blue-600 rounded-xl flex items-center justify-center text-white text-2xl mb-6 shadow-blue-200 shadow-lg">
+                <i class="fa-solid fa-users-line"></i>
               </div>
-              <h3 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-red-600 transition-colors">
-                {service.title}
-              </h3>
-              {service.overview && (
-                <p class="text-gray-500 text-sm line-clamp-3 mb-4">
-                  {service.overview}
-                </p>
-              )}
-              <!-- Mini Tariff Preview -->
-              {service.tariff && service.tariff.rows.length > 0 && (
-                <div class="bg-gray-50 rounded p-3 text-xs text-gray-600 mb-4">
-                  <div class="flex justify-between font-semibold border-b border-gray-200 pb-1 mb-1">
-                    <span>{service.tariff.headers[0]}</span>
-                    <span>{service.tariff.headers[service.tariff.headers.length - 1]}</span>
-                  </div>
-                  <div class="flex justify-between">
-                    <span>{service.tariff.rows[0][0]}</span>
-                    <span class="font-bold text-gray-900">{service.tariff.rows[0][service.tariff.rows[0].length - 1]}</span>
-                  </div>
-                </div>
-              )}
+              <h3 class="text-2xl font-bold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors">Employee Transportation</h3>
+              <p class="text-slate-600 mb-6 leading-relaxed">
+                Safe, punctual daily commute solutions for your workforce. Features automated rostering, real-time tracking, and route optimization to reduce costs.
+              </p>
+              <ul class="space-y-2 mb-6 text-sm text-slate-500">
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-green-500"></i> 24/7 Shift Support</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-green-500"></i> GPS & Panic Button</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-green-500"></i> Women Safety Protocols (Safe-Drop Confirmation & Escort Guard Provision)</li>
+              </ul>
+              <a href="/services/employee-transportation" class="inline-flex items-center text-blue-600 font-semibold group-hover:gap-2 transition-all">
+                Explore ETS <i class="fa-solid fa-arrow-right ml-2"></i>
+              </a>
             </div>
-            <div class="mt-auto pt-4 px-6 pb-6 border-t border-gray-100 flex items-center justify-between text-sm font-medium">
-              <span class="text-gray-600">View Details</span>
-              <span class="text-red-600 group-hover:translate-x-1 transition-transform">
-                Book Now &rarr;
-              </span>
+          </div>
+
+          <!-- Card 2: On-Demand Business Travel -->
+          <div class="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-slate-100 relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-32 h-32 bg-indigo-50 rounded-bl-full -mr-10 -mt-10 transition-transform group-hover:scale-110"></div>
+            <div class="relative z-10">
+              <div class="w-14 h-14 bg-indigo-600 rounded-xl flex items-center justify-center text-white text-2xl mb-6 shadow-indigo-200 shadow-lg">
+                <i class="fa-solid fa-briefcase"></i>
+              </div>
+              <h3 class="text-2xl font-bold text-slate-900 mb-3 group-hover:text-indigo-600 transition-colors">On-Demand Business Travel</h3>
+              <p class="text-slate-600 mb-6 leading-relaxed">
+                Flexible spot rentals for client visits, airport transfers, and inter-city travel. Book reliable sedans and SUVs instantly for your team.
+              </p>
+              <ul class="space-y-2 mb-6 text-sm text-slate-500">
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-green-500"></i> Airport Meet & Greet</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-green-500"></i> Hourly Packages</li>
+              </ul>
+              <a href="/services/business-travel" class="inline-flex items-center text-indigo-600 font-semibold group-hover:gap-2 transition-all">
+                Book a Ride <i class="fa-solid fa-arrow-right ml-2"></i>
+              </a>
             </div>
-          </a>
-        ))}
+          </div>
+
+          <!-- Card 3: Executive & VIP Fleet -->
+          <div class="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-slate-100 relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-32 h-32 bg-slate-100 rounded-bl-full -mr-10 -mt-10 transition-transform group-hover:scale-110"></div>
+            <div class="relative z-10">
+              <div class="w-14 h-14 bg-slate-800 rounded-xl flex items-center justify-center text-white text-2xl mb-6 shadow-slate-300 shadow-lg">
+                <i class="fa-solid fa-crown"></i>
+              </div>
+              <h3 class="text-2xl font-bold text-slate-900 mb-3 group-hover:text-slate-700 transition-colors">Executive & VIP Fleet</h3>
+              <p class="text-slate-600 mb-6 leading-relaxed">
+                Premium chauffeur-driven luxury cars (Innova Crysta, Altis, Benz) for leadership teams and high-profile guests. Impeccable service guaranteed.
+              </p>
+              <ul class="space-y-2 mb-6 text-sm text-slate-500">
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-green-500"></i> Uniformed & Verified Chauffeurs</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-green-500"></i> Amenities Onboard</li>
+              </ul>
+              <a href="/services/executive-fleet" class="inline-flex items-center text-slate-800 font-semibold group-hover:gap-2 transition-all">
+                View Fleet <i class="fa-solid fa-arrow-right ml-2"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Card 4: Events & MICE Logistics -->
+          <div class="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-slate-100 relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-32 h-32 bg-orange-50 rounded-bl-full -mr-10 -mt-10 transition-transform group-hover:scale-110"></div>
+            <div class="relative z-10">
+              <div class="w-14 h-14 bg-orange-500 rounded-xl flex items-center justify-center text-white text-2xl mb-6 shadow-orange-200 shadow-lg">
+                <i class="fa-solid fa-calendar-check"></i>
+              </div>
+              <h3 class="text-2xl font-bold text-slate-900 mb-3 group-hover:text-orange-600 transition-colors">Events & MICE Logistics</h3>
+              <p class="text-slate-600 mb-6 leading-relaxed">
+                End-to-end transport management for corporate events, team offsites, and conferences. We handle bulk bookings with buses and tempo travellers.
+              </p>
+              <ul class="space-y-2 mb-6 text-sm text-slate-500">
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-green-500"></i> On-site Coordinators</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-green-500"></i> Large Fleet Access</li>
+              </ul>
+              <a href="/services/events-mice" class="inline-flex items-center text-orange-600 font-semibold group-hover:gap-2 transition-all">
+                Plan Event <i class="fa-solid fa-arrow-right ml-2"></i>
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Trust Indicators -->
+      <section class="bg-white py-20 border-t border-slate-100">
+        <div class="max-w-7xl mx-auto px-6">
+          <div class="text-center mb-16">
+            <h2 class="text-3xl font-bold text-slate-900 mb-4">Why Leading Companies Choose Us</h2>
+            <div class="w-20 h-1 bg-blue-600 mx-auto rounded-full"></div>
+          </div>
+          
+          <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+            <div class="p-6">
+              <div class="w-20 h-20 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-6">
+                <i class="fa-solid fa-laptop-code text-3xl text-blue-600"></i>
+              </div>
+              <h3 class="text-xl font-bold text-slate-900 mb-3">Unified Tech Dashboard</h3>
+              <p class="text-slate-600">Complete visibility over your transport operations. Track rides, manage rosters, and download invoices from a single admin panel.</p>
+            </div>
+            
+            <div class="p-6">
+              <div class="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-6">
+                <i class="fa-solid fa-file-invoice-dollar text-3xl text-green-600"></i>
+              </div>
+              <h3 class="text-xl font-bold text-slate-900 mb-3">GST Compliant Billing</h3>
+              <p class="text-slate-600">Hassle-free, 100% GST compliant monthly invoices with consolidated trip reports for your finance team.</p>
+            </div>
+
+            <div class="p-6">
+              <div class="w-20 h-20 bg-purple-50 rounded-full flex items-center justify-center mx-auto mb-6">
+                <i class="fa-solid fa-clipboard-check text-3xl text-purple-600"></i>
+              </div>
+              <h3 class="text-xl font-bold text-slate-900 mb-3">100% Compliance</h3>
+              <p class="text-slate-600">Zero compromise on statutory requirements. All vehicles and drivers are fully compliant with state and central transport regulations.</p>
+            </div>
+
+            <div class="p-6">
+              <div class="w-20 h-20 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-6">
+                <i class="fa-solid fa-tower-broadcast text-3xl text-red-600"></i>
+              </div>
+              <h3 class="text-xl font-bold text-slate-900 mb-3">24/7 Command Center</h3>
+              <p class="text-slate-600">Our dedicated support team monitors every trip round-the-clock, ensuring rapid response to any on-road contingencies.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer CTA -->
+      <section id="contact-expert" class="bg-slate-900 text-white py-16">
+        <div class="max-w-5xl mx-auto px-6 text-center">
+          <h2 class="text-3xl md:text-4xl font-bold mb-6">Ready to upgrade your corporate travel experience?</h2>
+          <p class="text-slate-400 text-lg mb-10 max-w-2xl mx-auto">
+            Join the network of companies that trust Kalidass Travels for safe, reliable, and efficient employee mobility.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="tel:+919092303060" class="inline-flex items-center justify-center gap-3 bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 px-8 rounded-lg transition-all">
+              <i class="fa-solid fa-phone"></i> Call Corporate Desk
+            </a>
+            <a href="mailto:bookings@kalidasstravels.in" class="inline-flex items-center justify-center gap-3 bg-transparent border border-slate-600 hover:bg-slate-800 text-white font-bold py-4 px-8 rounded-lg transition-all">
+              <i class="fa-solid fa-envelope"></i> Request Proposal
+            </a>
+          </div>
+          <p class="text-slate-400 text-sm mt-4">Direct line to B2B Account Manager (No waiting)</p>
+        </div>
+      </section>
+    </main>
+  ) : (
+    <main class="bg-gray-50 min-h-screen py-20">
+      <!-- Standard Hero Header for other categories -->
+      <div class="bg-black text-white pt-32 pb-16 px-6 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-red-900/40 to-black z-0"></div>
+        <div class="max-w-7xl mx-auto relative z-10 text-center">
+          <span class="inline-block py-1 px-3 rounded-full bg-red-600/20 border border-red-500/30 text-red-400 text-xs font-semibold tracking-wider mb-4 uppercase">
+            Service Category
+          </span>
+          <h1 class="text-3xl md:text-5xl font-bold mb-4 leading-tight">{title}</h1>
+          <p class="text-gray-300 text-lg max-w-2xl mx-auto">{description}</p>
+        </div>
       </div>
-    </div>
-  </main>
+
+      <!-- Standard Service Cards Grid -->
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 relative z-20">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {categoryServices.map((service) => (
+            <a 
+              href={`/services/${service.slug}`}
+              class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 group flex flex-col h-full overflow-hidden"
+            >
+              <div class="h-48 overflow-hidden relative">
+                <img 
+                  src={serviceImages[service.slug] || serviceCategoryImages[service.category] || '/images/logo.png'} 
+                  alt={service.title} 
+                  class="w-full h-full object-cover group-hover:scale-105 transition duration-500" 
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80"></div>
+              </div>
+              <div class="p-6 flex-1 flex flex-col">
+                <div class="flex items-center justify-between mb-4">
+                  <span class="text-xs font-bold text-red-600 bg-red-50 px-2 py-1 rounded uppercase tracking-wide">
+                    {service.category}
+                  </span>
+                  <i class="fa-solid fa-arrow-right text-gray-300 group-hover:text-red-600 transition-colors"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-red-600 transition-colors">
+                  {service.title}
+                </h3>
+                {service.overview && (
+                  <p class="text-gray-500 text-sm line-clamp-3 mb-4">
+                    {service.overview}
+                  </p>
+                )}
+                <!-- Mini Tariff Preview -->
+                {service.tariff && service.tariff.rows.length > 0 && (
+                  <div class="bg-gray-50 rounded p-3 text-xs text-gray-600 mb-4">
+                    <div class="flex justify-between font-semibold border-b border-gray-200 pb-1 mb-1">
+                      <span>{service.tariff.headers[0]}</span>
+                      <span>{service.tariff.headers[service.tariff.headers.length - 1]}</span>
+                    </div>
+                    <div class="flex justify-between">
+                      <span>{service.tariff.rows[0][0]}</span>
+                      <span class="font-bold text-gray-900">{service.tariff.rows[0][service.tariff.rows[0].length - 1]}</span>
+                    </div>
+                  </div>
+                )}
+              </div>
+              <div class="mt-auto pt-4 px-6 pb-6 border-t border-gray-100 flex items-center justify-between text-sm font-medium">
+                <span class="text-gray-600">View Details</span>
+                <span class="text-red-600 group-hover:translate-x-1 transition-transform">
+                  Book Now &rarr;
+                </span>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </main>
+  )}
 </Layout>

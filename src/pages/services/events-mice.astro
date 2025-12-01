@@ -1,0 +1,623 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+const title = "Events & MICE Logistics";
+const description =
+    "End-to-end transport management for corporate events, team offsites, and conferences. We handle bulk bookings with buses and tempo travellers.";
+
+const schema = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: title,
+    description: description,
+    provider: {
+        "@type": "Organization",
+        name: "Kalidass Travels",
+    },
+};
+---
+
+<Layout
+    title={`${title} - Kalidass Travels`}
+    description={description}
+    schema={schema}
+>
+    <main class="bg-slate-50 min-h-screen">
+        <!-- Hero Section -->
+        <section
+            class="relative bg-gradient-to-br from-orange-900 via-orange-800 to-red-900 text-white pt-32 pb-20 px-6"
+        >
+            <div class="max-w-5xl mx-auto text-center">
+                <div
+                    class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-500/20 border border-orange-400/30 text-orange-200 text-xs font-bold uppercase mb-6"
+                >
+                    <i class="fa-solid fa-calendar-check"></i> Event Solution
+                </div>
+                <h1
+                    class="text-4xl md:text-6xl font-extrabold mb-6 leading-tight"
+                >
+                    Events & MICE<br class="hidden md:block" />
+                    <span class="text-orange-300">Logistics</span>
+                </h1>
+                <p class="text-xl text-slate-200 max-w-3xl mx-auto mb-10">
+                    Seamless transport coordination for corporate events,
+                    conferences, team offsites, and large-scale gatherings. From
+                    10 to 1000+ attendees.
+                </p>
+                <div class="flex flex-wrap gap-4 justify-center">
+                    <a
+                        href="#contact"
+                        class="bg-orange-600 hover:bg-orange-500 text-white font-bold py-4 px-8 rounded-lg shadow-lg transition-all"
+                    >
+                        Plan Your Event
+                    </a>
+                    <a
+                        href="#services"
+                        class="bg-white/10 hover:bg-white/20 text-white font-semibold py-4 px-8 rounded-lg border border-white/20 backdrop-blur-sm transition-all"
+                    >
+                        Our Services
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Event Types -->
+        <section class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2
+                        class="text-3xl md:text-4xl font-bold text-slate-900 mb-4"
+                    >
+                        We Handle All Event Types
+                    </h2>
+                    <div class="w-20 h-1 bg-orange-600 mx-auto rounded-full">
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div
+                        class="bg-slate-50 p-6 rounded-xl border border-slate-200 hover:shadow-lg transition-shadow"
+                    >
+                        <div
+                            class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mb-4"
+                        >
+                            <i
+                                class="fa-solid fa-users text-3xl text-orange-600"
+                            ></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-900 mb-2">
+                            Corporate Conferences
+                        </h3>
+                        <p class="text-slate-600 text-sm">
+                            Multi-day events with shuttle services, airport
+                            pickups, and hotel transfers.
+                        </p>
+                    </div>
+
+                    <div
+                        class="bg-slate-50 p-6 rounded-xl border border-slate-200 hover:shadow-lg transition-shadow"
+                    >
+                        <div
+                            class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4"
+                        >
+                            <i
+                                class="fa-solid fa-people-group text-3xl text-blue-600"
+                            ></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-900 mb-2">
+                            Team Offsites
+                        </h3>
+                        <p class="text-slate-600 text-sm">
+                            Weekend retreats, team building activities, and
+                            outstation trips.
+                        </p>
+                    </div>
+
+                    <div
+                        class="bg-slate-50 p-6 rounded-xl border border-slate-200 hover:shadow-lg transition-shadow"
+                    >
+                        <div
+                            class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mb-4"
+                        >
+                            <i
+                                class="fa-solid fa-handshake text-3xl text-purple-600"
+                            ></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-900 mb-2">
+                            Client Events
+                        </h3>
+                        <p class="text-slate-600 text-sm">
+                            Product launches, dealer meets, and customer
+                            appreciation events.
+                        </p>
+                    </div>
+
+                    <div
+                        class="bg-slate-50 p-6 rounded-xl border border-slate-200 hover:shadow-lg transition-shadow"
+                    >
+                        <div
+                            class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4"
+                        >
+                            <i
+                                class="fa-solid fa-graduation-cap text-3xl text-green-600"
+                            ></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-900 mb-2">
+                            Training Programs
+                        </h3>
+                        <p class="text-slate-600 text-sm">
+                            Multi-location training sessions with coordinated
+                            transport schedules.
+                        </p>
+                    </div>
+
+                    <div
+                        class="bg-slate-50 p-6 rounded-xl border border-slate-200 hover:shadow-lg transition-shadow"
+                    >
+                        <div
+                            class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-4"
+                        >
+                            <i
+                                class="fa-solid fa-champagne-glasses text-3xl text-red-600"
+                            ></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-900 mb-2">
+                            Corporate Celebrations
+                        </h3>
+                        <p class="text-slate-600 text-sm">
+                            Annual day, awards nights, and milestone
+                            celebrations.
+                        </p>
+                    </div>
+
+                    <div
+                        class="bg-slate-50 p-6 rounded-xl border border-slate-200 hover:shadow-lg transition-shadow"
+                    >
+                        <div
+                            class="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mb-4"
+                        >
+                            <i
+                                class="fa-solid fa-building text-3xl text-indigo-600"
+                            ></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-900 mb-2">
+                            Trade Shows
+                        </h3>
+                        <p class="text-slate-600 text-sm">
+                            Exhibition transport, booth setup crew movement, and
+                            VIP shuttles.
+                        </p>
+                    </div>
+
+                    <div
+                        class="bg-slate-50 p-6 rounded-xl border border-slate-200 hover:shadow-lg transition-shadow"
+                    >
+                        <div
+                            class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mb-4"
+                        >
+                            <i
+                                class="fa-solid fa-plane-departure text-3xl text-yellow-600"
+                            ></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-900 mb-2">
+                            Incentive Tours
+                        </h3>
+                        <p class="text-slate-600 text-sm">
+                            Reward trips with complete ground transport
+                            management.
+                        </p>
+                    </div>
+
+                    <div
+                        class="bg-slate-50 p-6 rounded-xl border border-slate-200 hover:shadow-lg transition-shadow"
+                    >
+                        <div
+                            class="w-16 h-16 bg-pink-100 rounded-full flex items-center justify-center mb-4"
+                        >
+                            <i
+                                class="fa-solid fa-microphone text-3xl text-pink-600"
+                            ></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-900 mb-2">
+                            Seminars & Workshops
+                        </h3>
+                        <p class="text-slate-600 text-sm">
+                            Speaker transport, attendee shuttles, and venue
+                            coordination.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Our Services -->
+        <section id="services" class="py-20 bg-slate-100">
+            <div class="max-w-7xl mx-auto px-6">
+                <h2 class="text-3xl font-bold text-slate-900 mb-12 text-center">
+                    Complete Event Transport Solutions
+                </h2>
+
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div
+                        class="bg-white p-8 rounded-xl shadow-sm border border-slate-200"
+                    >
+                        <div class="flex items-start gap-4 mb-4">
+                            <i
+                                class="fa-solid fa-route text-3xl text-orange-600 mt-1"
+                            ></i>
+                            <div>
+                                <h3
+                                    class="text-xl font-bold text-slate-900 mb-2"
+                                >
+                                    Route Planning
+                                </h3>
+                                <p class="text-slate-600">
+                                    Custom route design based on venue
+                                    locations, attendee distribution, and event
+                                    schedule.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div
+                        class="bg-white p-8 rounded-xl shadow-sm border border-slate-200"
+                    >
+                        <div class="flex items-start gap-4 mb-4">
+                            <i
+                                class="fa-solid fa-user-tie text-3xl text-orange-600 mt-1"
+                            ></i>
+                            <div>
+                                <h3
+                                    class="text-xl font-bold text-slate-900 mb-2"
+                                >
+                                    On-Site Coordinators
+                                </h3>
+                                <p class="text-slate-600">
+                                    Dedicated transport managers at venue to
+                                    handle real-time coordination and issues.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div
+                        class="bg-white p-8 rounded-xl shadow-sm border border-slate-200"
+                    >
+                        <div class="flex items-start gap-4 mb-4">
+                            <i
+                                class="fa-solid fa-bus text-3xl text-orange-600 mt-1"
+                            ></i>
+                            <div>
+                                <h3
+                                    class="text-xl font-bold text-slate-900 mb-2"
+                                >
+                                    Large Fleet Access
+                                </h3>
+                                <p class="text-slate-600">
+                                    Buses, tempo travellers, vans, and luxury
+                                    cars - all from a single provider.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div
+                        class="bg-white p-8 rounded-xl shadow-sm border border-slate-200"
+                    >
+                        <div class="flex items-start gap-4 mb-4">
+                            <i
+                                class="fa-solid fa-clock text-3xl text-orange-600 mt-1"
+                            ></i>
+                            <div>
+                                <h3
+                                    class="text-xl font-bold text-slate-900 mb-2"
+                                >
+                                    Time Management
+                                </h3>
+                                <p class="text-slate-600">
+                                    Precise scheduling to ensure attendees
+                                    arrive on time for sessions and activities.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div
+                        class="bg-white p-8 rounded-xl shadow-sm border border-slate-200"
+                    >
+                        <div class="flex items-start gap-4 mb-4">
+                            <i
+                                class="fa-solid fa-mobile-screen text-3xl text-orange-600 mt-1"
+                            ></i>
+                            <div>
+                                <h3
+                                    class="text-xl font-bold text-slate-900 mb-2"
+                                >
+                                    Real-Time Tracking
+                                </h3>
+                                <p class="text-slate-600">
+                                    Live GPS tracking of all vehicles with
+                                    centralized monitoring dashboard.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div
+                        class="bg-white p-8 rounded-xl shadow-sm border border-slate-200"
+                    >
+                        <div class="flex items-start gap-4 mb-4">
+                            <i
+                                class="fa-solid fa-headset text-3xl text-orange-600 mt-1"
+                            ></i>
+                            <div>
+                                <h3
+                                    class="text-xl font-bold text-slate-900 mb-2"
+                                >
+                                    24/7 Support
+                                </h3>
+                                <p class="text-slate-600">
+                                    Round-the-clock command center for immediate
+                                    response to any transport issues.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Fleet Options -->
+        <section class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-6">
+                <h2 class="text-3xl font-bold text-slate-900 mb-12 text-center">
+                    Vehicle Options for Every Group Size
+                </h2>
+
+                <div class="grid md:grid-cols-4 gap-6">
+                    <div
+                        class="border border-slate-200 rounded-xl p-6 text-center hover:shadow-lg transition-shadow"
+                    >
+                        <div
+                            class="w-20 h-20 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4"
+                        >
+                            <i class="fa-solid fa-car text-3xl text-orange-600"
+                            ></i>
+                        </div>
+                        <h3 class="font-bold text-slate-900 mb-2">Sedans</h3>
+                        <p class="text-slate-600 text-sm mb-3">4 Passengers</p>
+                        <p class="text-xs text-slate-500">
+                            VIP pickups, speaker transport
+                        </p>
+                    </div>
+
+                    <div
+                        class="border border-slate-200 rounded-xl p-6 text-center hover:shadow-lg transition-shadow"
+                    >
+                        <div
+                            class="w-20 h-20 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4"
+                        >
+                            <i
+                                class="fa-solid fa-car-side text-3xl text-orange-600"
+                            ></i>
+                        </div>
+                        <h3 class="font-bold text-slate-900 mb-2">SUVs</h3>
+                        <p class="text-slate-600 text-sm mb-3">
+                            6-7 Passengers
+                        </p>
+                        <p class="text-xs text-slate-500">
+                            Small groups, equipment transport
+                        </p>
+                    </div>
+
+                    <div
+                        class="border border-slate-200 rounded-xl p-6 text-center hover:shadow-lg transition-shadow"
+                    >
+                        <div
+                            class="w-20 h-20 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4"
+                        >
+                            <i
+                                class="fa-solid fa-van-shuttle text-3xl text-orange-600"
+                            ></i>
+                        </div>
+                        <h3 class="font-bold text-slate-900 mb-2">
+                            Tempo Travellers
+                        </h3>
+                        <p class="text-slate-600 text-sm mb-3">
+                            12-17 Passengers
+                        </p>
+                        <p class="text-xs text-slate-500">
+                            Medium groups, team outings
+                        </p>
+                    </div>
+
+                    <div
+                        class="border-2 border-orange-600 rounded-xl p-6 text-center shadow-lg"
+                    >
+                        <div
+                            class="w-20 h-20 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4"
+                        >
+                            <i class="fa-solid fa-bus text-3xl text-orange-600"
+                            ></i>
+                        </div>
+                        <h3 class="font-bold text-slate-900 mb-2">Buses</h3>
+                        <p class="text-slate-600 text-sm mb-3">
+                            35-45 Passengers
+                        </p>
+                        <p class="text-xs text-slate-500">
+                            Large events, conferences
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why Choose Us -->
+        <section class="py-20 bg-slate-100">
+            <div class="max-w-5xl mx-auto px-6">
+                <h2 class="text-3xl font-bold text-slate-900 mb-12 text-center">
+                    Why Event Planners Trust Us
+                </h2>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0">
+                            <div
+                                class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center"
+                            >
+                                <i
+                                    class="fa-solid fa-check text-xl text-green-600"
+                                ></i>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-slate-900 mb-1">
+                                Single Point of Contact
+                            </h3>
+                            <p class="text-slate-600 text-sm">
+                                One dedicated manager for all your transport
+                                needs - no juggling multiple vendors.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0">
+                            <div
+                                class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center"
+                            >
+                                <i
+                                    class="fa-solid fa-check text-xl text-green-600"
+                                ></i>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-slate-900 mb-1">
+                                Scalable Fleet
+                            </h3>
+                            <p class="text-slate-600 text-sm">
+                                From 10 to 1000+ attendees - we have the
+                                capacity and experience to handle any size.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0">
+                            <div
+                                class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center"
+                            >
+                                <i
+                                    class="fa-solid fa-check text-xl text-green-600"
+                                ></i>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-slate-900 mb-1">
+                                Backup Vehicles
+                            </h3>
+                            <p class="text-slate-600 text-sm">
+                                Standby fleet on-site to handle last-minute
+                                changes or breakdowns.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0">
+                            <div
+                                class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center"
+                            >
+                                <i
+                                    class="fa-solid fa-check text-xl text-green-600"
+                                ></i>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-slate-900 mb-1">
+                                Transparent Billing
+                            </h3>
+                            <p class="text-slate-600 text-sm">
+                                Detailed invoices with trip logs, no hidden
+                                charges, GST compliant documentation.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0">
+                            <div
+                                class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center"
+                            >
+                                <i
+                                    class="fa-solid fa-check text-xl text-green-600"
+                                ></i>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-slate-900 mb-1">
+                                Experienced Drivers
+                            </h3>
+                            <p class="text-slate-600 text-sm">
+                                Trained in event logistics, familiar with
+                                venues, and briefed on your schedule.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0">
+                            <div
+                                class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center"
+                            >
+                                <i
+                                    class="fa-solid fa-check text-xl text-green-600"
+                                ></i>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-slate-900 mb-1">
+                                Post-Event Reports
+                            </h3>
+                            <p class="text-slate-600 text-sm">
+                                Comprehensive transport analytics and feedback
+                                for continuous improvement.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section id="contact" class="bg-slate-900 text-white py-16">
+            <div class="max-w-4xl mx-auto px-6 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold mb-6">
+                    Plan Your Event Transport Today
+                </h2>
+                <p class="text-slate-300 text-lg mb-10">
+                    Get a customized transport plan and quote for your upcoming
+                    event. Free consultation with our MICE logistics experts.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a
+                        href="tel:+919092303060"
+                        class="inline-flex items-center justify-center gap-3 bg-orange-600 hover:bg-orange-500 text-white font-bold py-4 px-8 rounded-lg transition-all"
+                    >
+                        <i class="fa-solid fa-phone"></i> Call Events Desk
+                    </a>
+                    <a
+                        href="mailto:bookings@kalidasstravels.in?subject=Event Transport Inquiry"
+                        class="inline-flex items-center justify-center gap-3 bg-transparent border border-slate-600 hover:bg-slate-800 text-white font-bold py-4 px-8 rounded-lg transition-all"
+                    >
+                        <i class="fa-solid fa-envelope"></i> Request Proposal
+                    </a>
+                </div>
+                <p class="text-slate-400 text-sm mt-6">
+                    Book early for best availability during peak season
+                </p>
+            </div>
+        </section>
+    </main>
+</Layout>
