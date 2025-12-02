@@ -113,17 +113,17 @@ const schema = {
         <div class="flex flex-wrap gap-3 mb-4">
           <span class="inline-block py-1 px-3 rounded-full bg-red-600/20 border border-red-500/30 text-red-400 text-xs font-semibold tracking-wider uppercase">
             <span class="lang-en">{service.category}</span>
-            <span class="lang-ta hidden">{service.category_ta || service.category}</span>
+            <span class="lang-ta">{service.category_ta || service.category}</span>
           </span>
         </div>
         <h1 class="text-3xl md:text-5xl font-bold mb-4 leading-tight">
           <span class="lang-en">{service.title}</span>
-          <span class="lang-ta hidden">{service.title_ta || service.title}</span>
+          <span class="lang-ta">{service.title_ta || service.title}</span>
         </h1>
         {service.overview && (
           <p class="text-gray-300 text-lg max-w-2xl whitespace-pre-line">
             <span class="lang-en">{service.overview}</span>
-            <span class="lang-ta hidden">{service.overview_ta || service.overview}</span>
+            <span class="lang-ta">{service.overview_ta || service.overview}</span>
           </p>
         )}
       </div>
@@ -139,7 +139,7 @@ const schema = {
                 <h2 class="text-xl font-bold text-gray-900 flex items-center gap-2">
                   <i class="fa-solid fa-map-location-dot text-red-600"></i> 
                   <span class="lang-en">Route Plan</span>
-                  <span class="lang-ta hidden">பயணத் திட்டம்</span>
+                  <span class="lang-ta">பயணத் திட்டம்</span>
                 </h2>
                 {service.duration && (
                     <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-gray-200 shadow-sm text-sm font-bold text-gray-700">
@@ -176,7 +176,7 @@ const schema = {
             <h2 class="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
               <i class="fa-solid fa-tag text-red-600"></i> 
               <span class="lang-en">Tariff & Pricing</span>
-              <span class="lang-ta hidden">கட்டணம் & விலை</span>
+              <span class="lang-ta">கட்டணம் & விலை</span>
             </h2>
             
             {/* English Tariff */}
@@ -254,7 +254,7 @@ const schema = {
             </div>
 
             {/* Tamil Tariff */}
-            <div class="lang-ta hidden">
+            <div class="lang-ta">
               {(service.tariff.headers_ta || service.tariff.headers).length > 3 && (service.tariff.headers_ta || service.tariff.headers)[(service.tariff.headers_ta || service.tariff.headers).length - 1].toLowerCase().includes('total') ? (
                 <div class="space-y-4">
                   {(service.tariff.rows_ta || service.tariff.rows).map((row, rowIndex) => (
@@ -338,7 +338,7 @@ const schema = {
               <h3 class="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
                 <i class="fa-solid fa-check-circle text-green-600"></i> 
                 <span class="lang-en">What's Included</span>
-                <span class="lang-ta hidden">சேர்க்கப்பட்டுள்ளது</span>
+                <span class="lang-ta">சேர்க்கப்பட்டுள்ளது</span>
               </h3>
               <ul class="space-y-3 lang-en">
                 {service.includes.map((item) => (
@@ -348,7 +348,7 @@ const schema = {
                   </li>
                 ))}
               </ul>
-              <ul class="space-y-3 lang-ta hidden">
+              <ul class="space-y-3 lang-ta">
                 {(service.includes_ta || service.includes).map((item) => (
                   <li class="flex items-start gap-3 text-gray-600 text-sm">
                     <span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-green-500 shrink-0"></span>
@@ -365,7 +365,7 @@ const schema = {
               <h3 class="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
                 <i class="fa-solid fa-times-circle text-red-500"></i> 
                 <span class="lang-en">Not Included</span>
-                <span class="lang-ta hidden">சேர்க்கப்படவில்லை</span>
+                <span class="lang-ta">சேர்க்கப்படவில்லை</span>
               </h3>
               <ul class="space-y-3 lang-en">
                 {service.excludes.map((item) => (
@@ -375,7 +375,7 @@ const schema = {
                   </li>
                 ))}
               </ul>
-              <ul class="space-y-3 lang-ta hidden">
+              <ul class="space-y-3 lang-ta">
                 {(service.excludes_ta || service.excludes).map((item) => (
                   <li class="flex items-start gap-3 text-gray-500 text-sm">
                     <span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-red-300 shrink-0"></span>
@@ -393,7 +393,7 @@ const schema = {
             <h2 class="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
               <i class={`fa-solid ${guideLabels.sectionIcon} ${isTour ? 'text-orange-600' : 'text-blue-600'}`}></i> 
               <span class="lang-en">{guideLabels.sectionTitle}</span>
-              <span class="lang-ta hidden">{isTour ? "பயண வழிகாட்டி & குறிப்புகள்" : "சேவை விவரங்கள்"}</span>
+              <span class="lang-ta">{isTour ? "பயண வழிகாட்டி & குறிப்புகள்" : "சேவை விவரங்கள்"}</span>
             </h2>
             
             <div class="grid md:grid-cols-2 gap-8">
@@ -403,11 +403,11 @@ const schema = {
                   <h3 class="font-bold text-gray-800 mb-2 flex items-center gap-2">
                     <i class={`fa-solid ${guideLabels.col1Icon} ${isTour ? 'text-orange-500' : 'text-blue-500'}`}></i> 
                     <span class="lang-en">{guideLabels.col1Title}</span>
-                    <span class="lang-ta hidden">{isTour ? "வரலாறு & சிறப்பு" : "சேவை கண்ணோட்டம்"}</span>
+                    <span class="lang-ta">{isTour ? "வரலாறு & சிறப்பு" : "சேவை கண்ணோட்டம்"}</span>
                   </h3>
                   <p class="text-gray-600 text-sm leading-relaxed whitespace-pre-line">
                     <span class="lang-en">{service.travelGuide.history}</span>
-                    <span class="lang-ta hidden">{service.travelGuide.history_ta || service.travelGuide.history}</span>
+                    <span class="lang-ta">{service.travelGuide.history_ta || service.travelGuide.history}</span>
                   </p>
                 </div>
               )}
@@ -419,11 +419,11 @@ const schema = {
                     <h3 class="font-bold text-gray-800 mb-2 flex items-center gap-2">
                       <i class={`fa-solid ${guideLabels.col2Icon} ${isTour ? 'text-orange-500' : 'text-blue-500'}`}></i> 
                       <span class="lang-en">{guideLabels.col2Title}</span>
-                      <span class="lang-ta hidden">{isTour ? "தரிசன நேரங்கள்" : "கிடைக்கும் தன்மை"}</span>
+                      <span class="lang-ta">{isTour ? "தரிசன நேரங்கள்" : "கிடைக்கும் தன்மை"}</span>
                     </h3>
                     <p class="text-gray-600 text-sm whitespace-pre-line">
                       <span class="lang-en">{service.travelGuide.timings}</span>
-                      <span class="lang-ta hidden">{service.travelGuide.timings_ta || service.travelGuide.timings}</span>
+                      <span class="lang-ta">{service.travelGuide.timings_ta || service.travelGuide.timings}</span>
                     </p>
                   </div>
                 )}
@@ -433,11 +433,11 @@ const schema = {
                     <h3 class="font-bold text-gray-800 mb-2 flex items-center gap-2">
                       <i class="fa-solid fa-user-tie text-orange-500"></i> 
                       <span class="lang-en">Dress Code</span>
-                      <span class="lang-ta hidden">ஆடை கட்டுப்பாடு</span>
+                      <span class="lang-ta">ஆடை கட்டுப்பாடு</span>
                     </h3>
                     <p class="text-gray-600 text-sm">
                       <span class="lang-en">{service.travelGuide.dressCode}</span>
-                      <span class="lang-ta hidden">{service.travelGuide.dressCode_ta || service.travelGuide.dressCode}</span>
+                      <span class="lang-ta">{service.travelGuide.dressCode_ta || service.travelGuide.dressCode}</span>
                     </p>
                   </div>
                 )}
@@ -450,7 +450,7 @@ const schema = {
                 <h3 class="font-bold text-gray-800 mb-3 flex items-center gap-2">
                   <i class={`fa-solid fa-lightbulb ${isTour ? 'text-yellow-500' : 'text-blue-500'}`}></i> 
                   <span class="lang-en">{guideLabels.tipsTitle}</span>
-                  <span class="lang-ta hidden">{isTour ? "முக்கிய குறிப்புகள்" : "முக்கிய தகவல்கள்"}</span>
+                  <span class="lang-ta">{isTour ? "முக்கிய குறிப்புகள்" : "முக்கிய தகவல்கள்"}</span>
                 </h3>
                 <ul class="grid md:grid-cols-2 gap-3 lang-en">
                   {service.travelGuide.tips.map((tip) => (
@@ -460,7 +460,7 @@ const schema = {
                     </li>
                   ))}
                 </ul>
-                <ul class="grid md:grid-cols-2 gap-3 lang-ta hidden">
+                <ul class="grid md:grid-cols-2 gap-3 lang-ta">
                   {(service.travelGuide.tips_ta || service.travelGuide.tips).map((tip) => (
                     <li class="flex items-start gap-2 text-sm text-gray-600">
                       <i class={`fa-solid fa-check mt-1 ${isTour ? 'text-green-500' : 'text-blue-500'}`}></i>
@@ -479,7 +479,7 @@ const schema = {
           <div class="p-6 md:p-8 border-t border-gray-100">
             <h3 class="text-lg font-bold text-gray-900 mb-6">
               <span class="lang-en">Frequently Asked Questions</span>
-              <span class="lang-ta hidden">அடிக்கடி கேட்கப்படும் கேள்விகள்</span>
+              <span class="lang-ta">அடிக்கடி கேட்கப்படும் கேள்விகள்</span>
             </h3>
             <div class="grid gap-4">
               {service.faq.map((item) => (
@@ -487,11 +487,11 @@ const schema = {
                   <p class="font-semibold text-gray-900 text-sm mb-2 flex items-start gap-2">
                     <span class="text-red-600">Q:</span> 
                     <span class="lang-en">{item.q}</span>
-                    <span class="lang-ta hidden">{item.q_ta || item.q}</span>
+                    <span class="lang-ta">{item.q_ta || item.q}</span>
                   </p>
                   <p class="text-gray-600 text-sm pl-6 border-l-2 border-gray-200">
                     <span class="lang-en">{item.a}</span>
-                    <span class="lang-ta hidden">{item.a_ta || item.a}</span>
+                    <span class="lang-ta">{item.a_ta || item.a}</span>
                   </p>
                 </div>
               ))}
@@ -504,7 +504,7 @@ const schema = {
           <div class="p-6 md:p-8 bg-blue-50 border-t border-blue-100">
             <h4 class="text-sm font-bold text-blue-900 uppercase tracking-wide mb-3">
               <span class="lang-en">Important Notes</span>
-              <span class="lang-ta hidden">முக்கிய குறிப்புகள்</span>
+              <span class="lang-ta">முக்கிய குறிப்புகள்</span>
             </h4>
             <ul class="space-y-2 lang-en">
               {service.notes.map((note) => (
@@ -513,7 +513,7 @@ const schema = {
                 </li>
               ))}
             </ul>
-            <ul class="space-y-2 lang-ta hidden">
+            <ul class="space-y-2 lang-ta">
               {(service.notes_ta || service.notes).map((note) => (
                 <li class="text-blue-800 text-sm flex items-start gap-2">
                   <i class="fa-solid fa-info-circle mt-1 opacity-70"></i> {note}
@@ -528,11 +528,11 @@ const schema = {
           <div>
             <p class="text-gray-400 text-xs uppercase tracking-wider mb-1">
               <span class="lang-en">Ready to book?</span>
-              <span class="lang-ta hidden">முன்பதிவு செய்ய தயாரா?</span>
+              <span class="lang-ta">முன்பதிவு செய்ய தயாரா?</span>
             </p>
             <p class="font-bold text-lg">
               <span class="lang-en">Instant Confirmation via WhatsApp</span>
-              <span class="lang-ta hidden">வாட்ஸ்அப் மூலம் உடனடி உறுதிப்படுத்தல்</span>
+              <span class="lang-ta">வாட்ஸ்அப் மூலம் உடனடி உறுதிப்படுத்தல்</span>
             </p>
           </div>
           <a 
@@ -542,7 +542,7 @@ const schema = {
           >
             <i class="fa-brands fa-whatsapp text-xl"></i>
             <span class="lang-en">Book Now</span>
-            <span class="lang-ta hidden">இப்போதே முன்பதிவு செய்</span>
+            <span class="lang-ta">இப்போதே முன்பதிவு செய்</span>
           </a>
         </div>
 
