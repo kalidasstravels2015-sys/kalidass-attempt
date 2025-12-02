@@ -308,6 +308,20 @@ _Please confirm availability._`;
             </div>
           </div>
 
+          {/* Date - Full Width */}
+          <div className="col-span-2 relative group">
+            <label className="text-[10px] font-bold text-gray-500 uppercase mb-0.5 block">Pickup Date</label>
+            <div className="flex items-center bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 focus-within:ring-1 ring-red-500 transition">
+              <Calendar className="text-red-500 mr-2 w-4 h-4" />
+              <input
+                type="datetime-local"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                className="bg-transparent w-full outline-none text-sm text-gray-700 font-medium cursor-pointer"
+              />
+            </div>
+          </div>
+
           {/* Passengers - Half Width */}
           <div className="col-span-1 relative group">
             <label className="text-[10px] font-bold text-gray-500 uppercase mb-0.5 block">Passengers</label>
@@ -361,20 +375,6 @@ _Please confirm availability._`;
               </div>
             </div>
           )}
-
-          {/* Date - Full Width (or Half if Round Trip) */}
-          <div className={`${activeTab === 'round' ? 'col-span-1' : 'col-span-2'} relative group`}>
-            <label className="text-[10px] font-bold text-gray-500 uppercase mb-0.5 block">Pickup Date</label>
-            <div className="flex items-center bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 focus-within:ring-1 ring-red-500 transition">
-              <Calendar className="text-red-500 mr-2 w-4 h-4" />
-              <input
-                type="datetime-local"
-                value={date}
-                onChange={(e) => setDate(e.target.value)}
-                className="bg-transparent w-full outline-none text-sm text-gray-700 font-medium cursor-pointer"
-              />
-            </div>
-          </div>
 
           {/* Name - Half Width */}
           <div className="col-span-1 relative group">
