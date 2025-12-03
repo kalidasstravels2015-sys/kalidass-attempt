@@ -38,15 +38,6 @@
       "description_ta": "Employee pickup/drop, site visits, and flexible monthly contracts that keep operations on time."
     },
     {
-      "title": "Airport Transfer",
-      "description": "Reliable, on-time drops to Chennai Airport and airport transfers for outstation teams.",
-      "icon": "plane",
-      "image": "/images/services/airport-transfer.jpg",
-      "link": "/services/category/airport-transfer",
-      "title_ta": "விமான நிலைய சவாரி",
-      "description_ta": "Reliable, on-time drops to சென்னை Airport and airport transfers for outstation teams."
-    },
-    {
       "title": "Temple Tours",
       "description": "Round trips for Tirupati, Navagraha, and heritage temple circuits with local expertise.",
       "icon": "gopuram",
@@ -54,6 +45,15 @@
       "link": "/services/category/temple-tours",
       "title_ta": "கோவில் சுற்றுலா",
       "description_ta": "Round trips for திருப்பதி, நவகிரக, and heritage temple circuits with local expertise."
+    },
+    {
+      "title": "Popular Destinations",
+      "description": "Explore heritage sites, beaches, and city tours.",
+      "icon": "map-pin",
+      "image": "/images/temple/Mahabalipuram-ECR-Temples.jpg",
+      "link": "/services/category/popular-destinations",
+      "title_ta": "பிரபலமான இடங்கள்",
+      "description_ta": "Explore heritage sites, beaches, and city tours."
     }
   ],
   "fleet": [

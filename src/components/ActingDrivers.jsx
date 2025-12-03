@@ -193,20 +193,6 @@ export default function ActingDrivers() {
         </div>
       </section>
 
-      {/* Floating WhatsApp CTA */}
-      <a 
-        href="https://wa.me/919092303060" 
-        target="_blank"
-        rel="noopener noreferrer"
-        className="fixed bottom-6 right-6 bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-lg transition-all z-50 flex items-center gap-2 animate-in fade-in slide-in-from-bottom-4"
-      >
-        <MessageCircle className="w-6 h-6" />
-        <span className="font-bold hidden md:inline">
-          <span className="lang-en">Chat with Us</span>
-          <span className="lang-ta">எங்களுடன் அரட்டையடிக்கவும்</span>
-        </span>
-      </a>
-
     </div>
   );
 }
