@@ -10,7 +10,6 @@ interface Props {
 }
 
 import siteContent from '../data/siteContent.json';
-import { pwaInfo } from 'virtual:pwa-info';
 const services = siteContent.services;
 
 const {
@@ -99,9 +98,7 @@ const localBusinessSchema = {
     <link rel="icon" type="image/png" href="/images/favicon.png" />
     <meta name="description" content={description} />
     <link rel="canonical" href={url} />
-    <link rel="manifest" href="/manifest.json" />
-    <script src="/src/pwa.ts"></script>
-    { pwaInfo && <Fragment set:html={pwaInfo.webManifest.linkTag} /> }
+    <!-- PWA manifest removed -->
 
     <!-- Fonts: Noto Sans (English), Hind Madurai (Tamil Body), Mukta Malar (Tamil Headings) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />

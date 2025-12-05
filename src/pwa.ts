@@ -1,11 +1,5 @@
-import { registerSW } from 'virtual:pwa-register';
-
-registerSW({
-  immediate: true,
-  onNeedRefresh() {
-    console.log('New content available, click on reload button to update.');
-  },
-  onOfflineReady() {
-    console.log('App is ready to work offline.');
-  },
-});
+// PWA support removed. File intentionally cleared to avoid any runtime registration.
+// NOTE: To fully remove PWA references from your environment, run locally:
+//   npm uninstall @vite-pwa/astro
+//   npm install
+// This file can be deleted locally after confirming build passes.
