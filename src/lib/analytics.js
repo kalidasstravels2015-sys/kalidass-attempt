@@ -1,4 +1,4 @@
-import { onCLS, onFID, onLCP, onFCP, onTTFB, onINP } from 'web-vitals';
+import { onCLS, onLCP, onFCP, onTTFB, onINP } from 'web-vitals';
 
 const GA_MEASUREMENT_ID = import.meta.env.PUBLIC_GA_ID || 'G-STG8DWJ76K';
 
@@ -40,7 +40,6 @@ export const initAnalytics = () => {
     }
 
     onCLS(sendToAnalytics);
-    onFID(sendToAnalytics);
     onLCP(sendToAnalytics);
     onFCP(sendToAnalytics);
     onTTFB(sendToAnalytics);

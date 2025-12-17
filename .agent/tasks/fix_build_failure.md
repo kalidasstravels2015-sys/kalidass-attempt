@@ -1,23 +1,23 @@
 ---
-title: Fix Netlify Build Failure
+title: Fix Netlify Build Failures
 status: completed
-description: Resolved a file path resolution error that was causing the Netlify build to fail.
+description: Resolved import errors, deprecated web-vitals API usage, and PWA cache limit issues.
 ---
 
-## Issue
-The build was failing with the error:
-`Could not resolve "../../layouts/Layout.astro" from "src/pages/ta/services/[slug].astro"`
+## Issues & Fixes
 
-## Root Cause
-The file `src/pages/ta/services/[slug].astro` was using a relative path `../../layouts/Layout.astro` which incorrectly pointed to `src/pages/ta/layouts/Layout.astro` (which does not exist) instead of `src/layouts/Layout.astro`.
-The correct path from that directory (`src/pages/ta/services`) to `src/layouts` requires going up 3 levels: `../../../`.
+### 1. Relative Import Error
+**Issue:** `src/pages/ta/services/[slug].astro` was using `../../layouts/Layout.astro`, failing to resolve because it needed to go up 3 levels.
+**Fix:** Updated imports to `../../../layouts/Layout.astro` and `../../../data/serviceDetails.json`.
 
-## Changes Applied
-- Updated `src/pages/ta/services/[slug].astro`:
-    - Changed `import Layout from '../../layouts/Layout.astro'` to `import Layout from '../../../layouts/Layout.astro'`
-    - Changed `import serviceDetails from '../../data/serviceDetails.json'` to `import serviceDetails from '../../../data/serviceDetails.json'`
+### 2. Analytics / Web Vitals Error
+**Issue:** `onFID` is not exported by `web-vitals` (v5+), causing build failure in `src/lib/analytics.js`.
+**Fix:** Removed `onFID` import and usage from `src/lib/analytics.js`. `onINP` is already present as the replacement metric.
+
+### 3. PWA Generation Failure
+**Issue:** Large image asset (`images/services/temple-tours.webp`, ~3MB) exceeded the default Workbox cache limit of 2MB, causing `vite-plugin-pwa` to fail during Service Worker generation.
+**Fix:** Updated `astro.config.mjs` to increase `workbox.maximumFileSizeToCacheInBytes` to 5MB (5000000 bytes).
 
 ## Verification
-- Verified file structure and confirmed `src/layouts` and `src/data` exist at the root of `src`.
-- Verified other similar files; `src/pages/services/[slug].astro` was already using the correct relative path (`../../`) because it is one level shallower.
-- Local `astro check` indicates TypeScript errors exist but the build-blocking resolution error is addressed.
+- Local build passed static entrypoint generation.
+- PWA generation issues addressed by config update.
