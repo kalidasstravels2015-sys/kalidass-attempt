@@ -12,6 +12,8 @@
     "@astrojs/partytown": "^2.1.4",
     "@astrojs/react": "^4.4.2",
     "@astrojs/sitemap": "^3.6.0",
+    "@axe-core/playwright": "^4.11.0",
+    "@playform/compress": "^0.2.0",
     "astro": "^4.0.0",
     "jspdf": "^3.0.4",
     "lucide-react": "^0.555.0",
@@ -19,7 +21,9 @@
     "react-dom": "^19.2.0",
     "satori": "^0.18.3",
     "satori-html": "^0.3.2",
-    "sharp": "^0.34.5"
+    "sharp": "^0.34.5",
+    "vite-plugin-pwa": "^1.2.0",
+    "web-vitals": "^5.1.0"
   },
   "devDependencies": {
     "@astrojs/tailwind": "^5.0.0",

@@ -71,7 +71,8 @@
       "name_ta": "Swift Dzire",
       "caps_ta": "4 Pax",
       "bags_ta": "2 Bags",
-      "rate_ta": "₹11/km"
+      "rate_ta": "₹11/km",
+      "alt": "Maruti Swift Dzire 4-seater AC taxi for family trips and outstation travel from Chennai"
     },
     {
       "name": "Toyota Etios",
@@ -88,7 +89,8 @@
       "name_ta": "Toyota Etios",
       "caps_ta": "4 Pax",
       "bags_ta": "2 Bags",
-      "rate_ta": "₹12/km"
+      "rate_ta": "₹12/km",
+      "alt": "Toyota Etios executive sedan taxi for corporate client visits and comfortable outstation travel"
     },
     {
       "name": "Innova",
@@ -105,7 +107,8 @@
       "name_ta": "இன்னோவா",
       "caps_ta": "7 Pax",
       "bags_ta": "4 Bags",
-      "rate_ta": "₹15/km"
+      "rate_ta": "₹15/km",
+      "alt": "Toyota Innova 7-seater SUV taxi for large families and long-distance pilgrimages"
     },
     {
       "name": "Mahindra Bolero",
@@ -121,7 +124,8 @@
       "name_ta": "Mahindra Bolero",
       "caps_ta": "7 Pax",
       "bags_ta": "3 Bags",
-      "rate_ta": "₹15/km"
+      "rate_ta": "₹15/km",
+      "alt": "Mahindra Bolero rugged SUV rental for hill station trips and rough terrain travel"
     },
     {
       "name": "Tata Sumo",
@@ -137,7 +141,8 @@
       "name_ta": "Tata Sumo",
       "caps_ta": "7 Pax",
       "bags_ta": "3 Bags",
-      "rate_ta": "₹16/km"
+      "rate_ta": "₹16/km",
+      "alt": "Tata Sumo spacious 7-seater taxi for group travel and economical outstation trips"
     },
     {
       "name": "Tempo Traveller",
@@ -154,7 +159,8 @@
       "name_ta": "டெம்போ டிராவலர்",
       "caps_ta": "12 Pax",
       "bags_ta": "8 Bags",
-      "rate_ta": "₹21/km"
+      "rate_ta": "₹21/km",
+      "alt": "12-seater Tempo Traveller van rental for corporate team outings and family pilgrimage groups"
     }
   ],
   "tours": [
@@ -167,7 +173,8 @@
       "tag_ta": "PILGRIMAGE",
       "title_ta": "Kadapa Ameen Peer Dargah",
       "duration_ta": "2 Days / 1 Night",
-      "description_ta": "Sacred visit with comfortable stays, guided transport, and evening aarti arrangements."
+      "description_ta": "Sacred visit with comfortable stays, guided transport, and evening aarti arrangements.",
+      "alt": "Kadapa Ameen Peer Dargah pilgrimage tour package from Chennai"
     },
     {
       "tag": "HERITAGE",
@@ -178,7 +185,8 @@
       "tag_ta": "HERITAGE",
       "title_ta": "காஞ்சிபுரம் Temple City",
       "duration_ta": "1 Day Trip",
-      "description_ta": "Explore the golden temple town with expert drivers who double as storytellers."
+      "description_ta": "Explore the golden temple town with expert drivers who double as storytellers.",
+      "alt": "Kanchipuram Temple City heritage day trip by taxi"
     },
     {
       "tag": "SPIRITUAL",
@@ -190,7 +198,8 @@
       "tag_ta": "SPIRITUAL",
       "title_ta": "Ramanathaswamy Temple",
       "duration_ta": "3 Days / 2 Nights",
-      "description_ta": "Sacred route through ராமேஸ்வரம் with beach time and temple darshan support."
+      "description_ta": "Sacred route through ராமேஸ்வரம் with beach time and temple darshan support.",
+      "alt": "Rameswaram Ramanathaswamy Temple spiritual tour package 3 days"
     }
   ],
   "drivers": [
@@ -207,7 +216,8 @@
       "name_ta": "Perumal Manikumar",
       "experience_ta": "12 Years Experience",
       "languages_ta": "Tamil, English",
-      "tag_ta": "Owner"
+      "tag_ta": "Owner",
+      "alt": "Perumal Manikumar - Owner and VVIP luxury car driver in Chennai"
     },
     {
       "name": "Perumal Karthik Kumar",
@@ -222,7 +232,8 @@
       "name_ta": "Perumal Karthik Kumar",
       "experience_ta": "10 Years Experience",
       "languages_ta": "Tamil, English, Hindi",
-      "tag_ta": "Managing Partner"
+      "tag_ta": "Managing Partner",
+      "alt": "Perumal Karthik Kumar - Corporate fleet manager and managing partner"
     },
     {
       "name": "Hariharan",
@@ -237,7 +248,8 @@
       "name_ta": "Hariharan",
       "experience_ta": "2 Year Experience",
       "languages_ta": "Tamil, English",
-      "tag_ta": "Driver"
+      "tag_ta": "Driver",
+      "alt": "Hariharan - Expert driver for city and airport taxi drops in Chennai"
     },
     {
       "name": "Raj",
@@ -252,7 +264,8 @@
       "name_ta": "Raj",
       "experience_ta": "2 Years Experience",
       "languages_ta": "Tamil, English",
-      "tag_ta": "Driver"
+      "tag_ta": "Driver",
+      "alt": "Raj - Experienced driver for local Chennai taxi routes"
     },
     {
       "name": "Munish",
@@ -267,7 +280,8 @@
       "name_ta": "Munish",
       "experience_ta": "3+ Years Experience",
       "languages_ta": "Tamil, English",
-      "tag_ta": "Driver"
+      "tag_ta": "Driver",
+      "alt": "Munish - Specialist driver for safe night driving and outstation trips"
     },
     {
       "name": "Vishnu",
@@ -282,7 +296,8 @@
       "name_ta": "Vishnu",
       "experience_ta": "8+ Years Experience",
       "languages_ta": "Tamil, English",
-      "tag_ta": "Driver"
+      "tag_ta": "Driver",
+      "alt": "Vishnu - Long distance highway driving specialist driver"
     },
     {
       "name": "Thangaraj",
@@ -297,7 +312,8 @@
       "name_ta": "Thangaraj",
       "experience_ta": "8+ Years Experience",
       "languages_ta": "Tamil, English",
-      "tag_ta": "Driver"
+      "tag_ta": "Driver",
+      "alt": "Thangaraj - Senior river with 25+ years experience in hill station driving"
     },
     {
       "name": "Senthamil",
@@ -312,7 +328,8 @@
       "name_ta": "Senthamil",
       "experience_ta": "20+ Years Experience",
       "languages_ta": "Tamil, English",
-      "tag_ta": "Driver"
+      "tag_ta": "Driver",
+      "alt": "Senthamil - Expert driver for Navagraha temple tours from Chennai"
     },
     {
       "name": "Prakash",
@@ -327,7 +344,8 @@
       "name_ta": "Prakash",
       "experience_ta": "5+ Years Experience",
       "languages_ta": "Tamil, English",
-      "tag_ta": "Driver"
+      "tag_ta": "Driver",
+      "alt": "Prakash - Experienced driver for interstate trips to Kerala and Karnataka"
     },
     {
       "name": "Elumalai",
@@ -342,7 +360,8 @@
       "name_ta": "Elumalai",
       "experience_ta": "21+ Years Experience",
       "languages_ta": "Tamil, English",
-      "tag_ta": "Driver"
+      "tag_ta": "Driver",
+      "alt": "Elumalai - Expert heavy vehicle and bus driver for group tours"
     },
     {
       "name": "Venkateshan",
@@ -357,7 +376,8 @@
       "name_ta": "Venkateshan",
       "experience_ta": "15+ Years Experience",
       "languages_ta": "Tamil, English",
-      "tag_ta": "Driver"
+      "tag_ta": "Driver",
+      "alt": "Venkateshan - Reliable driver for family pilgrimage trips"
     },
     {
       "name": "Mani",
@@ -372,7 +392,8 @@
       "name_ta": "Mani",
       "experience_ta": "8+ Years Experience",
       "languages_ta": "Tamil, English",
-      "tag_ta": "Driver"
+      "tag_ta": "Driver",
+      "alt": "Mani - Professional driver for corporate events and employee transport"
     },
     {
       "name": "Neelakandan",
@@ -387,7 +408,8 @@
       "name_ta": "Neelakandan",
       "experience_ta": "18+ Years Experience",
       "languages_ta": "Tamil, English",
-      "tag_ta": "Driver"
+      "tag_ta": "Driver",
+      "alt": "Neelakandan - Sabarimala pilgrimage specialist driver"
     },
     {
       "name": "Karthick",
@@ -402,7 +424,8 @@
       "name_ta": "Karthick",
       "experience_ta": "13+ Years Experience",
       "languages_ta": "Tamil, English",
-      "tag_ta": "Driver"
+      "tag_ta": "Driver",
+      "alt": "Karthick - Luxury car chauffeur and valet specialist"
     },
     {
       "name": "Natraj",
@@ -417,7 +440,8 @@
       "name_ta": "Natraj",
       "experience_ta": "25+ Years Experience",
       "languages_ta": "Tamil, English",
-      "tag_ta": "Driver"
+      "tag_ta": "Driver",
+      "alt": "Natraj - Master driver for all terrains with 25+ years experience"
     },
     {
       "name": "Vijay",
@@ -432,7 +456,8 @@
       "name_ta": "Vijay",
       "experience_ta": "7+ Years Experience",
       "languages_ta": "Tamil, English",
-      "tag_ta": "Driver"
+      "tag_ta": "Driver",
+      "alt": "Vijay - Friendly driver for Pondicherry weekend taxi trips"
     },
     {
       "name": "Murugan",
@@ -447,7 +472,8 @@
       "name_ta": "Murugan",
       "experience_ta": "20+ Years Experience",
       "languages_ta": "Tamil, English",
-      "tag_ta": "Driver"
+      "tag_ta": "Driver",
+      "alt": "Murugan - Expert guide and driver for Tirupati Darshan taxi packages"
     },
     {
       "name": "Vadivel",
@@ -462,7 +488,8 @@
       "name_ta": "Vadivel",
       "experience_ta": "12+ Years Experience",
       "languages_ta": "Tamil, English",
-      "tag_ta": "Driver"
+      "tag_ta": "Driver",
+      "alt": "Vadivel - Customer favorite driver for family and corporate trips"
     }
   ],
   "reviews": [

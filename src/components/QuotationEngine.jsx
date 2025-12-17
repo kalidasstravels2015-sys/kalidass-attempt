@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useId } from 'react';
 import { Car, MapPin, Calendar, Calculator, Send, Plane, ArrowRight, Repeat, Users, User, Phone, AlertCircle } from 'lucide-react';
+import { trackEvent } from '../lib/analytics';
 
 const rates = {
   'Swift Dzire': 11,
@@ -25,6 +26,8 @@ const ERROR_MSGS = {
   date: { en: "Date must be in future", ta: "தேதி எதிர்காலத்தில் இருக்க வேண்டும்" },
 };
 
+
+
 export default function QuotationEngine({ showAirportTab = true, showBookingButton = true, title = "Book Your Ride", variant = "default" }) {
   const [activeTab, setActiveTab] = useState('oneway');
   const [airportMode, setAirportMode] = useState('drop');
@@ -45,6 +48,22 @@ export default function QuotationEngine({ showAirportTab = true, showBookingButt
   const [showResult, setShowResult] = useState(false);
   const [errors, setErrors] = useState({});
   const [botField, setBotField] = useState(''); // Honeypot
+  const formId = useId(); // Unique ID for accessibility linkage
+
+  // Analytics Hooks
+  useEffect(() => {
+    trackEvent('booking_component_viewed', { variant });
+  }, []);
+
+  useEffect(() => {
+    trackEvent('trip_type_selected', { trip_type: activeTab });
+  }, [activeTab]);
+
+  useEffect(() => {
+    if (estimate > 0) {
+      trackEvent('estimate_calculated', { vehicle, trip_type: activeTab, estimate, distance });
+    }
+  }, [estimate]);
 
   const pickupInputRef = useRef(null);
   const dropInputRef = useRef(null);
@@ -249,11 +268,16 @@ export default function QuotationEngine({ showAirportTab = true, showBookingButt
         ...prev,
         global: "Please fix errors above / மேலே உள்ள பிழைகளை சரிசெய்யவும்"
       }));
+      trackEvent('booking_validation_error', {
+        trip_type: activeTab
+      });
       return;
     }
 
     // 3. Rate Limit
     if (!checkRateLimit()) return;
+
+    trackEvent('booking_submit_attempt', { trip_type: activeTab, vehicle, estimate });
 
     // 4. Send Data to Sheet
     const bookingData = {
@@ -300,6 +324,12 @@ ${activeTab === 'round' ? `📅 Days: ${days}` : ''}
 
 _Please confirm availability._`;
 
+    trackEvent('booking_conversion_whatsapp', {
+      estimate,
+      trip_type: activeTab,
+      vehicle
+    });
+
     const encodedMessage = encodeURIComponent(message);
     window.open(`https://wa.me/919092303060?text=${encodedMessage}`, '_blank');
   };
@@ -307,8 +337,8 @@ _Please confirm availability._`;
   // Helper for Input Classes
   const getInputClass = (field) => {
     return `flex items-center bg-slate-50 border rounded-xl px-4 py-3 transition-all ${errors[field]
-        ? 'border-red-500 ring-1 ring-red-500 bg-red-50'
-        : 'border-slate-200 focus-within:ring-2 focus-within:ring-indigo-500/20'
+      ? 'border-red-500 ring-1 ring-red-500 bg-red-50'
+      : 'border-slate-200 focus-within:ring-2 focus-within:ring-indigo-500/20'
       }`;
   };
 
@@ -344,6 +374,7 @@ _Please confirm availability._`;
                 onClick={() => { setActiveTab(tab); setShowResult(false); }}
                 className={`flex-1 py-2 text-sm font-semibold rounded-lg transition-all flex items-center justify-center gap-2 ${activeTab === tab ? 'bg-white text-indigo-600 shadow-sm' : 'text-slate-600 hover:text-slate-900'
                   }`}
+                aria-current={activeTab === tab ? 'page' : undefined}
               >
                 {tab === 'oneway' ? <ArrowRight className="w-4 h-4" /> : <Repeat className="w-4 h-4" />}
                 <span className="capitalize">{tab} Trip</span>
@@ -363,10 +394,16 @@ _Please confirm availability._`;
           <div className="space-y-4">
             {['Pickup', 'Drop'].map((type) => (
               <div key={type} className="relative group">
-                <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1.5">{type} Location</label>
+                <label
+                  htmlFor={`${formId}-${type.toLowerCase()}`}
+                  className="block text-xs font-bold text-slate-600 uppercase mb-1.5"
+                >
+                  {type} Location
+                </label>
                 <div className={getInputClass('location')}>
-                  <MapPin className={`${type === 'Pickup' ? 'text-indigo-500' : 'text-slate-400'} mr-3 w-5 h-5`} />
+                  <MapPin className={`${type === 'Pickup' ? 'text-indigo-500' : 'text-slate-400'} mr-3 w-5 h-5`} aria-hidden="true" />
                   <input
+                    id={`${formId}-${type.toLowerCase()}`}
                     ref={type === 'Pickup' ? pickupInputRef : dropInputRef}
                     type="text"
                     value={type === 'Pickup' ? pickup : drop}
@@ -385,10 +422,11 @@ _Please confirm availability._`;
             <div className="grid grid-cols-2 gap-4">
               {/* Passengers */}
               <div className="relative group">
-                <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1.5">Passengers</label>
-                <div className="flex items-center bg-slate-50 border border-slate-200 rounded-xl px-4 py-3">
-                  <Users className="text-indigo-500 mr-3 w-5 h-5" />
+                <label htmlFor={`${formId}-passengers`} className="block text-xs font-bold text-slate-600 uppercase mb-1.5">Passengers</label>
+                <div className="flex items-center bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 focus-within:ring-2 focus-within:ring-indigo-500/20">
+                  <Users className="text-indigo-500 mr-3 w-5 h-5" aria-hidden="true" />
                   <select
+                    id={`${formId}-passengers`}
                     value={passengers}
                     onChange={(e) => { setPassengers(e.target.value); setShowResult(false); }}
                     className="bg-transparent w-full outline-none text-sm text-slate-700 font-medium appearance-none"
@@ -400,10 +438,10 @@ _Please confirm availability._`;
 
               {/* Vehicle */}
               <div className="relative group">
-                <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1.5">Vehicle</label>
+                <label htmlFor={`${formId}-vehicle`} className="block text-xs font-bold text-slate-600 uppercase mb-1.5">Vehicle</label>
                 <div className="flex items-center bg-slate-100 border border-slate-200 rounded-xl px-4 py-3">
-                  <Car className="text-slate-500 mr-3 w-5 h-5" />
-                  <select value={vehicle} disabled className="bg-transparent w-full outline-none text-sm text-slate-700 font-medium appearance-none cursor-not-allowed">
+                  <Car className="text-slate-500 mr-3 w-5 h-5" aria-hidden="true" />
+                  <select id={`${formId}-vehicle`} value={vehicle} disabled className="bg-transparent w-full outline-none text-sm text-slate-700 font-medium appearance-none cursor-not-allowed">
                     {vehicleOptions.map(v => <option key={v} value={v}>{v}</option>)}
                   </select>
                 </div>
@@ -411,10 +449,11 @@ _Please confirm availability._`;
 
               {/* Name */}
               <div className="relative group col-span-2 md:col-span-1">
-                <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1.5">Name</label>
+                <label htmlFor={`${formId}-name`} className="block text-xs font-bold text-slate-600 uppercase mb-1.5">Name</label>
                 <div className={getInputClass('name')}>
-                  <User className="text-slate-400 mr-3 w-5 h-5" />
+                  <User className="text-slate-400 mr-3 w-5 h-5" aria-hidden="true" />
                   <input
+                    id={`${formId}-name`}
                     type="text"
                     value={name}
                     onChange={(e) => { setName(e.target.value); activeValidate('name', e.target.value); }}
@@ -422,15 +461,16 @@ _Please confirm availability._`;
                     className="bg-transparent w-full outline-none text-sm text-slate-700 font-medium"
                   />
                 </div>
-                {errors.name && <p className="text-[10px] text-red-500 mt-1">{errors.name}</p>}
+                {errors.name && <p className="text-[10px] text-red-500 mt-1" role="alert">{errors.name}</p>}
               </div>
 
               {/* Phone */}
               <div className="relative group col-span-2 md:col-span-1">
-                <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1.5">Phone</label>
+                <label htmlFor={`${formId}-phone`} className="block text-xs font-bold text-slate-600 uppercase mb-1.5">Phone</label>
                 <div className={getInputClass('phone')}>
-                  <Phone className="text-slate-400 mr-3 w-5 h-5" />
+                  <Phone className="text-slate-400 mr-3 w-5 h-5" aria-hidden="true" />
                   <input
+                    id={`${formId}-phone`}
                     type="tel"
                     value={phone}
                     onChange={(e) => { setPhone(e.target.value); activeValidate('phone', e.target.value); }}
@@ -438,16 +478,17 @@ _Please confirm availability._`;
                     className="bg-transparent w-full outline-none text-sm text-slate-700 font-medium"
                   />
                 </div>
-                {errors.phone && <p className="text-[10px] text-red-500 mt-1">{errors.phone}</p>}
+                {errors.phone && <p className="text-[10px] text-red-500 mt-1" role="alert">{errors.phone}</p>}
               </div>
 
               {/* Days Input if Round Trip */}
               {activeTab === 'round' && (
                 <div className="relative group">
-                  <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1.5">Days</label>
-                  <div className="flex items-center bg-slate-50 border border-slate-200 rounded-xl px-4 py-3">
-                    <Calendar className="text-indigo-500 mr-3 w-5 h-5" />
+                  <label htmlFor={`${formId}-days`} className="block text-xs font-bold text-slate-600 uppercase mb-1.5">Days</label>
+                  <div className="flex items-center bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 focus-within:ring-2 focus-within:ring-indigo-500/20">
+                    <Calendar className="text-indigo-500 mr-3 w-5 h-5" aria-hidden="true" />
                     <input
+                      id={`${formId}-days`}
                       type="number"
                       min="1"
                       value={days}
@@ -526,8 +567,9 @@ _Please confirm availability._`;
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`flex-1 py-2 text-xs text-center font-bold uppercase flex items-center justify-center gap-1 ${activeTab === tab ? 'text-red-600 border-b-2 border-red-600 bg-red-50' : 'text-gray-500'
+              className={`flex-1 py-2 text-xs text-center font-bold uppercase flex items-center justify-center gap-1 ${activeTab === tab ? 'text-red-600 border-b-2 border-red-600 bg-red-50' : 'text-gray-600'
                 }`}
+              aria-current={activeTab === tab ? 'page' : undefined}
             >
               {tab === 'airport' ? <Plane className="w-3 h-3" /> : tab === 'round' ? <Repeat className="w-3 h-3" /> : <ArrowRight className="w-3 h-3" />}
               <span className="hidden xs:inline">{tab === 'airport' ? 'Airport' : tab === 'round' ? 'Round Trip' : 'One Way'}</span>
@@ -544,7 +586,8 @@ _Please confirm availability._`;
                 <button
                   key={mode}
                   onClick={() => setAirportMode(mode)}
-                  className={`px-4 py-1.5 rounded-md transition-all ${airportMode === mode ? 'bg-white text-red-600 shadow-sm' : 'text-gray-500'}`}
+                  className={`px-4 py-1.5 rounded-md transition-all ${airportMode === mode ? 'bg-white text-red-600 shadow-sm' : 'text-gray-600'}`}
+                  aria-pressed={airportMode === mode}
                 >
                   {mode === 'drop' ? 'To Airport' : 'From Airport'}
                 </button>
@@ -562,10 +605,11 @@ _Please confirm availability._`;
         <div className="grid grid-cols-2 gap-3">
           {['Pickup', 'Drop'].map((type) => (
             <div key={type} className="col-span-2 relative group">
-              <label className="text-[10px] font-bold text-gray-500 uppercase mb-0.5 block">{type}</label>
-              <div className="flex items-center bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 focus-within:ring-1 ring-red-500 transition">
-                <MapPin className="text-red-500 mr-2 w-4 h-4" />
+              <label htmlFor={`${formId}-mobile-${type}`} className="text-[10px] font-bold text-gray-700 uppercase mb-0.5 block">{type}</label>
+              <div className="flex items-center bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 focus-within:ring-1 focus-within:ring-red-500 transition">
+                <MapPin className="text-red-500 mr-2 w-4 h-4" aria-hidden="true" />
                 <input
+                  id={`${formId}-mobile-${type}`}
                   ref={type === 'Pickup' ? pickupInputRef : dropInputRef}
                   value={type === 'Pickup' ? pickup : drop}
                   onChange={(e) => type === 'Pickup' ? setPickup(e.target.value) : setDrop(e.target.value)}
@@ -577,34 +621,37 @@ _Please confirm availability._`;
           ))}
 
           <div className="col-span-1">
-            <label className="text-[10px] font-bold text-gray-500 uppercase mb-0.5 block">Name</label>
+            <label htmlFor={`${formId}-mobile-name`} className="text-[10px] font-bold text-gray-700 uppercase mb-0.5 block">Name</label>
             <input
+              id={`${formId}-mobile-name`}
               value={name}
               onChange={(e) => { setName(e.target.value); activeValidate('name', e.target.value); }}
               placeholder="Name"
-              className={`w-full bg-gray-50 border rounded-lg px-3 py-2 text-sm outline-none ${errors.name ? 'border-red-500' : 'border-gray-200 focus:ring-1 ring-red-500'}`}
+              className={`w-full bg-gray-50 border rounded-lg px-3 py-2 text-sm outline-none ${errors.name ? 'border-red-500' : 'border-gray-200 focus:ring-1 focus:ring-red-500'}`}
             />
-            {errors.name && <p className="text-[8px] text-red-500">{errors.name}</p>}
+            {errors.name && <p className="text-[8px] text-red-500" role="alert">{errors.name}</p>}
           </div>
 
           <div className="col-span-1">
-            <label className="text-[10px] font-bold text-gray-500 uppercase mb-0.5 block">Phone</label>
+            <label htmlFor={`${formId}-mobile-phone`} className="text-[10px] font-bold text-gray-700 uppercase mb-0.5 block">Phone</label>
             <input
+              id={`${formId}-mobile-phone`}
               value={phone}
               onChange={(e) => { setPhone(e.target.value); activeValidate('phone', e.target.value); }}
               placeholder="Mobile"
-              className={`w-full bg-gray-50 border rounded-lg px-3 py-2 text-sm outline-none ${errors.phone ? 'border-red-500' : 'border-gray-200 focus:ring-1 ring-red-500'}`}
+              className={`w-full bg-gray-50 border rounded-lg px-3 py-2 text-sm outline-none ${errors.phone ? 'border-red-500' : 'border-gray-200 focus:ring-1 focus:ring-red-500'}`}
             />
-            {errors.phone && <p className="text-[8px] text-red-500">{errors.phone}</p>}
+            {errors.phone && <p className="text-[8px] text-red-500" role="alert">{errors.phone}</p>}
           </div>
 
           <div className="col-span-2">
-            <label className="text-[10px] font-bold text-gray-500 uppercase mb-0.5 block">Date</label>
+            <label htmlFor={`${formId}-mobile-date`} className="text-[10px] font-bold text-gray-700 uppercase mb-0.5 block">Date</label>
             <input
+              id={`${formId}-mobile-date`}
               type="datetime-local"
               value={date}
               onChange={(e) => setDate(e.target.value)}
-              className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-sm"
+              className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-red-500"
             />
           </div>
         </div>

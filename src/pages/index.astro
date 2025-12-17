@@ -1,38 +1,41 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Hero from '../components/Hero.astro';
-import BookingPanel from '../components/BookingPanel.astro';
-import Services from '../components/Services.astro';
-import FleetRoll from '../components/FleetRoll.astro';
-import Tours from '../components/Tours.astro';
-import Partners from '../components/Partners.astro';
-import Drivers from '../components/Drivers.astro';
-import Reviews from '../components/Reviews.astro';
-import TariffCalculator from '../components/TariffCalculator.astro';
-import SafetySection from '../components/SafetySection.astro';
+import Layout from "../layouts/Layout.astro";
+import Hero from "../components/Hero.astro";
+import BookingPanel from "../components/BookingPanel.astro";
+import Services from "../components/Services.astro";
+import FleetRoll from "../components/react/FleetRoll.jsx";
+import Tours from "../components/Tours.astro";
+import FAQ from "../components/FAQ.astro";
+import SafetySection from "../components/SafetySection.astro";
+
+// React Components for Lazy Loading
+import PartnersCarousel from "../components/react/PartnersCarousel.jsx";
+import DriversCarousel from "../components/react/DriversCarousel.jsx";
+import ReviewsCarousel from "../components/react/ReviewsCarousel.jsx";
+import TariffCalculator from "../components/react/TariffCalculator.jsx";
 
 // Use a specific OG image for the homepage if available, or fallback to a generic one
-const ogImage = "/images/logo.png"; 
+const ogImage = "/images/logo.png";
 
 const schema = {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
-  "name": "Kalidass Travels",
-  "image": "https://kalidasstravels.in/images/logo.png",
-  "telephone": "+919092303060",
-  "email": "bookings@kalidasstravels.in",
-  "address": {
+  name: "Kalidass Travels",
+  image: "https://kalidasstravels.in/images/logo.png",
+  telephone: "+919092303060",
+  email: "bookings@kalidasstravels.in",
+  address: {
     "@type": "PostalAddress",
-    "addressLocality": "Chennai",
-    "addressRegion": "Tamil Nadu",
-    "addressCountry": "IN"
+    addressLocality: "Chennai",
+    addressRegion: "Tamil Nadu",
+    addressCountry: "IN",
   },
-  "url": "https://kalidasstravels.in",
-  "priceRange": "₹₹"
+  url: "https://kalidasstravels.in",
+  priceRange: "₹₹",
 };
 ---
 
-<Layout 
+<Layout
   title="Kalidass Travels - Premium Travel Experience in South India"
   description="Trusted travel partner in Chennai for Temple Tours, Corporate Travel, and Outstation Cabs. Verified drivers, transparent pricing, and 24/7 support."
   schema={schema}
@@ -41,11 +44,14 @@ const schema = {
   <Hero />
   <BookingPanel />
   <Services />
-  <FleetRoll />
+  <FleetRoll client:visible currentLang="en" />
   <Tours />
-  <Partners />
-  <Drivers />
-  <Reviews />
-  <TariffCalculator />
+
+  <!-- Lazy Loaded Interactive Sections -->
+  <PartnersCarousel client:visible currentLang="en" />
+  <DriversCarousel client:visible currentLang="en" />
+  <ReviewsCarousel client:visible currentLang="en" />
+  <FAQ />
+  <TariffCalculator client:idle currentLang="en" />
   <SafetySection />
 </Layout>

@@ -24,7 +24,7 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
 );
 
 // The src from JSON is usually like "/images/hero/abc.webp"
-// We need to map it to absolute src path
+// We need to map it to absolute src path if it exists in src/assets
 const isRemote = src.startsWith("http") || src.startsWith("//");
 const imagePath = `/src/assets${src}`;
 
@@ -38,8 +38,8 @@ if (!isRemote) {
             console.error(`Failed to load image: ${imagePath}`, e);
         }
     } else {
-        // Warn but don't crash, let fallback img handle it (likely broken but better than crash)
-        console.warn(`Image not found in assets: ${imagePath}`);
+        // Image not found in src/assets, so it must be in public/
+        // We will fall back to using the img tag with the public path.
     }
 }
 ---

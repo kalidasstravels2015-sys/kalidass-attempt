@@ -44,6 +44,26 @@ const tourImages: Record<string, string> = {
     "/images/temple/Mahabalipuram-ECR-Temples.jpg",
   "one-day-chennai-city-tour": "/images/temple/chennai-city.jpg",
 };
+
+const tourImageAlts: Record<string, string> = {
+  "tirupati-package":
+    "Tirupati Balaji Temple darshan package with taxi service from Chennai",
+  "thiruvannamalai-girivalam-trip":
+    "Thiruvannamalai Girivalam full moon day trip from Chennai",
+  "rameswaram-2-days":
+    "Rameswaram 2-day pilgrimage tour including Dhanushkodi beach",
+  "navagraha-tour": "Complete Navagraha temple tour package Kumbakonam taxi",
+  "chidambaram-temple-trip":
+    "Chidambaram Nataraja Temple spiritual visit taxi service",
+  "sabarimala-trip":
+    "Sabarimala Mandala Pooja pilgrimage taxi package from Chennai",
+  "pondicherry-one-day-trip":
+    "Pondicherry one day sightseeing trip from Chennai by car",
+  "mahabalipuram-ecr-temple-route":
+    "Mahabalipuram and ECR temple heritage tour taxi",
+  "one-day-chennai-city-tour":
+    "Chennai local city sightseeing day tour cab service",
+};
 ---
 
 <section id="tours" class="py-10 md:py-16 bg-gray-50">
@@ -82,7 +102,7 @@ const tourImages: Record<string, string> = {
                     tourImages[tour.slug] ||
                     "https://images.unsplash.com/photo-1596700414605-e45f1b1c7c9a?q=80&w=600"
                   }
-                  alt={tour.title}
+                  alt={tourImageAlts[tour.slug] || tour.title}
                   class="w-full h-full object-cover group-hover:scale-105 transition duration-700"
                 />
                 <span class="absolute top-2 left-2 bg-orange-600 text-white text-[10px] font-bold px-2 py-0.5 rounded shadow-sm">
@@ -99,9 +119,9 @@ const tourImages: Record<string, string> = {
                   <span class="lang-en">{tour.overview}</span>
                   <span class="lang-ta">{tour.overview_ta}</span>
                 </p>
-                <div class="flex items-center text-orange-600 font-bold text-xs uppercase tracking-wide">
-                  <span class="lang-en">View Details</span>
-                  <span class="lang-ta">விவரங்கள்</span>
+                <div class="flex items-center text-orange-600 font-bold text-xs uppercase tracking-wide group-hover:text-orange-700">
+                  <span class="lang-en">Book {tour.title}</span>
+                  <span class="lang-ta">{tour.title_ta} முன்பதிவு</span>
                   <i class="fas fa-arrow-right ml-1 group-hover:translate-x-1 transition" />
                 </div>
               </div>
@@ -157,7 +177,7 @@ const tourImages: Record<string, string> = {
                     tourImages[tour.slug] ||
                     "https://images.unsplash.com/photo-1596700414605-e45f1b1c7c9a?q=80&w=600"
                   }
-                  alt={tour.title}
+                  alt={tourImageAlts[tour.slug] || tour.title}
                   class="w-full h-full object-cover group-hover:scale-105 transition duration-700"
                 />
                 <span class="absolute top-2 left-2 bg-green-600 text-white text-[10px] font-bold px-2 py-0.5 rounded shadow-sm">
@@ -174,9 +194,9 @@ const tourImages: Record<string, string> = {
                   <span class="lang-en">{tour.overview}</span>
                   <span class="lang-ta">{tour.overview_ta}</span>
                 </p>
-                <div class="flex items-center text-green-600 font-bold text-xs uppercase tracking-wide">
-                  <span class="lang-en">View Details</span>
-                  <span class="lang-ta">விவரங்கள்</span>
+                <div class="flex items-center text-green-600 font-bold text-xs uppercase tracking-wide group-hover:text-green-700">
+                  <span class="lang-en">Explore {tour.title}</span>
+                  <span class="lang-ta">{tour.title_ta} சுற்றுலா</span>
                   <i class="fas fa-arrow-right ml-1 group-hover:translate-x-1 transition" />
                 </div>
               </div>
