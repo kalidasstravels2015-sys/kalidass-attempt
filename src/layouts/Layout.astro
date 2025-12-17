@@ -9,7 +9,7 @@ interface Props {
   schema?: object;
 }
 
-import siteContent from '../data/siteContent.json';
+import siteContent from "../data/siteContent.json";
 const services = siteContent.services;
 
 const {
@@ -34,40 +34,40 @@ const fullImage = ogImage
 const localBusinessSchema = {
   "@context": "https://schema.org",
   "@type": "TaxiService",
-  "name": "Kalidass Travels",
-  "image": "https://kalidasstravels.in/images/logo.png",
-  "description": description,
-  "telephone": "+919952749408",
-  "address": {
+  name: "Kalidass Travels",
+  image: "https://kalidasstravels.in/images/logo.png",
+  description: description,
+  telephone: "+919952749408",
+  address: {
     "@type": "PostalAddress",
-    "addressLocality": "Chennai",
-    "addressRegion": "Tamil Nadu",
-    "addressCountry": "IN"
+    addressLocality: "Chennai",
+    addressRegion: "Tamil Nadu",
+    addressCountry: "IN",
   },
-  "geo": {
+  geo: {
     "@type": "GeoCoordinates",
-    "latitude": "13.0827",
-    "longitude": "80.2707"
+    latitude: "13.0827",
+    longitude: "80.2707",
   },
-  "areaServed": {
+  areaServed: {
     "@type": "City",
-    "name": "Chennai"
+    name: "Chennai",
   },
-  "priceRange": "₹₹",
-  "openingHoursSpecification": {
+  priceRange: "₹₹",
+  openingHoursSpecification: {
     "@type": "OpeningHoursSpecification",
-    "dayOfWeek": [
+    dayOfWeek: [
       "Monday",
       "Tuesday",
       "Wednesday",
       "Thursday",
       "Friday",
       "Saturday",
-      "Sunday"
+      "Sunday",
     ],
-    "opens": "00:00",
-    "closes": "23:59"
-  }
+    opens: "00:00",
+    closes: "23:59",
+  },
 };
 ---
 
@@ -75,7 +75,7 @@ const localBusinessSchema = {
 <html lang="en">
   <head>
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-N4N0V5224H"
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-STG8DWJ76K"
     ></script>
     <script is:inline>
       window.dataLayer = window.dataLayer || [];
@@ -84,14 +84,16 @@ const localBusinessSchema = {
       }
       gtag("js", new Date());
 
-      gtag("config", "G-N4N0V5224H");
+      gtag("config", "G-STG8DWJ76K");
     </script>
     <script is:inline>
       function initGoogleMaps() {
-        window.dispatchEvent(new CustomEvent('google-maps-loaded'));
+        window.dispatchEvent(new CustomEvent("google-maps-loaded"));
       }
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPpRgTPIkv20IMdaBqqdlz0S0FEGU5400&libraries=places&callback=initGoogleMaps" defer></script>
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPpRgTPIkv20IMdaBqqdlz0S0FEGU5400&libraries=places&callback=initGoogleMaps"
+      defer></script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#4f46e5" />
@@ -129,33 +131,39 @@ const localBusinessSchema = {
     <meta property="twitter:image" content={fullImage} />
 
     <!-- Schema.org JSON-LD -->
-    <script type="application/ld+json" set:html={JSON.stringify(schema || localBusinessSchema)} />
-
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(schema || localBusinessSchema)}
+    />
 
     <style is:global>
       html {
-        font-family: 'Noto Sans', sans-serif;
+        font-family: "Noto Sans", sans-serif;
         scroll-behavior: smooth;
       }
 
       /* Language Toggle Styles */
-      body.lang-ta .lang-en { display: none !important; }
-      body:not(.lang-ta) .lang-ta { display: none !important; }
+      body.lang-ta .lang-en {
+        display: none !important;
+      }
+      body:not(.lang-ta) .lang-ta {
+        display: none !important;
+      }
 
       /* Tamil Font Overrides */
       body.lang-ta,
       body.lang-ta .font-sans {
-        font-family: 'Hind Madurai', sans-serif !important;
+        font-family: "Hind Madurai", sans-serif !important;
       }
-      
-      body.lang-ta h1, 
-      body.lang-ta h2, 
-      body.lang-ta h3, 
-      body.lang-ta h4, 
-      body.lang-ta h5, 
+
+      body.lang-ta h1,
+      body.lang-ta h2,
+      body.lang-ta h3,
+      body.lang-ta h4,
+      body.lang-ta h5,
       body.lang-ta h6,
       body.lang-ta .font-heading {
-        font-family: 'Mukta Malar', sans-serif !important;
+        font-family: "Mukta Malar", sans-serif !important;
       }
     </style>
     <link
@@ -356,22 +364,43 @@ const localBusinessSchema = {
               <span class="lang-en">Drivers</span>
               <span class="lang-ta">ஓட்டுநர்கள்</span>
             </a>
-            
+
             <!-- Services Dropdown -->
             <div class="relative group">
-              <button class="header-link flex items-center gap-1 focus:outline-none py-4">
+              <button
+                class="header-link flex items-center gap-1 focus:outline-none py-4"
+              >
                 <span class="lang-en">Services</span>
                 <span class="lang-ta">சேவைகள்</span>
-                <svg class="w-4 h-4 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                <svg
+                  class="w-4 h-4 transition-transform group-hover:rotate-180"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  ><path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M19 9l-7 7-7-7"></path></svg
+                >
               </button>
-              <div class="absolute left-0 top-full w-64 bg-white rounded-xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform group-hover:translate-y-0 translate-y-2 border border-gray-100 overflow-hidden">
+              <div
+                class="absolute left-0 top-full w-64 bg-white rounded-xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform group-hover:translate-y-0 translate-y-2 border border-gray-100 overflow-hidden"
+              >
                 <div class="py-2">
-                  {services.map((service) => (
-                    <a href={service.link} class="block px-4 py-3 text-sm text-gray-700 hover:bg-red-50 hover:text-red-600 border-b border-gray-50 last:border-0">
-                      <span class="lang-en font-medium">{service.title}</span>
-                      <span class="lang-ta font-medium">{service.title_ta}</span>
-                    </a>
-                  ))}
+                  {
+                    services.map((service) => (
+                      <a
+                        href={service.link}
+                        class="block px-4 py-3 text-sm text-gray-700 hover:bg-red-50 hover:text-red-600 border-b border-gray-50 last:border-0"
+                      >
+                        <span class="lang-en font-medium">{service.title}</span>
+                        <span class="lang-ta font-medium">
+                          {service.title_ta}
+                        </span>
+                      </a>
+                    ))
+                  }
                 </div>
               </div>
             </div>
@@ -643,7 +672,11 @@ const localBusinessSchema = {
 
       <!-- Floating Action Buttons -->
       <!-- Android Style Call Button -->
-      <a href="tel:+919092303060" class="fixed bottom-6 right-6 z-50 group" aria-label="Call Kalidass Travels">
+      <a
+        href="tel:+919092303060"
+        class="fixed bottom-6 right-6 z-50 group"
+        aria-label="Call Kalidass Travels"
+      >
         <div
           class="absolute inset-0 bg-[#4285F4] rounded-full animate-ping opacity-75"
         >
