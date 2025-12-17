@@ -1,6 +1,6 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import serviceDetails from '../../data/serviceDetails.json';
+import Layout from '../../../layouts/Layout.astro';
+import serviceDetails from '../../../data/serviceDetails.json';
 
 export async function getStaticPaths() {
   return serviceDetails.map((service) => ({
