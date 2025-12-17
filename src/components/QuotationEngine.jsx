@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useId } from 'react';
 import { Car, MapPin, Calendar, Calculator, Send, Plane, ArrowRight, Repeat, Users, User, Phone, AlertCircle, Navigation } from 'lucide-react';
 import { trackEvent } from '../lib/analytics';
+import LocationPicker from './LocationPicker';
 
 const rates = {
   'Swift Dzire': 11,
@@ -48,7 +49,9 @@ export default function QuotationEngine({ showAirportTab = true, showBookingButt
   const [showResult, setShowResult] = useState(false);
   const [errors, setErrors] = useState({});
   const [botField, setBotField] = useState(''); // Honeypot
-  const [gettingLocation, setGettingLocation] = useState(null); // 'pickup' or 'drop'
+  const [gettingLocation, setGettingLocation] = useState(null);
+  const [locationPickerOpen, setLocationPickerOpen] = useState(false);
+  const [pickerField, setPickerField] = useState(null);
   const formId = useId(); // Unique ID for accessibility linkage
 
   // Analytics Hooks
@@ -217,6 +220,26 @@ export default function QuotationEngine({ showAirportTab = true, showBookingButt
     }
   };
 
+  // Handle Pin Click - Opens Map Modal
+  const handlePinClick = (field) => {
+    setPickerField(field);
+    setLocationPickerOpen(true);
+    trackEvent('location_map_opened', { field });
+  };
+
+  // Handle Location Selection from Map Modal
+  const handleLocationConfirm = (address) => {
+    if (pickerField === 'pickup') {
+      setPickup(sanitizeInput(address));
+      if (drop) calculateDistance(address, drop);
+    } else if (pickerField === 'drop') {
+      setDrop(sanitizeInput(address));
+      if (pickup) calculateDistance(pickup, address);
+    }
+    setLocationPickerOpen(false);
+    trackEvent('location_pin_used', { field: pickerField, method: 'map_picker', success: true });
+  };
+
   // Get Current Location using Geolocation API
   const getCurrentLocation = (field) => {
     if (!navigator.geolocation) {
@@ -229,39 +252,104 @@ export default function QuotationEngine({ showAirportTab = true, showBookingButt
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const { latitude, longitude } = position.coords;
+        console.log('📍 GPS Coordinates:', { latitude, longitude });
 
-        // Reverse geocode to get address
-        if (window.google && window.google.maps) {
-          const geocoder = new window.google.maps.Geocoder();
-          const latlng = { lat: latitude, lng: longitude };
-
-          geocoder.geocode({ location: latlng }, (results, status) => {
-            setGettingLocation(null);
-
-            if (status === 'OK' && results[0]) {
-              const address = results[0].formatted_address;
-
-              if (field === 'pickup') {
-                setPickup(sanitizeInput(address));
-                if (drop) calculateDistance(address, drop);
-              } else {
-                setDrop(sanitizeInput(address));
-                if (pickup) calculateDistance(pickup, address);
-              }
-
-              setShowResult(false);
-              trackEvent('location_pin_used', { field });
-            } else {
-              alert('Could not get address from location');
-            }
-          });
-        } else {
+        // Check if Google Maps is loaded
+        if (!window.google || !window.google.maps) {
           setGettingLocation(null);
+          console.error('❌ Google Maps not loaded');
           alert('Google Maps not loaded. Please wait a moment and try again.');
+          return;
         }
+
+        // Try Geocoding first (best option)
+        const geocoder = new window.google.maps.Geocoder();
+        const latlng = { lat: latitude, lng: longitude };
+
+        console.log('🔄 Trying Geocoding API...');
+
+        geocoder.geocode({ location: latlng }, (results, status) => {
+          console.log('📊 Geocoding Status:', status);
+
+          if (status === 'OK' && results && results.length > 0) {
+            // SUCCESS - Use Geocoding result
+            const address = results[0].formatted_address;
+            console.log('✅ Geocoding success:', address);
+
+            if (field === 'pickup') {
+              setPickup(sanitizeInput(address));
+              if (drop) calculateDistance(address, drop);
+            } else {
+              setDrop(sanitizeInput(address));
+              if (pickup) calculateDistance(pickup, address);
+            }
+
+            setGettingLocation(null);
+            setShowResult(false);
+            trackEvent('location_pin_used', { field, method: 'geocoding', success: true });
+
+          } else {
+            // FALLBACK - Use Places Nearby Search
+            console.log('🔄 Geocoding failed, trying Places API...');
+            console.log('⚠️ Geocoding status:', status);
+
+            const map = new window.google.maps.Map(document.createElement('div'));
+            const service = new window.google.maps.places.PlacesService(map);
+
+            const request = {
+              location: latlng,
+              rankBy: window.google.maps.places.RankBy.DISTANCE,
+              type: ['establishment', 'point_of_interest']
+            };
+
+            service.nearbySearch(request, (places, placesStatus) => {
+              console.log('📊 Places API Status:', placesStatus);
+
+              setGettingLocation(null);
+
+              if (placesStatus === 'OK' && places && places.length > 0) {
+                // SUCCESS - Use nearest place
+                const nearestPlace = places[0];
+                const placeName = nearestPlace.name;
+                // Use vicinity if available for context
+                const vicinity = nearestPlace.vicinity || 'Chennai';
+                const placeAddress = `${placeName}, ${vicinity}`;
+
+                console.log('✅ Places API success:', placeAddress);
+
+                if (field === 'pickup') {
+                  setPickup(sanitizeInput(placeAddress));
+                } else {
+                  setDrop(sanitizeInput(placeAddress));
+                }
+
+                setShowResult(false);
+                alert('Using nearby location. Please refine if needed.');
+                trackEvent('location_pin_used', { field, method: 'places', success: true });
+
+              } else {
+                // FINAL FALLBACK - Use city name with coordinates
+                console.error('❌ Both Geocoding and Places failed');
+                const fallbackAddress = `Chennai (${latitude.toFixed(4)}, ${longitude.toFixed(4)})`;
+
+                if (field === 'pickup') {
+                  setPickup(fallbackAddress);
+                } else {
+                  setDrop(fallbackAddress);
+                }
+
+                console.log('🔄 Using coordinate fallback:', fallbackAddress);
+                alert('Could not find nearby location. Using coordinates. Please enter address manually.');
+                trackEvent('location_pin_used', { field, method: 'coordinates', success: false });
+              }
+            });
+          }
+        });
       },
       (error) => {
         setGettingLocation(null);
+        console.error('❌ Geolocation error:', error);
+
         let errorMsg = 'Unable to get location';
 
         switch (error.code) {
@@ -277,6 +365,7 @@ export default function QuotationEngine({ showAirportTab = true, showBookingButt
         }
 
         alert(errorMsg);
+        trackEvent('location_pin_error', { field, error: error.code });
       },
       {
         enableHighAccuracy: true,
@@ -487,7 +576,7 @@ _Please confirm availability._`;
                   />
                   <button
                     type="button"
-                    onClick={() => getCurrentLocation(type.toLowerCase())}
+                    onClick={() => handlePinClick(type.toLowerCase())}
                     disabled={gettingLocation === type.toLowerCase()}
                     className="absolute right-3 top-1/2 -translate-y-1/2 p-1.5 hover:bg-slate-100 rounded-full transition-colors disabled:opacity-50"
                     title="Use my current location"
@@ -702,7 +791,7 @@ _Please confirm availability._`;
                 />
                 <button
                   type="button"
-                  onClick={() => getCurrentLocation(type.toLowerCase())}
+                  onClick={() => handlePinClick(type.toLowerCase())}
                   disabled={gettingLocation === type.toLowerCase()}
                   className="absolute right-2 p-1 hover:bg-gray-200 rounded-full transition-colors disabled:opacity-50"
                   title="Use my location"
@@ -767,6 +856,12 @@ _Please confirm availability._`;
           </button>
         </div>
       </div>
+      <LocationPicker
+        isOpen={locationPickerOpen}
+        onClose={() => setLocationPickerOpen(false)}
+        onConfirm={handleLocationConfirm}
+        type={pickerField}
+      />
     </div>
   );
 }

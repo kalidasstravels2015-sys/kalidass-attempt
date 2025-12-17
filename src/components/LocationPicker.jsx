@@ -1,0 +1,157 @@
+import React, { useEffect, useRef, useState } from 'react';
+import { X, MapPin, Navigation } from 'lucide-react';
+
+const LocationPicker = ({ isOpen, onClose, onConfirm, type }) => {
+    const mapRef = useRef(null);
+    const mapInstanceRef = useRef(null);
+    const markerRef = useRef(null);
+    const [address, setAddress] = useState('Locating...');
+    const [isDragging, setIsDragging] = useState(false);
+
+    // Default to Chennai
+    const defaultCenter = { lat: 13.0827, lng: 80.2707 };
+
+    useEffect(() => {
+        if (!isOpen) return;
+
+        // Use a timeout to ensure DOM is ready
+        const timer = setTimeout(() => {
+            initMap();
+        }, 100);
+
+        return () => clearTimeout(timer);
+    }, [isOpen]);
+
+    const initMap = () => {
+        if (!mapRef.current || !window.google) return;
+
+        // Try to get current location for initial center
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const pos = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude,
+                    };
+                    if (mapInstanceRef.current) {
+                        mapInstanceRef.current.setCenter(pos);
+                    }
+                },
+                () => {
+                    // Error/Permission denied - stick to default
+                }
+            );
+        }
+
+        const map = new window.google.maps.Map(mapRef.current, {
+            center: defaultCenter,
+            zoom: 15,
+            disableDefaultUI: true,
+            zoomControl: true,
+            gestureHandling: 'greedy', // Better mobile touch handling
+        });
+
+        mapInstanceRef.current = map;
+
+        // Update address when map stops moving
+        map.addListener('dragstart', () => {
+            setIsDragging(true);
+            setAddress('Moving...');
+        });
+
+        map.addListener('idle', () => {
+            setIsDragging(false);
+            const center = map.getCenter();
+            geocodePosition(center);
+        });
+
+        // Initial geocode
+        geocodePosition(defaultCenter);
+    };
+
+    const geocodePosition = (latlng) => {
+        const geocoder = new window.google.maps.Geocoder();
+        geocoder.geocode({ location: latlng }, (results, status) => {
+            if (status === 'OK' && results[0]) {
+                // Prefer places with names, or route names
+                const bestResult = results[0];
+                // Logic to strip country/pincode if needed, but full address is usually safer
+                setAddress(bestResult.formatted_address);
+            } else {
+                setAddress('Unknown location');
+            }
+        });
+    };
+
+    const handleCurrentLocation = () => {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition((position) => {
+                const pos = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude,
+                };
+                mapInstanceRef.current.setCenter(pos);
+                mapInstanceRef.current.setZoom(17);
+            });
+        }
+    };
+
+    if (!isOpen) return null;
+
+    return (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+            <div className="bg-white w-full max-w-lg rounded-2xl overflow-hidden shadow-2xl flex flex-col h-[80vh] animate-in fade-in zoom-in duration-200">
+
+                {/* Header */}
+                <div className="px-4 py-3 border-b flex items-center justify-between bg-white z-10">
+                    <h3 className="font-bold text-lg text-slate-800">Set {type} Location</h3>
+                    <button onClick={onClose} className="p-2 hover:bg-slate-100 rounded-full transition-colors">
+                        <X className="w-5 h-5 text-slate-500" />
+                    </button>
+                </div>
+
+                {/* Map Container */}
+                <div className="relative flex-1 bg-slate-100">
+                    <div ref={mapRef} className="w-full h-full" />
+
+                    {/* Centered Pin */}
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none z-10 flex flex-col items-center">
+                        <div className={`transition-transform duration-200 ${isDragging ? '-translate-y-2' : ''}`}>
+                            <MapPin className="w-8 h-8 text-black fill-black drop-shadow-md" />
+                        </div>
+                        <div className="w-1.5 h-1.5 bg-black/20 rounded-full blur-[1px] mt-[-2px]" />
+                    </div>
+
+                    {/* Current Location Button */}
+                    <button
+                        onClick={handleCurrentLocation}
+                        className="absolute bottom-6 right-4 bg-white p-3 rounded-full shadow-lg hover:bg-slate-50 active:scale-95 transition-all"
+                        title="Go to current location"
+                    >
+                        <Navigation className="w-5 h-5 text-indigo-600 fill-indigo-100" />
+                    </button>
+                </div>
+
+                {/* Footer */}
+                <div className="p-5 bg-white border-t space-y-4 z-10">
+                    <div>
+                        <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Selected Location</p>
+                        <p className="text-sm font-medium text-slate-800 line-clamp-2 min-h-[2.5em]">
+                            {address}
+                        </p>
+                    </div>
+
+                    <button
+                        onClick={() => onConfirm(address)}
+                        disabled={isDragging || address === 'Locating...' || address === 'Unknown location'}
+                        className="w-full bg-black text-white py-3.5 rounded-xl font-bold text-sm tracking-wide hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all active:scale-[0.98] shadow-lg shadow-indigo-500/20"
+                    >
+                        CONFIRM LOCATION
+                    </button>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default LocationPicker;
