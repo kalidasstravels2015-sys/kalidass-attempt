@@ -76,7 +76,7 @@
     },
     {
       "name": "Toyota Etios",
-      "image": "/images/fleet/toyoto-etios.jpg",
+      "image": "/images/fleet/toyoto-etios.webp",
       "caps": "4 Pax",
       "bags": "2 Bags",
       "rate": "₹12/km",
@@ -129,7 +129,7 @@
     },
     {
       "name": "Tata Sumo",
-      "image": "/images/fleet/Tata-Sumo.png",
+      "image": "/images/fleet/Tata-Sumo.webp",
       "caps": "7 Pax",
       "bags": "3 Bags",
       "rate": "₹16/km",

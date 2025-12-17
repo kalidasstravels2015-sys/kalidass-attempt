@@ -520,49 +520,51 @@ const localBusinessSchema = {
               <span class="lang-en">Calculator</span>
               <span class="lang-ta">கால்குலேட்டர்</span>
             </a>
+
+            {/* Language Toggle (Desktop) */}
+            <div class="ml-4">
+              <LanguageToggle
+                isMobile={false}
+                client:load
+                currentLang={lang}
+                targetUrl={targetPath}
+              />
+            </div>
           </div>
 
-          {/* Language Toggle (Desktop) */}
-          <LanguageToggle
-            isMobile={false}
-            client:load
-            currentLang={lang}
-            targetUrl={targetPath}
-          />
-        </div>
+          <!-- Mobile Controls - In same row -->
+          <div class="flex items-center gap-3 md:hidden">
+            <!-- Language Toggle (Mobile) -->
+            <LanguageToggle
+              isMobile={true}
+              client:load
+              currentLang={lang}
+              targetUrl={targetPath}
+            />
 
-        <!-- Mobile Controls -->
-        <div class="flex items-center gap-6 md:hidden">
-          <!-- Language Toggle (Mobile) -->
-          <LanguageToggle
-            isMobile={true}
-            client:load
-            currentLang={lang}
-            targetUrl={targetPath}
-          />
-
-          <!-- Mobile Menu Button -->
-          <button
-            id="mobile-menu-btn"
-            class="text-gray-700 focus:outline-none focus:ring-2 focus:ring-red-500 rounded p-1"
-            aria-label="Open mobile menu"
-            aria-expanded="false"
-            aria-controls="mobile-menu-drawer"
-          >
-            <svg
-              class="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              aria-hidden="true"
+            <!-- Mobile Menu Button -->
+            <button
+              id="mobile-menu-btn"
+              class="text-gray-700 focus:outline-none focus:ring-2 focus:ring-red-500 rounded p-1"
+              aria-label="Open mobile menu"
+              aria-expanded="false"
+              aria-controls="mobile-menu-drawer"
             >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M4 6h16M4 12h16M4 18h16"></path>
-            </svg>
-          </button>
+              <svg
+                class="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16"></path>
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
     </nav>
@@ -713,7 +715,7 @@ const localBusinessSchema = {
           class="relative mx-auto w-32 h-40 mb-3 rounded-2xl overflow-hidden shadow-lg border-4 border-white"
         >
           <img
-            src="/images/mani-perumal.jpg"
+            src="/images/drivers/mani-perumal.webp"
             alt="Proprietor Perumal Manikumar"
             class="w-full h-full object-cover"
           />
@@ -785,21 +787,17 @@ const localBusinessSchema = {
     </div>
 
     <!-- Floating Action Buttons -->
-    <!-- Android Style Call Button -->
+    <!-- Call Button -->
     <a
       href="tel:+919092303060"
       class="fixed bottom-6 right-6 z-50 group"
       aria-label="Call Kalidass Travels"
     >
       <div
-        class="absolute inset-0 bg-[#4285F4] rounded-full animate-ping opacity-75"
-      >
-      </div>
-      <div
-        class="relative bg-[#4285F4] hover:bg-[#3367D6] text-white p-4 rounded-full shadow-lg transition-all transform group-hover:scale-110 flex items-center justify-center w-16 h-16 border-2 border-white"
+        class="relative bg-[#4285F4] hover:bg-[#3367D6] text-white p-3 rounded-full shadow-xl transition-all transform group-hover:scale-105 flex items-center justify-center w-14 h-14 border-2 border-white"
       >
         <svg
-          class="w-8 h-8"
+          class="w-6 h-6"
           fill="currentColor"
           viewBox="0 0 24 24"
           aria-hidden="true"

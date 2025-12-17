@@ -344,7 +344,7 @@ _Please confirm availability._`;
 
   if (variant === 'card') {
     return (
-      <div className="w-full bg-white rounded-3xl shadow-xl border border-slate-200 overflow-hidden font-sans">
+      <div className="w-full max-w-2xl mx-auto bg-white rounded-3xl shadow-xl border border-slate-200 overflow-hidden font-sans">
         {/* Hidden Honeypot */}
         <input
           type="text"

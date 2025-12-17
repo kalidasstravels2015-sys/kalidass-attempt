@@ -44,9 +44,7 @@ const PartnersCarousel = ({ currentLang }) => {
     const contextLang = useLanguage();
     const lang = isSSR ? currentLang : contextLang;
 
-    // Optimizing DOM:
-    // Instead of 3x duplication, we can use CSS mask text-scrolling or just 2x duplication if needed for seamless loop.
-    // 2x is efficient enough for a seamless loop if the track width > container width.
+    // Always double the array for seamless infinite scroll on all devices
     const scrollingPartners = [...partners, ...partners];
 
     return (
@@ -66,17 +64,16 @@ const PartnersCarousel = ({ currentLang }) => {
                 <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-gray-50 to-transparent z-10 pointer-events-none"></div>
                 <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-gray-50 to-transparent z-10 pointer-events-none"></div>
 
-                {/* Scrolling Track - Reduced duplication */}
+                {/* Auto-scrolling Track */}
                 <div
-                    className="flex w-max animate-scroll hover:pause focus:pause items-center focus:outline-none focus:ring-2 focus:ring-red-500 rounded-xl"
-                    tabIndex={0}
+                    className="flex w-max animate-scroll items-center gap-6 pb-8"
                     role="region"
                     aria-label="Partner Logos"
                 >
                     {scrollingPartners.map((partner, index) => (
                         <div
                             key={index}
-                            className="flex-shrink-0 mx-8 md:mx-12"
+                            className="flex-shrink-0 mx-4 md:mx-8"
                             aria-hidden={index >= partners.length ? "true" : "false"}
                         >
                             <div className="w-44 h-24 md:w-56 md:h-32 flex items-center justify-center bg-white rounded-lg shadow-sm border border-gray-100 p-4">
@@ -102,26 +99,13 @@ const PartnersCarousel = ({ currentLang }) => {
             0% { transform: translateX(0); }
             100% { transform: translateX(-50%); } 
           }
-          /* moved 50% because list is doubled, so 50% is one full original set */
           .animate-scroll {
             animation: scroll 30s linear infinite;
           }
-          .hover\\:pause:hover, .focus\\:pause:focus {
-            animation-play-state: paused;
-          }
           @media (prefers-reduced-motion: reduce) {
             .animate-scroll {
-              animation: none;
-              transform: translateX(0); /* Show first set */
-              flex-wrap: wrap; /* Wrap if needed or just show overflow */
-              justify-content: center;
-              width: 100%;
+              animation: scroll 60s linear infinite;
             }
-            /* Hide duplicates visually in reduced motion if wrapping looks bad, 
-               but simpler to just stop scrolling. 
-               However, with w-max, it might be cut off. 
-               Better to allow horizontal scroll in reduced motion or wrap.
-            */
           }
       `}</style>
         </section>
