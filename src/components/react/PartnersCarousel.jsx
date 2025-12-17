@@ -4,7 +4,7 @@ import { useLanguage } from '../../hooks/useLanguage';
 const partners = [
     {
         name: "Airport Authority of India",
-        logo: "/images/partners/airport-chennai.png",
+        logo: "/images/partners/airport-chennai.webp",
         alt: "Airport Authority of India - Official taxi partner for Chennai Airport pickup and drop",
     },
     {
@@ -14,27 +14,27 @@ const partners = [
     },
     {
         name: "Reliance Jio",
-        logo: "/images/partners/jio.jpg",
+        logo: "/images/partners/jio.webp",
         alt: "Reliance Jio Infocomm - Monthly cab services for corporate staff in Chennai"
     },
     {
         name: "Savaari",
-        logo: "/images/partners/Savaari.png",
+        logo: "/images/partners/Savaari.webp",
         alt: "Savaari Car Rentals - Trusted local taxi operator partner"
     },
     {
         name: "Saravn Enterprises",
-        logo: "/images/partners/saravn.png",
+        logo: "/images/partners/saravn.webp",
         alt: "Saravn Enterprises - Dedicated logistics and staff transport provider"
     },
     {
         name: "Cognizant",
-        logo: "/images/partners/Cognizant.png",
+        logo: "/images/partners/Cognizant.webp",
         alt: "Cognizant Technology Solutions - IT employee daily commute partner"
     },
     {
         name: "TN Police",
-        logo: "/images/partners/tn-police.png",
+        logo: "/images/partners/tn-police.webp",
         alt: "Tamil Nadu Police - Trusted vehicle provider for official duties"
     },
 ];

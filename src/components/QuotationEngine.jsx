@@ -572,7 +572,7 @@ _Please confirm availability._`;
               aria-current={activeTab === tab ? 'page' : undefined}
             >
               {tab === 'airport' ? <Plane className="w-3 h-3" /> : tab === 'round' ? <Repeat className="w-3 h-3" /> : <ArrowRight className="w-3 h-3" />}
-              <span className="hidden xs:inline">{tab === 'airport' ? 'Airport' : tab === 'round' ? 'Round Trip' : 'One Way'}</span>
+              <span>{tab === 'airport' ? 'Airport' : tab === 'round' ? 'Round Trip' : 'One Way'}</span>
             </button>
           )
         ))}
