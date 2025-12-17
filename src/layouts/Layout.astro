@@ -13,11 +13,6 @@ interface Props {
 import siteContent from "../data/siteContent.json";
 import LanguageToggle from "../components/react/LanguageToggle.jsx";
 
-const services = siteContent.services.map((s) => ({
-  ...s,
-  link: isTamil ? `/ta${s.link}` : s.link,
-}));
-
 const {
   title = "Kalidass Travels - Premium Travel Experience",
   description = "Premium travel and cab services across South India. Professional drivers, comfortable vehicles, affordable rates.",
@@ -32,6 +27,11 @@ const {
 // --- Internationalization Logic ---
 const currentPath = Astro.url.pathname.replace(/\/$/, ""); // Remove trailing slash
 const isTamil = lang === "ta";
+
+const services = siteContent.services.map((s) => ({
+  ...s,
+  link: isTamil ? `/ta${s.link}` : s.link,
+}));
 
 // Calculate the alternate language URL
 // If currently English (e.g. "/services"), target is "/ta/services"
