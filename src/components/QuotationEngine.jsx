@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useId } from 'react';
-import { Car, MapPin, Calendar, Calculator, Send, Plane, ArrowRight, Repeat, Users, User, Phone, AlertCircle } from 'lucide-react';
+import { Car, MapPin, Calendar, Calculator, Send, Plane, ArrowRight, Repeat, Users, User, Phone, AlertCircle, Navigation } from 'lucide-react';
 import { trackEvent } from '../lib/analytics';
 
 const rates = {
@@ -48,6 +48,7 @@ export default function QuotationEngine({ showAirportTab = true, showBookingButt
   const [showResult, setShowResult] = useState(false);
   const [errors, setErrors] = useState({});
   const [botField, setBotField] = useState(''); // Honeypot
+  const [gettingLocation, setGettingLocation] = useState(null); // 'pickup' or 'drop'
   const formId = useId(); // Unique ID for accessibility linkage
 
   // Analytics Hooks
@@ -215,6 +216,76 @@ export default function QuotationEngine({ showAirportTab = true, showBookingButt
       );
     }
   };
+
+  // Get Current Location using Geolocation API
+  const getCurrentLocation = (field) => {
+    if (!navigator.geolocation) {
+      alert('Geolocation is not supported by your browser');
+      return;
+    }
+
+    setGettingLocation(field);
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+
+        // Reverse geocode to get address
+        if (window.google && window.google.maps) {
+          const geocoder = new window.google.maps.Geocoder();
+          const latlng = { lat: latitude, lng: longitude };
+
+          geocoder.geocode({ location: latlng }, (results, status) => {
+            setGettingLocation(null);
+
+            if (status === 'OK' && results[0]) {
+              const address = results[0].formatted_address;
+
+              if (field === 'pickup') {
+                setPickup(sanitizeInput(address));
+                if (drop) calculateDistance(address, drop);
+              } else {
+                setDrop(sanitizeInput(address));
+                if (pickup) calculateDistance(pickup, address);
+              }
+
+              setShowResult(false);
+              trackEvent('location_pin_used', { field });
+            } else {
+              alert('Could not get address from location');
+            }
+          });
+        } else {
+          setGettingLocation(null);
+          alert('Google Maps not loaded. Please wait a moment and try again.');
+        }
+      },
+      (error) => {
+        setGettingLocation(null);
+        let errorMsg = 'Unable to get location';
+
+        switch (error.code) {
+          case error.PERMISSION_DENIED:
+            errorMsg = 'Location permission denied. Please enable location access in your browser settings.';
+            break;
+          case error.POSITION_UNAVAILABLE:
+            errorMsg = 'Location information unavailable';
+            break;
+          case error.TIMEOUT:
+            errorMsg = 'Location request timed out';
+            break;
+        }
+
+        alert(errorMsg);
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 0
+      }
+    );
+  };
+
 
   useEffect(() => {
     if (distance && rates[vehicle]) {
@@ -415,6 +486,18 @@ _Please confirm availability._`;
                     placeholder="Enter City / Area"
                     className="bg-transparent w-full outline-none text-sm text-slate-700 font-medium"
                   />
+                  <button
+                    type="button"
+                    onClick={() => getCurrentLocation(type.toLowerCase())}
+                    disabled={gettingLocation === type.toLowerCase()}
+                    className="ml-2 p-2 hover:bg-slate-100 rounded-lg transition-colors disabled:opacity-50 flex-shrink-0"
+                    title="Use my current location"
+                    aria-label={`Use current location for ${type.toLowerCase()}`}
+                  >
+                    <Navigation
+                      className={`w-4 h-4 ${gettingLocation === type.toLowerCase() ? 'text-indigo-600 animate-pulse' : 'text-slate-500'}`}
+                    />
+                  </button>
                 </div>
               </div>
             ))}
@@ -605,7 +688,19 @@ _Please confirm availability._`;
         <div className="grid grid-cols-2 gap-3">
           {['Pickup', 'Drop'].map((type) => (
             <div key={type} className="col-span-2 relative group">
-              <label htmlFor={`${formId}-mobile-${type}`} className="text-[10px] font-bold text-gray-700 uppercase mb-0.5 block">{type}</label>
+              <label htmlFor={`${formId}-mobile-${type}`} className="text-[10px] font-bold text-gray-700 uppercase mb-0.5 block flex items-center justify-between">
+                <span>{type}</span>
+                <button
+                  type="button"
+                  onClick={() => getCurrentLocation(type.toLowerCase())}
+                  disabled={gettingLocation === type.toLowerCase()}
+                  className="text-red-600 hover:text-red-700 disabled:opacity-50 p-1"
+                  title="Use my location"
+                  aria-label={`Use current location for ${type.toLowerCase()}`}
+                >
+                  <Navigation className={`w-3 h-3 ${gettingLocation === type.toLowerCase() ? 'animate-pulse' : ''}`} />
+                </button>
+              </label>
               <div className="flex items-center bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 focus-within:ring-1 focus-within:ring-red-500 transition">
                 <MapPin className="text-red-500 mr-2 w-4 h-4" aria-hidden="true" />
                 <input
