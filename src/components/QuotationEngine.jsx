@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Car, MapPin, Calendar, Calculator, Send, Plane, ArrowRight, Repeat, Users, User, Phone } from 'lucide-react';
+import { Car, MapPin, Calendar, Calculator, Send, Plane, ArrowRight, Repeat, Users, User, Phone, AlertCircle } from 'lucide-react';
 
 const rates = {
   'Swift Dzire': 11,
@@ -11,9 +11,23 @@ const rates = {
 
 const vehicleOptions = Object.keys(rates);
 
+const sanitizeInput = (input) => {
+  if (typeof input !== 'string') return input;
+  // Remove potential XSS characters
+  return input.replace(/[<>"'/`]/g, "").trim().slice(0, 100);
+};
+
+const ERROR_MSGS = {
+  active: { en: "Too many attempts. Try again later.", ta: "அதிக முயற்சிகள். பின்னர் முயற்சிக்கவும்." },
+  name: { en: "Name: 2-50 letters only", ta: "பெயர்: 2-50 எழுத்துக்கள் மட்டும்" },
+  phone: { en: "Invalid Indian mobile number", ta: "தவறான மொபைல் எண்" },
+  locations: { en: "Enter valid pickup & drop locations", ta: "சரியான இடங்களை உள்ளிடவும்" },
+  date: { en: "Date must be in future", ta: "தேதி எதிர்காலத்தில் இருக்க வேண்டும்" },
+};
+
 export default function QuotationEngine({ showAirportTab = true, showBookingButton = true, title = "Book Your Ride", variant = "default" }) {
-  const [activeTab, setActiveTab] = useState('oneway'); // airport, oneway, round
-  const [airportMode, setAirportMode] = useState('drop'); // drop (to airport), pickup (from airport)
+  const [activeTab, setActiveTab] = useState('oneway');
+  const [airportMode, setAirportMode] = useState('drop');
   const [vehicle, setVehicle] = useState('Swift Dzire');
   const [passengers, setPassengers] = useState('4');
   const [pickup, setPickup] = useState('');
@@ -22,16 +36,83 @@ export default function QuotationEngine({ showAirportTab = true, showBookingButt
   const [duration, setDuration] = useState(null);
   const [estimate, setEstimate] = useState(0);
   const [loading, setLoading] = useState(false);
-  const [days, setDays] = useState(1); // For round trip calculation
-  
-  // Customer Details
+  const [days, setDays] = useState(1);
+
+  // Customer Details & Validation
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [date, setDate] = useState('');
   const [showResult, setShowResult] = useState(false);
+  const [errors, setErrors] = useState({});
+  const [botField, setBotField] = useState(''); // Honeypot
 
   const pickupInputRef = useRef(null);
   const dropInputRef = useRef(null);
+
+  // Rate Limiter
+  const checkRateLimit = () => {
+    try {
+      const attempts = JSON.parse(localStorage.getItem('booking_attempts') || '[]');
+      const now = Date.now();
+      const oneHour = 60 * 60 * 1000;
+      const recent = attempts.filter(time => now - time < oneHour);
+
+      if (recent.length >= 5) {
+        setErrors(prev => ({ ...prev, global: ERROR_MSGS.active.en + " / " + ERROR_MSGS.active.ta }));
+        return false;
+      }
+
+      recent.push(now);
+      localStorage.setItem('booking_attempts', JSON.stringify(recent));
+      return true;
+    } catch (e) {
+      return true; // Fallback if local storage fails
+    }
+  };
+
+  // Validation Logic
+  const validateField = (field, value) => {
+    let error = null;
+    const sanitized = sanitizeInput(value);
+
+    switch (field) {
+      case 'name':
+        // 2-50 chars, letters, spaces, dots
+        if (!/^[a-zA-Z\s\.]{2,50}$/.test(sanitized)) {
+          error = `${ERROR_MSGS.name.en} | ${ERROR_MSGS.name.ta}`;
+        }
+        break;
+      case 'phone':
+        // Indian mobile: 6-9 start, 10 digits
+        if (!/^[6-9]\d{9}$/.test(sanitized)) {
+          error = `${ERROR_MSGS.phone.en} | ${ERROR_MSGS.phone.ta}`;
+        }
+        break;
+      case 'date':
+        if (value && new Date(value) < new Date()) {
+          error = `${ERROR_MSGS.date.en} | ${ERROR_MSGS.date.ta}`;
+        }
+        break;
+      case 'location':
+        // Alphanumeric, comma, space, hyphen, dot
+        if (sanitized.length > 0 && !/^[a-zA-Z0-9\s,.-]+$/.test(sanitized)) {
+          error = "Invalid characters in location";
+        }
+        break;
+    }
+    return error;
+  };
+
+  const activeValidate = (field, value) => {
+    const error = validateField(field, value);
+    setErrors(prev => {
+      const newErrors = { ...prev };
+      if (error) newErrors[field] = error;
+      else delete newErrors[field];
+      return newErrors;
+    });
+    return !error;
+  };
 
   // Auto-select vehicle based on passengers
   useEffect(() => {
@@ -43,7 +124,7 @@ export default function QuotationEngine({ showAirportTab = true, showBookingButt
     setShowResult(false);
   }, [passengers]);
 
-  // Initialize Google Maps Autocomplete
+  // Google Maps Autocomplete
   useEffect(() => {
     const initAutocomplete = () => {
       if (!window.google || !window.google.maps || !window.google.maps.places) return;
@@ -58,7 +139,8 @@ export default function QuotationEngine({ showAirportTab = true, showBookingButt
         pickupAutocomplete.addListener('place_changed', () => {
           const place = pickupAutocomplete.getPlace();
           if (place.formatted_address) {
-            setPickup(place.formatted_address);
+            setPickup(sanitizeInput(place.formatted_address));
+            activeValidate('location', place.formatted_address);
             calculateDistance(place.formatted_address, drop);
             setShowResult(false);
           }
@@ -70,7 +152,8 @@ export default function QuotationEngine({ showAirportTab = true, showBookingButt
         dropAutocomplete.addListener('place_changed', () => {
           const place = dropAutocomplete.getPlace();
           if (place.formatted_address) {
-            setDrop(place.formatted_address);
+            setDrop(sanitizeInput(place.formatted_address));
+            activeValidate('location', place.formatted_address);
             calculateDistance(pickup, place.formatted_address);
             setShowResult(false);
           }
@@ -86,33 +169,34 @@ export default function QuotationEngine({ showAirportTab = true, showBookingButt
     }
   }, [pickup, drop, activeTab, airportMode]);
 
-  // Calculate Distance
   const calculateDistance = (origin, destination) => {
     if (!origin || !destination || !window.google) return;
 
-    setLoading(true);
-    const service = new window.google.maps.DistanceMatrixService();
-    service.getDistanceMatrix(
-      {
-        origins: [origin],
-        destinations: [destination],
-        travelMode: window.google.maps.TravelMode.DRIVING,
-      },
-      (response, status) => {
-        setLoading(false);
-        if (status === 'OK' && response.rows[0].elements[0].status === 'OK') {
-          const distValue = response.rows[0].elements[0].distance.value / 1000; // in km
-          const durText = response.rows[0].elements[0].duration.text;
-          setDistance(distValue);
-          setDuration(durText);
-        } else {
-          console.error('Distance calculation failed:', status);
+    // Quick validation before API call
+    if (activeValidate('location', origin) && activeValidate('location', destination)) {
+      setLoading(true);
+      const service = new window.google.maps.DistanceMatrixService();
+      service.getDistanceMatrix(
+        {
+          origins: [origin],
+          destinations: [destination],
+          travelMode: window.google.maps.TravelMode.DRIVING,
+        },
+        (response, status) => {
+          setLoading(false);
+          if (status === 'OK' && response.rows[0].elements[0].status === 'OK') {
+            const distValue = response.rows[0].elements[0].distance.value / 1000;
+            const durText = response.rows[0].elements[0].duration.text;
+            setDistance(distValue);
+            setDuration(durText);
+          } else {
+            console.error('Distance calculation failed:', status);
+          }
         }
-      }
-    );
+      );
+    }
   };
 
-  // Recalculate estimate
   useEffect(() => {
     if (distance && rates[vehicle]) {
       let rate = rates[vehicle];
@@ -122,47 +206,63 @@ export default function QuotationEngine({ showAirportTab = true, showBookingButt
         const minKm = days * 250;
         const actualRoundTripKm = distance * 2;
         const chargeableKm = Math.max(minKm, actualRoundTripKm);
-        
         const baseFare = chargeableKm * rate;
         const driverBata = days * 300;
-        
         totalCost = baseFare + driverBata;
       } else {
         totalCost = distance * rate;
       }
-
       setEstimate(Math.round(totalCost));
     } else {
       setEstimate(0);
     }
   }, [distance, vehicle, activeTab, days]);
 
-  // Auto-fill Airport Location
   useEffect(() => {
     if (activeTab === 'airport') {
       if (airportMode === 'drop') {
         setDrop('Chennai International Airport (MAA)');
-        if (pickup === 'Chennai International Airport (MAA)') setPickup('');
+        if (pickup.includes('Airport')) setPickup('');
       } else {
         setPickup('Chennai International Airport (MAA)');
-        if (drop === 'Chennai International Airport (MAA)') setDrop('');
+        if (drop.includes('Airport')) setDrop('');
       }
-    } else {
-      // Clear Airport if switching to One Way / Round Trip
-      if (drop === 'Chennai International Airport (MAA)') setDrop('');
-      if (pickup === 'Chennai International Airport (MAA)') setPickup('');
     }
   }, [activeTab, airportMode]);
 
   const handleWhatsApp = async () => {
-    // 1. Send Data to Google Sheet (Fire and Forget)
+    // 1. Honeypot Check
+    if (botField) {
+      console.warn("Bot detected");
+      return;
+    }
+
+    // 2. Validate All Fields
+    const isNameValid = activeValidate('name', name);
+    const isPhoneValid = activeValidate('phone', phone);
+    const isDateValid = date ? activeValidate('date', date) : true;
+    const isPickupValid = pickup.length > 0;
+    const isDropValid = drop.length > 0;
+
+    if (!isNameValid || !isPhoneValid || !isDateValid || !isPickupValid || !isDropValid) {
+      setErrors(prev => ({
+        ...prev,
+        global: "Please fix errors above / மேலே உள்ள பிழைகளை சரிசெய்யவும்"
+      }));
+      return;
+    }
+
+    // 3. Rate Limit
+    if (!checkRateLimit()) return;
+
+    // 4. Send Data to Sheet
     const bookingData = {
       date: new Date().toLocaleString(),
       tripType: activeTab,
-      name: name || 'Anonymous',
-      phone: phone || 'Not Provided',
-      pickup,
-      drop,
+      name: sanitizeInput(name),
+      phone: sanitizeInput(phone),
+      pickup: sanitizeInput(pickup),
+      drop: sanitizeInput(drop),
       vehicle,
       passengers,
       distance: distance ? distance.toFixed(1) : '',
@@ -171,35 +271,30 @@ export default function QuotationEngine({ showAirportTab = true, showBookingButt
     };
 
     try {
-      // Replace with your deployed Google Apps Script Web App URL
-      // We use no-cors because Google Scripts don't support CORS for simple POSTs easily, 
-      // but the data still gets sent.
       await fetch('https://script.google.com/macros/s/AKfycbwoEpKqa3Qg-DIvMe06pGUgGLlC_0vJQev61nzIh9ssh1-uHZ5VtYkGzpMVwhEyi7tvEQ/exec', {
         method: 'POST',
         mode: 'no-cors',
-        headers: {
-          'Content-Type': 'text/plain',
-        },
+        headers: { 'Content-Type': 'text/plain' },
         body: JSON.stringify(bookingData)
       });
     } catch (e) {
-      console.error("Error logging to sheet", e);
+      console.log("Logging simplified");
     }
 
-    // 2. Open WhatsApp
+    // 5. Open WhatsApp
     const message = `*New Booking Request*
     
-*Customer:* ${name}
-*Phone:* ${phone}
+*Customer:* ${sanitizeInput(name)}
+*Phone:* ${sanitizeInput(phone)}
 *Trip Details:*
 🚗 Type: ${activeTab === 'airport' ? 'Airport Transfer' : activeTab === 'round' ? 'Round Trip' : 'One Way'}
 🚙 Vehicle: ${vehicle}
 👥 Passengers: ${passengers}
-📍 Pickup: ${pickup}
-📍 Drop: ${drop}
+📍 Pickup: ${sanitizeInput(pickup)}
+📍 Drop: ${sanitizeInput(drop)}
 📅 Date: ${date ? new Date(date).toLocaleString() : 'Not Specified'}
 📏 Distance: ${distance ? distance.toFixed(1) : 'N/A'} km ${activeTab === 'round' ? `(Round Trip: ${(distance * 2).toFixed(1)} km)` : ''}
-⏱️ Duration: ${duration || 'N/A'}
+202: ⏱️ Duration: ${duration || 'N/A'}
 ${activeTab === 'round' ? `📅 Days: ${days}` : ''}
 💰 Est. Cost: ₹${estimate}
 
@@ -209,102 +304,96 @@ _Please confirm availability._`;
     window.open(`https://wa.me/919092303060?text=${encodedMessage}`, '_blank');
   };
 
+  // Helper for Input Classes
+  const getInputClass = (field) => {
+    return `flex items-center bg-slate-50 border rounded-xl px-4 py-3 transition-all ${errors[field]
+        ? 'border-red-500 ring-1 ring-red-500 bg-red-50'
+        : 'border-slate-200 focus-within:ring-2 focus-within:ring-indigo-500/20'
+      }`;
+  };
+
   if (variant === 'card') {
     return (
       <div className="w-full bg-white rounded-3xl shadow-xl border border-slate-200 overflow-hidden font-sans">
-        {/* Header matching DriverFeeEstimator */}
+        {/* Hidden Honeypot */}
+        <input
+          type="text"
+          name="website_url"
+          style={{ display: 'none' }}
+          value={botField}
+          onChange={(e) => setBotField(e.target.value)}
+          tabIndex={-1}
+          autoComplete="off"
+        />
+
         <div className="p-6 pb-2">
           <div className="flex flex-col items-center text-center gap-2 mb-1">
             <Car className="w-10 h-10 text-indigo-600" />
             <div>
-              <h2 className="text-xl font-bold text-slate-900">
-                {title}
-              </h2>
-              <p className="text-xs text-slate-500">
-                Get Instant Quote
-              </p>
+              <h2 className="text-xl font-bold text-slate-900">{title}</h2>
+              <p className="text-xs text-slate-500">Get Instant Quote</p>
             </div>
           </div>
         </div>
 
-        {/* Tabs - Card Style */}
         <div className="px-6 mb-6">
           <div className="bg-slate-100 p-1 rounded-xl flex">
-            <button
-              onClick={() => { setActiveTab('oneway'); setShowResult(false); }}
-              className={`flex-1 py-2 text-sm font-semibold rounded-lg transition-all flex items-center justify-center gap-2 ${
-                activeTab === 'oneway'
-                  ? 'bg-white text-indigo-600 shadow-sm'
-                  : 'text-slate-600 hover:text-slate-900'
-              }`}
-            >
-              <ArrowRight className="w-4 h-4" />
-              <span>One Way</span>
-            </button>
-            <button
-              onClick={() => { setActiveTab('round'); setShowResult(false); }}
-              className={`flex-1 py-2 text-sm font-semibold rounded-lg transition-all flex items-center justify-center gap-2 ${
-                activeTab === 'round'
-                  ? 'bg-white text-indigo-600 shadow-sm'
-                  : 'text-slate-600 hover:text-slate-900'
-              }`}
-            >
-              <Repeat className="w-4 h-4" />
-              <span>Round Trip</span>
-            </button>
+            {['oneway', 'round'].map(tab => (
+              <button
+                key={tab}
+                onClick={() => { setActiveTab(tab); setShowResult(false); }}
+                className={`flex-1 py-2 text-sm font-semibold rounded-lg transition-all flex items-center justify-center gap-2 ${activeTab === tab ? 'bg-white text-indigo-600 shadow-sm' : 'text-slate-600 hover:text-slate-900'
+                  }`}
+              >
+                {tab === 'oneway' ? <ArrowRight className="w-4 h-4" /> : <Repeat className="w-4 h-4" />}
+                <span className="capitalize">{tab} Trip</span>
+              </button>
+            ))}
           </div>
         </div>
 
         <div className="px-6 pb-8 space-y-5">
-          {/* Content */}
-          <div className="space-y-4">
-             {/* Pickup - Full Width */}
-            <div className="relative group">
-              <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1.5">Pickup Location</label>
-              <div className="flex items-center bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 focus-within:ring-2 focus-within:ring-indigo-500/20 transition-all">
-                <MapPin className="text-indigo-500 mr-3 w-5 h-5" />
-                <input
-                  ref={pickupInputRef}
-                  type="text"
-                  value={pickup}
-                  onChange={(e) => { setPickup(e.target.value); setShowResult(false); }}
-                  placeholder="Enter City / Area"
-                  className="bg-transparent w-full outline-none text-sm text-slate-700 font-medium placeholder:text-slate-400"
-                />
-              </div>
+          {errors.global && (
+            <div className="p-3 bg-red-50 text-red-600 text-xs font-bold rounded-lg flex items-center gap-2">
+              <AlertCircle className="w-4 h-4" /> {errors.global}
             </div>
+          )}
 
-            {/* Drop - Full Width */}
-            <div className="relative group">
-              <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1.5">Drop Location</label>
-              <div className="flex items-center bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 focus-within:ring-2 focus-within:ring-indigo-500/20 transition-all">
-                <MapPin className="text-slate-400 mr-3 w-5 h-5" />
-                <input
-                  ref={dropInputRef}
-                  type="text"
-                  value={drop}
-                  onChange={(e) => { setDrop(e.target.value); setShowResult(false); }}
-                  placeholder="Enter Destination"
-                  className="bg-transparent w-full outline-none text-sm text-slate-700 font-medium placeholder:text-slate-400"
-                />
+          {/* Locations */}
+          <div className="space-y-4">
+            {['Pickup', 'Drop'].map((type) => (
+              <div key={type} className="relative group">
+                <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1.5">{type} Location</label>
+                <div className={getInputClass('location')}>
+                  <MapPin className={`${type === 'Pickup' ? 'text-indigo-500' : 'text-slate-400'} mr-3 w-5 h-5`} />
+                  <input
+                    ref={type === 'Pickup' ? pickupInputRef : dropInputRef}
+                    type="text"
+                    value={type === 'Pickup' ? pickup : drop}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      type === 'Pickup' ? setPickup(val) : setDrop(val);
+                      setShowResult(false);
+                    }}
+                    placeholder="Enter City / Area"
+                    className="bg-transparent w-full outline-none text-sm text-slate-700 font-medium"
+                  />
+                </div>
               </div>
-            </div>
+            ))}
 
             <div className="grid grid-cols-2 gap-4">
               {/* Passengers */}
               <div className="relative group">
                 <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1.5">Passengers</label>
-                <div className="flex items-center bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 focus-within:ring-2 focus-within:ring-indigo-500/20 transition-all">
+                <div className="flex items-center bg-slate-50 border border-slate-200 rounded-xl px-4 py-3">
                   <Users className="text-indigo-500 mr-3 w-5 h-5" />
                   <select
                     value={passengers}
                     onChange={(e) => { setPassengers(e.target.value); setShowResult(false); }}
-                    className="bg-transparent w-full outline-none text-sm text-slate-700 font-medium appearance-none cursor-pointer"
+                    className="bg-transparent w-full outline-none text-sm text-slate-700 font-medium appearance-none"
                   >
-                    <option value="4">4+ Driver</option>
-                    <option value="6">6+ Driver</option>
-                    <option value="7">7+ Driver</option>
-                    <option value="12">12+ Driver</option>
+                    {['4', '6', '7', '12'].map(n => <option key={n} value={n}>{n}+ Driver</option>)}
                   </select>
                 </div>
               </div>
@@ -314,365 +403,227 @@ _Please confirm availability._`;
                 <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1.5">Vehicle</label>
                 <div className="flex items-center bg-slate-100 border border-slate-200 rounded-xl px-4 py-3">
                   <Car className="text-slate-500 mr-3 w-5 h-5" />
-                  <select
-                    value={vehicle}
-                    disabled
-                    className="bg-transparent w-full outline-none text-sm text-slate-700 font-medium appearance-none cursor-not-allowed"
-                  >
-                    {vehicleOptions.map((v) => (
-                      <option key={v} value={v}>
-                        {v}
-                      </option>
-                    ))}
+                  <select value={vehicle} disabled className="bg-transparent w-full outline-none text-sm text-slate-700 font-medium appearance-none cursor-not-allowed">
+                    {vehicleOptions.map(v => <option key={v} value={v}>{v}</option>)}
                   </select>
                 </div>
               </div>
-            </div>
 
-            {activeTab === 'round' && (
-              <div className="relative group">
-                <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1.5">Days</label>
-                <div className="flex items-center bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 focus-within:ring-2 focus-within:ring-indigo-500/20 transition-all">
-                  <Calendar className="text-indigo-500 mr-3 w-5 h-5" />
+              {/* Name */}
+              <div className="relative group col-span-2 md:col-span-1">
+                <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1.5">Name</label>
+                <div className={getInputClass('name')}>
+                  <User className="text-slate-400 mr-3 w-5 h-5" />
                   <input
-                    type="number"
-                    min="1"
-                    value={days}
-                    onChange={(e) => { setDays(parseInt(e.target.value) || 1); setShowResult(false); }}
+                    type="text"
+                    value={name}
+                    onChange={(e) => { setName(e.target.value); activeValidate('name', e.target.value); }}
+                    placeholder="Your Name"
                     className="bg-transparent w-full outline-none text-sm text-slate-700 font-medium"
                   />
                 </div>
+                {errors.name && <p className="text-[10px] text-red-500 mt-1">{errors.name}</p>}
+              </div>
+
+              {/* Phone */}
+              <div className="relative group col-span-2 md:col-span-1">
+                <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1.5">Phone</label>
+                <div className={getInputClass('phone')}>
+                  <Phone className="text-slate-400 mr-3 w-5 h-5" />
+                  <input
+                    type="tel"
+                    value={phone}
+                    onChange={(e) => { setPhone(e.target.value); activeValidate('phone', e.target.value); }}
+                    placeholder="Mobile Number"
+                    className="bg-transparent w-full outline-none text-sm text-slate-700 font-medium"
+                  />
+                </div>
+                {errors.phone && <p className="text-[10px] text-red-500 mt-1">{errors.phone}</p>}
+              </div>
+
+              {/* Days Input if Round Trip */}
+              {activeTab === 'round' && (
+                <div className="relative group">
+                  <label className="block text-[10px] font-bold text-slate-400 uppercase mb-1.5">Days</label>
+                  <div className="flex items-center bg-slate-50 border border-slate-200 rounded-xl px-4 py-3">
+                    <Calendar className="text-indigo-500 mr-3 w-5 h-5" />
+                    <input
+                      type="number"
+                      min="1"
+                      value={days}
+                      onChange={(e) => setDays(parseInt(e.target.value) || 1)}
+                      className="bg-transparent w-full outline-none text-sm text-slate-700 font-medium"
+                    />
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <button
+              className="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-4 rounded-xl transition-all flex items-center justify-center shadow-lg"
+              onClick={() => setShowResult(true)}
+            >
+              Calculate Cost <ArrowRight className="w-4 h-4 ml-2" />
+            </button>
+
+            {/* Results Section */}
+            {showResult && (
+              <div className="space-y-4 animate-in fade-in slide-in-from-top-4 duration-300">
+                {distance && (
+                  <div className="flex justify-between text-xs text-slate-600 bg-slate-50 p-3 rounded-xl border">
+                    <div><span className="block text-[10px] uppercase font-bold text-slate-400">Distance</span><strong>{distance.toFixed(1)} km</strong></div>
+                    <div><span className="block text-[10px] uppercase font-bold text-slate-400">Time</span><strong>{duration}</strong></div>
+                  </div>
+                )}
+
+                {estimate > 0 && (
+                  <div className="bg-emerald-50 rounded-2xl p-4 border border-emerald-100">
+                    <div className="flex justify-between items-end mb-4">
+                      <div>
+                        <p className="text-xs text-emerald-700 font-bold uppercase">Total Estimate</p>
+                        <p className="text-3xl font-black text-slate-800">₹ {estimate.toLocaleString()}</p>
+                      </div>
+                      <div className="text-[10px] text-slate-500 text-right">
+                        Rate: ₹{rates[vehicle]}/km
+                      </div>
+                    </div>
+
+                    <button
+                      onClick={handleWhatsApp}
+                      className="w-full py-3 bg-[#25D366] hover:bg-[#20bd5a] text-white rounded-xl font-bold flex items-center justify-center gap-2 shadow-sm transition-all active:scale-95"
+                    >
+                      <Send className="w-4 h-4" /> Book on WhatsApp
+                    </button>
+                  </div>
+                )}
               </div>
             )}
           </div>
-
-          {/* Calculate Button */}
-          <button 
-            className="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-4 rounded-xl transition-all flex items-center justify-center shadow-lg hover:shadow-xl active:scale-[0.98]"
-            onClick={() => {
-               setShowResult(true);
-            }}
-          >
-            <span className="flex items-center">Calculate Cost <ArrowRight className="w-4 h-4 ml-2" /></span>
-          </button>
-
-          {/* Distance Info */}
-          {distance && showResult && (
-            <div className="flex flex-row justify-between text-xs text-slate-600 bg-slate-50 p-3 rounded-xl border border-slate-100">
-              <div>
-                <span className="block text-[10px] text-slate-400 uppercase font-bold">Distance</span>
-                <strong className="text-slate-900">{distance.toFixed(1)} km</strong>
-              </div>
-              {activeTab === 'round' && (
-                <div>
-                  <span className="block text-[10px] text-slate-400 uppercase font-bold">Round Trip</span>
-                  <strong className="text-indigo-600">{(distance * 2).toFixed(1)} km</strong>
-                </div>
-              )}
-              <div className="text-right">
-                <span className="block text-[10px] text-slate-400 uppercase font-bold">Duration</span>
-                <strong className="text-slate-900">{duration}</strong>
-              </div>
-            </div>
-          )}
-
-          {/* Estimate */}
-          {estimate > 0 && showResult && (
-            <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl p-4 flex flex-col gap-2 border border-green-100">
-              <div className="flex justify-between items-end">
-                <div>
-                  <p className="text-xs text-green-700 font-bold uppercase">Total Estimate</p>
-                  <div className="flex items-baseline gap-1">
-                    {loading ? (
-                      <span className="text-lg text-slate-400 animate-pulse">...</span>
-                    ) : (
-                      <p className="text-3xl font-black text-slate-800 leading-none">
-                        ₹ {estimate > 0 ? estimate.toLocaleString() : '0'}
-                      </p>
-                    )}
-                  </div>
-                  <p className="text-[10px] text-slate-500 mt-1">*Excludes Tolls/Parking</p>
-                </div>
-                
-                {estimate > 0 && (
-                   <div className="text-[10px] text-right text-slate-500">
-                      <div>Rate: ₹{rates[vehicle]}/km</div>
-                      {activeTab === 'round' && <div>+ Bata: ₹{days * 300}</div>}
-                   </div>
-                )}
-              </div>
-            </div>
-          )}
         </div>
       </div>
     );
   }
 
+  // Mobile / Default Variant
   return (
-    <div className="bg-white rounded-xl shadow-xl p-0 border-t-4 border-red-600 overflow-hidden">
-      <h2 className="text-lg font-bold text-center text-gray-800 py-2 border-b border-gray-100">
-        {title}
-      </h2>
-      
-      {/* Tabs - Compact */}
+    <div className="bg-white rounded-xl shadow-xl border-t-4 border-red-600 overflow-hidden">
+      {/* Hidden Honeypot */}
+      <input
+        type="text"
+        name="website_url"
+        style={{ display: 'none' }}
+        value={botField}
+        onChange={(e) => setBotField(e.target.value)}
+        tabIndex={-1}
+      />
+
+      <h2 className="text-lg font-bold text-center text-gray-800 py-2 border-b border-gray-100">{title}</h2>
+
+      {/* Tabs */}
       <div className="flex border-b border-gray-100">
-        <button
-          onClick={() => setActiveTab('oneway')}
-          className={`flex-1 py-2 text-xs text-center font-bold tracking-wide uppercase transition flex items-center justify-center gap-1 ${
-            activeTab === 'oneway'
-              ? 'text-red-600 border-b-2 border-red-600 bg-red-50'
-              : 'text-gray-500 hover:text-red-600'
-          }`}
-        >
-          <ArrowRight className="w-3 h-3" />
-          <span>One Way</span>
-        </button>
-        <button
-          onClick={() => setActiveTab('round')}
-          className={`flex-1 py-2 text-xs text-center font-bold tracking-wide uppercase transition flex items-center justify-center gap-1 ${
-            activeTab === 'round'
-              ? 'text-red-600 border-b-2 border-red-600 bg-red-50'
-              : 'text-gray-500 hover:text-red-600'
-          }`}
-        >
-          <Repeat className="w-3 h-3" />
-          <span>Round Trip</span>
-        </button>
-        {showAirportTab && (
-          <button
-            onClick={() => setActiveTab('airport')}
-            className={`flex-1 py-2 text-xs text-center font-bold tracking-wide uppercase transition flex items-center justify-center gap-1 ${
-              activeTab === 'airport'
-                ? 'text-red-600 border-b-2 border-red-600 bg-red-50'
-                : 'text-gray-500 hover:text-red-600'
-            }`}
-          >
-            <Plane className="w-3 h-3" />
-            <span>Airport</span>
-          </button>
-        )}
+        {['oneway', 'round', 'airport'].map(tab => (
+          (tab !== 'airport' || showAirportTab) && (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              className={`flex-1 py-2 text-xs text-center font-bold uppercase flex items-center justify-center gap-1 ${activeTab === tab ? 'text-red-600 border-b-2 border-red-600 bg-red-50' : 'text-gray-500'
+                }`}
+            >
+              {tab === 'airport' ? <Plane className="w-3 h-3" /> : tab === 'round' ? <Repeat className="w-3 h-3" /> : <ArrowRight className="w-3 h-3" />}
+              <span className="hidden xs:inline">{tab === 'airport' ? 'Airport' : tab === 'round' ? 'Round Trip' : 'One Way'}</span>
+            </button>
+          )
+        ))}
       </div>
 
       <div className="p-4 space-y-3">
-        
-        {/* Airport Mode Toggle */}
         {activeTab === 'airport' && (
           <div className="flex justify-center mb-2">
             <div className="bg-gray-100 p-1 rounded-lg flex text-[10px] font-bold">
-              <button
-                onClick={() => setAirportMode('drop')}
-                className={`px-4 py-1.5 rounded-md transition-all ${
-                  airportMode === 'drop' ? 'bg-white text-red-600 shadow-sm' : 'text-gray-500'
-                }`}
-              >
-                To Airport
-              </button>
-              <button
-                onClick={() => setAirportMode('pickup')}
-                className={`px-4 py-1.5 rounded-md transition-all ${
-                  airportMode === 'pickup' ? 'bg-white text-red-600 shadow-sm' : 'text-gray-500'
-                }`}
-              >
-                From Airport
-              </button>
+              {['drop', 'pickup'].map(mode => (
+                <button
+                  key={mode}
+                  onClick={() => setAirportMode(mode)}
+                  className={`px-4 py-1.5 rounded-md transition-all ${airportMode === mode ? 'bg-white text-red-600 shadow-sm' : 'text-gray-500'}`}
+                >
+                  {mode === 'drop' ? 'To Airport' : 'From Airport'}
+                </button>
+              ))}
             </div>
+          </div>
+        )}
+
+        {errors.global && (
+          <div className="p-2 bg-red-50 text-red-600 text-[10px] font-bold rounded flex items-center gap-1">
+            <AlertCircle className="w-3 h-3" /> {errors.global}
           </div>
         )}
 
         <div className="grid grid-cols-2 gap-3">
-          
-          {/* Pickup - Full Width */}
-          <div className="col-span-2 relative group">
-            <label className="text-[10px] font-bold text-gray-500 uppercase mb-0.5 block">Pickup Location</label>
-            <div className="flex items-center bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 focus-within:ring-1 ring-red-500 transition">
-              <MapPin className="text-red-500 mr-2 w-4 h-4" />
-              <input
-                ref={pickupInputRef}
-                type="text"
-                value={pickup}
-                onChange={(e) => setPickup(e.target.value)}
-                placeholder="Enter City / Area"
-                className="bg-transparent w-full outline-none text-sm text-gray-700 font-medium"
-              />
-            </div>
-          </div>
-
-          {/* Drop - Full Width */}
-          <div className="col-span-2 relative group">
-            <label className="text-[10px] font-bold text-gray-500 uppercase mb-0.5 block">Drop Location</label>
-            <div className="flex items-center bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 focus-within:ring-1 ring-red-500 transition">
-              <MapPin className="text-gray-400 mr-2 w-4 h-4" />
-              <input
-                ref={dropInputRef}
-                type="text"
-                value={drop}
-                onChange={(e) => setDrop(e.target.value)}
-                placeholder="Enter Destination"
-                className="bg-transparent w-full outline-none text-sm text-gray-700 font-medium"
-              />
-            </div>
-          </div>
-
-          {/* Date - Full Width */}
-          <div className="col-span-2 relative group">
-            <label className="text-[10px] font-bold text-gray-500 uppercase mb-0.5 block">Pickup Date</label>
-            <div className="flex items-center bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 focus-within:ring-1 ring-red-500 transition">
-              <Calendar className="text-red-500 mr-2 w-4 h-4" />
-              <input
-                type="datetime-local"
-                value={date}
-                onChange={(e) => setDate(e.target.value)}
-                className="bg-transparent w-full outline-none text-sm text-gray-700 font-medium cursor-pointer"
-              />
-            </div>
-          </div>
-
-          {/* Passengers - Half Width */}
-          <div className="col-span-1 relative group">
-            <label className="text-[10px] font-bold text-gray-500 uppercase mb-0.5 block">Passengers</label>
-            <div className="flex items-center bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 focus-within:ring-1 ring-red-500 transition">
-              <Users className="text-red-500 mr-2 w-4 h-4" />
-              <select
-                value={passengers}
-                onChange={(e) => setPassengers(e.target.value)}
-                className="bg-transparent w-full outline-none text-sm text-gray-700 font-medium appearance-none cursor-pointer"
-              >
-                <option value="4">4+ Driver</option>
-                <option value="6">6+ Driver</option>
-                <option value="7">7+ Driver</option>
-                <option value="12">12+ Driver</option>
-              </select>
-            </div>
-          </div>
-
-          {/* Vehicle - Half Width */}
-          <div className="col-span-1 relative group">
-            <label className="text-[10px] font-bold text-gray-500 uppercase mb-0.5 block">Vehicle (Auto)</label>
-            <div className="flex items-center bg-gray-100 border border-gray-200 rounded-lg px-3 py-2">
-              <Car className="text-gray-500 mr-2 w-4 h-4" />
-              <select
-                value={vehicle}
-                disabled
-                className="bg-transparent w-full outline-none text-sm text-gray-700 font-medium appearance-none cursor-not-allowed"
-              >
-                {vehicleOptions.map((v) => (
-                  <option key={v} value={v}>
-                    {v}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-
-          {/* Days (Round Trip) - Half Width */}
-          {activeTab === 'round' && (
-            <div className="col-span-1 relative group">
-              <label className="text-[10px] font-bold text-gray-500 uppercase mb-0.5 block">Days</label>
+          {['Pickup', 'Drop'].map((type) => (
+            <div key={type} className="col-span-2 relative group">
+              <label className="text-[10px] font-bold text-gray-500 uppercase mb-0.5 block">{type}</label>
               <div className="flex items-center bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 focus-within:ring-1 ring-red-500 transition">
-                <Calendar className="text-red-500 mr-2 w-4 h-4" />
+                <MapPin className="text-red-500 mr-2 w-4 h-4" />
                 <input
-                  type="number"
-                  min="1"
-                  value={days}
-                  onChange={(e) => setDays(parseInt(e.target.value) || 1)}
-                  className="bg-transparent w-full outline-none text-sm text-gray-700 font-medium"
+                  ref={type === 'Pickup' ? pickupInputRef : dropInputRef}
+                  value={type === 'Pickup' ? pickup : drop}
+                  onChange={(e) => type === 'Pickup' ? setPickup(e.target.value) : setDrop(e.target.value)}
+                  placeholder="Enter Location"
+                  className="bg-transparent w-full outline-none text-sm text-gray-700"
                 />
               </div>
             </div>
-          )}
+          ))}
 
-          {/* Name - Half Width */}
-          <div className="col-span-1 relative group">
+          <div className="col-span-1">
             <label className="text-[10px] font-bold text-gray-500 uppercase mb-0.5 block">Name</label>
-            <div className="flex items-center bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 focus-within:ring-1 ring-red-500 transition">
-              <User className="text-gray-400 mr-2 w-4 h-4" />
-              <input
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder="Your Name"
-                className="bg-transparent w-full outline-none text-sm text-gray-700 font-medium"
-              />
-            </div>
+            <input
+              value={name}
+              onChange={(e) => { setName(e.target.value); activeValidate('name', e.target.value); }}
+              placeholder="Name"
+              className={`w-full bg-gray-50 border rounded-lg px-3 py-2 text-sm outline-none ${errors.name ? 'border-red-500' : 'border-gray-200 focus:ring-1 ring-red-500'}`}
+            />
+            {errors.name && <p className="text-[8px] text-red-500">{errors.name}</p>}
           </div>
 
-          {/* Phone - Half Width */}
-          <div className="col-span-1 relative group">
+          <div className="col-span-1">
             <label className="text-[10px] font-bold text-gray-500 uppercase mb-0.5 block">Phone</label>
-            <div className="flex items-center bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 focus-within:ring-1 ring-red-500 transition">
-              <Phone className="text-gray-400 mr-2 w-4 h-4" />
-              <input
-                type="tel"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                placeholder="Mobile Number"
-                className="bg-transparent w-full outline-none text-sm text-gray-700 font-medium"
-              />
-            </div>
+            <input
+              value={phone}
+              onChange={(e) => { setPhone(e.target.value); activeValidate('phone', e.target.value); }}
+              placeholder="Mobile"
+              className={`w-full bg-gray-50 border rounded-lg px-3 py-2 text-sm outline-none ${errors.phone ? 'border-red-500' : 'border-gray-200 focus:ring-1 ring-red-500'}`}
+            />
+            {errors.phone && <p className="text-[8px] text-red-500">{errors.phone}</p>}
+          </div>
+
+          <div className="col-span-2">
+            <label className="text-[10px] font-bold text-gray-500 uppercase mb-0.5 block">Date</label>
+            <input
+              type="datetime-local"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+              className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-sm"
+            />
           </div>
         </div>
 
-        {/* Distance Info - Compact */}
-        {distance && (
-          <div className="flex flex-row justify-between text-xs text-gray-600 bg-gray-50 p-2 rounded border border-gray-100">
-            <div>
-              <span className="block text-[10px] text-gray-400 uppercase">Distance</span>
-              <strong>{distance.toFixed(1)} km</strong>
-            </div>
-            {activeTab === 'round' && (
-              <div>
-                <span className="block text-[10px] text-gray-400 uppercase">Round Trip</span>
-                <strong className="text-red-600">{(distance * 2).toFixed(1)} km</strong>
-              </div>
-            )}
-            <div className="text-right">
-              <span className="block text-[10px] text-gray-400 uppercase">Duration</span>
-              <strong>{duration}</strong>
-            </div>
+        <div className="bg-emerald-50 rounded-lg p-3 border border-emerald-100 flex justify-between items-center">
+          <div>
+            <p className="text-[10px] text-emerald-700 font-bold uppercase">Estimate</p>
+            <p className="text-xl font-black text-gray-800">₹ {estimate > 0 ? estimate.toLocaleString() : '0'}</p>
           </div>
-        )}
-
-        {/* Estimate - Compact */}
-        <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg p-3 flex flex-col gap-2 border border-green-100">
-          <div className="flex justify-between items-end">
-            <div>
-              <p className="text-xs text-green-700 font-bold uppercase">Total Estimate</p>
-              <div className="flex items-baseline gap-1">
-                {loading ? (
-                  <span className="text-lg text-gray-400 animate-pulse">...</span>
-                ) : (
-                  <p className="text-2xl font-black text-gray-800 leading-none">
-                    ₹ {estimate > 0 ? estimate.toLocaleString() : '0'}
-                  </p>
-                )}
-              </div>
-              <p className="text-[10px] text-gray-500 mt-0.5">*Excludes Tolls/Parking</p>
-            </div>
-            
-            {estimate > 0 && (
-               <div className="text-[10px] text-right text-gray-500">
-                  <div>Rate: ₹{rates[vehicle]}/km</div>
-                  {activeTab === 'round' && <div>+ Bata: ₹{days * 300}</div>}
-               </div>
-            )}
-          </div>
-          
-          {showBookingButton && (
-            <button
-              onClick={handleWhatsApp}
-              disabled={estimate === 0}
-              className={`w-full py-2.5 rounded-lg font-bold text-sm flex items-center justify-center gap-2 transition-transform shadow-sm ${
-                estimate > 0 
-                  ? 'bg-[#25D366] hover:bg-[#20bd5a] text-white active:scale-95' 
-                  : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-              }`}
-            >
-              <Send className="w-4 h-4" />
-              Book on WhatsApp
-            </button>
-          )}
+          <button
+            onClick={handleWhatsApp}
+            disabled={estimate === 0}
+            className={`px-4 py-2 rounded-lg font-bold text-xs flex items-center gap-2 ${estimate > 0 ? 'bg-[#25D366] text-white hover:bg-[#20bd5a]' : 'bg-gray-300 text-gray-500'}`}
+          >
+            <Send className="w-3 h-3" /> Book
+          </button>
         </div>
       </div>
     </div>
   );
 }
+

@@ -1,39 +1,62 @@
 ---
-import siteContent from '../data/siteContent.json';
+import OptimizedImage from "./OptimizedImage.astro";
+import siteContent from "../data/siteContent.json";
 const hero = siteContent.hero;
 const heroImages = hero.images ?? [
-  'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=1920'
+  "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=1920",
 ];
 ---
 
-<section class="relative min-h-[70dvh] flex items-center justify-center overflow-hidden pb-32">
+<section
+  class="relative min-h-[70dvh] flex items-center justify-center overflow-hidden pb-32"
+>
   <!-- Background Slideshow -->
   <div class="absolute inset-0 z-0">
-    <div class="hero-slides absolute inset-0 pointer-events-none" aria-hidden="true">
-      {heroImages.map((image, index) => (
-        <div
-          class="hero-slide"
-          style={`background-image: url(${image}); animation-delay: ${index * 6}s;`}
-        ></div>
-      ))}
+    <div
+      class="hero-slides absolute inset-0 pointer-events-none"
+      aria-hidden="true"
+    >
+      {
+        heroImages.map((image, index) => (
+          <div
+            class="hero-slide relative w-full h-full"
+            style={`animation-delay: ${index * 6}s; opacity: 0;`}
+          >
+            <OptimizedImage
+              src={image}
+              alt="Hero Background"
+              class="absolute inset-0 w-full h-full object-cover"
+              loading={index === 0 ? "eager" : "lazy"}
+            />
+          </div>
+        ))
+      }
     </div>
-    <div class="absolute inset-0" style="background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.5));"></div>
+    <div
+      class="absolute inset-0"
+      style="background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.5));"
+    >
+    </div>
   </div>
 
   <div class="relative z-10 max-w-3xl mx-4 sm:mx-auto text-center space-y-6">
-    <div class="inline-flex items-center justify-center gap-2 px-3 py-1 rounded-full bg-black/40 border border-white/10">
+    <div
+      class="inline-flex items-center justify-center gap-2 px-3 py-1 rounded-full bg-black/40 border border-white/10"
+    >
       <span class="text-green-400 animate-pulse text-[10px]">●</span>
       <p class="text-xs font-semibold uppercase tracking-widest text-white">
         <span class="lang-en">{hero.badge}</span>
         <span class="lang-ta">{hero.badge_ta}</span>
       </p>
     </div>
-    
-    <h1 class="text-2xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight drop-shadow-lg">
+
+    <h1
+      class="text-2xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight drop-shadow-lg"
+    >
       <span class="lang-en">{hero.title}</span>
       <span class="lang-ta">{hero.title_ta}</span>
     </h1>
-    
+
     <p class="text-sm sm:text-lg text-white/90 font-medium drop-shadow-md px-4">
       <span class="lang-en">{hero.highlight}</span>
       <span class="lang-ta">{hero.highlight_ta}</span>
@@ -42,8 +65,17 @@ const heroImages = hero.images ?? [
 
   <!-- Scroll Indicator -->
   <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+    <svg
+      class="w-6 h-6 text-white"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
     </svg>
   </div>
 </section>
@@ -59,10 +91,8 @@ const heroImages = hero.images ?? [
   .hero-slide {
     position: absolute;
     inset: 0;
-    background-size: cover;
-    background-position: center;
-    opacity: 0;
-    transform: scale(1.08);
+    /* Opacity handled by animation */
+    /* background properties removed as we use img tag now */
     animation: heroCinematic 24s ease-in-out infinite;
     animation-fill-mode: both;
     filter: saturate(1.1);

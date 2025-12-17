@@ -35,24 +35,35 @@ const localBusinessSchema = {
   "@context": "https://schema.org",
   "@type": "TaxiService",
   name: "Kalidass Travels",
-  image: "https://kalidasstravels.in/images/logo.png",
+  image: ["https://kalidasstravels.in/images/logo.png"],
   description: description,
-  telephone: "+919952749408",
+  telephone: "+919092303060",
+  email: "bookings@kalidasstravels.in",
+  url: "https://kalidasstravels.in",
   address: {
     "@type": "PostalAddress",
+    streetAddress:
+      "No. 4/220, E88, Ponniamman Kovil Street, Annamalai Nagar, Medavakkam",
     addressLocality: "Chennai",
+    postalCode: "600100",
     addressRegion: "Tamil Nadu",
     addressCountry: "IN",
   },
   geo: {
     "@type": "GeoCoordinates",
-    latitude: "13.0827",
-    longitude: "80.2707",
+    latitude: "12.926442514836141",
+    longitude: "80.18460027205512",
   },
-  areaServed: {
-    "@type": "City",
-    name: "Chennai",
-  },
+  areaServed: [
+    {
+      "@type": "City",
+      name: "Chennai",
+    },
+    {
+      "@type": "AdministrativeArea",
+      name: "Tamil Nadu",
+    },
+  ],
   priceRange: "₹₹",
   openingHoursSpecification: {
     "@type": "OpeningHoursSpecification",
@@ -68,6 +79,40 @@ const localBusinessSchema = {
     opens: "00:00",
     closes: "23:59",
   },
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Travel Services",
+    itemListElement: [
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Airport Drop & Pickup",
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Corporate Employee Transport",
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Outstation Taxi",
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Temple Tour Packages",
+        },
+      },
+    ],
+  },
 };
 ---
 
@@ -75,9 +120,11 @@ const localBusinessSchema = {
 <html lang="en">
   <head>
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-STG8DWJ76K"
-    ></script>
-    <script is:inline>
+    <script
+      async
+      type="text/partytown"
+      src="https://www.googletagmanager.com/gtag/js?id=G-STG8DWJ76K"></script>
+    <script type="text/partytown">
       window.dataLayer = window.dataLayer || [];
       function gtag() {
         dataLayer.push(arguments);

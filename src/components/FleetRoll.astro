@@ -1,4 +1,5 @@
 ---
+import OptimizedImage from './OptimizedImage.astro';
 import siteContent from '../data/siteContent.json';
 const fleet = siteContent.fleet;
 ---
@@ -24,10 +25,10 @@ const fleet = siteContent.fleet;
               <div class="bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
                 <!-- Image -->
                 <div class="relative h-48 overflow-hidden">
-                  <img 
+                  <OptimizedImage 
                     src={vehicle.image} 
                     alt={vehicle.name}
-                    class="w-full h-full object-cover"
+                    class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
                   />
                   <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
                   <div class="absolute bottom-4 left-4">
