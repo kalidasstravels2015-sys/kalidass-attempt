@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef, useId } from 'react';
 import { Car, MapPin, Calendar, Calculator, Send, Plane, ArrowRight, Repeat, Users, User, Phone, AlertCircle, Navigation } from 'lucide-react';
 import { trackEvent } from '../lib/analytics';
 import LocationPicker from './LocationPicker';
+import { useLanguage } from '../hooks/useLanguage';
+import siteContent from '../data/siteContent.json';
 
 const rates = {
   'Swift Dzire': 11,
@@ -29,7 +31,12 @@ const ERROR_MSGS = {
 
 
 
-export default function QuotationEngine({ showAirportTab = true, showBookingButton = true, title = "Book Your Ride", variant = "default" }) {
+export default function QuotationEngine({ currentLang = 'en', showAirportTab = true, showBookingButton = true, title = null, variant = "default" }) {
+  const lang = useLanguage(currentLang);
+  const isTa = lang === 'ta';
+  const labels = siteContent.ui_labels;
+  const displayTitle = title || (isTa ? labels.book_your_ride_ta : labels.book_your_ride);
+
   const [activeTab, setActiveTab] = useState('oneway');
   const [airportMode, setAirportMode] = useState('drop');
   const [vehicle, setVehicle] = useState('Swift Dzire');
@@ -52,7 +59,12 @@ export default function QuotationEngine({ showAirportTab = true, showBookingButt
   const [gettingLocation, setGettingLocation] = useState(null);
   const [locationPickerOpen, setLocationPickerOpen] = useState(false);
   const [pickerField, setPickerField] = useState(null);
-  const formId = useId(); // Unique ID for accessibility linkage
+  const [mounted, setMounted] = useState(false);
+  const stableFormId = "booking-form-v1"; // Using stable ID for hydration safety
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Analytics Hooks
   useEffect(() => {
@@ -137,9 +149,10 @@ export default function QuotationEngine({ showAirportTab = true, showBookingButt
     return !error;
   };
 
-  // Auto-select vehicle based on passengers
+  // Handle passengers change
   useEffect(() => {
     const pax = parseInt(passengers);
+    // Auto-set vehicle ONLY IF it hasn't been manually changed or if it's too small for pax
     if (pax <= 4) setVehicle('Swift Dzire');
     else if (pax <= 6) setVehicle('Innova');
     else if (pax <= 7) setVehicle('Innova Crysta');
@@ -386,12 +399,13 @@ export default function QuotationEngine({ showAirportTab = true, showBookingButt
         const actualRoundTripKm = distance * 2;
         const chargeableKm = Math.max(minKm, actualRoundTripKm);
         const baseFare = chargeableKm * rate;
-        const driverBata = days * 300;
+        const driverBata = (days || 1) * 300;
         totalCost = baseFare + driverBata;
       } else {
         totalCost = distance * rate;
       }
-      setEstimate(Math.round(totalCost));
+      // Round to nearest 10 for cleaner pricing
+      setEstimate(Math.round(totalCost / 10) * 10);
     } else {
       setEstimate(0);
     }
@@ -520,8 +534,8 @@ _Please confirm availability._`;
           <div className="flex flex-col items-center text-center gap-2 mb-1">
             <Car className="w-10 h-10 text-indigo-600" />
             <div>
-              <h2 className="text-xl font-bold text-slate-900">{title}</h2>
-              <p className="text-xs text-slate-500">Get Instant Quote</p>
+              <h2 className="text-xl font-bold text-slate-900">{displayTitle}</h2>
+              <p className="text-xs text-slate-500">{isTa ? 'உடனடி விலை மதிப்பீடு' : 'Get Instant Quote'}</p>
             </div>
           </div>
         </div>
@@ -537,7 +551,7 @@ _Please confirm availability._`;
                 aria-current={activeTab === tab ? 'page' : undefined}
               >
                 {tab === 'oneway' ? <ArrowRight className="w-4 h-4" /> : <Repeat className="w-4 h-4" />}
-                <span className="capitalize">{tab} Trip</span>
+                <span className="capitalize">{tab === 'oneway' ? (isTa ? 'ஒரு வழி' : 'One Way') : (isTa ? 'இரு வழி' : 'Round Trip')}</span>
               </button>
             ))}
           </div>
@@ -558,7 +572,7 @@ _Please confirm availability._`;
                   htmlFor={`${formId}-${type.toLowerCase()}`}
                   className="block text-xs font-bold text-slate-600 uppercase mb-1.5"
                 >
-                  {type} Location
+                  {type === 'Pickup' ? (isTa ? 'பிக்கப்' : 'Pickup') : (isTa ? 'டிராப்' : 'Drop')} {isTa ? 'இடம்' : 'Location'}
                 </label>
                 <div className="relative flex items-center bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 focus-within:ring-2 focus-within:ring-indigo-500/20">
                   <input
@@ -571,22 +585,37 @@ _Please confirm availability._`;
                       type === 'Pickup' ? setPickup(val) : setDrop(val);
                       setShowResult(false);
                     }}
-                    placeholder="Enter City / Area"
-                    className="bg-transparent w-full outline-none text-sm text-slate-700 font-medium px-3 pr-10"
+                    placeholder={isTa ? 'நகரம் / பகுதியை உள்ளிடவும்' : `Enter ${type} City / Area`}
+                    className="bg-transparent w-full outline-none text-sm text-slate-700 font-medium px-3 pr-20"
                   />
-                  <button
-                    type="button"
-                    onClick={() => handlePinClick(type.toLowerCase())}
-                    disabled={gettingLocation === type.toLowerCase()}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 p-1.5 hover:bg-slate-100 rounded-full transition-colors disabled:opacity-50"
-                    title="Use my current location"
-                    aria-label={`Use current location for ${type.toLowerCase()}`}
-                  >
-                    <MapPin
-                      className={`w-5 h-5 ${gettingLocation === type.toLowerCase() ? 'text-red-600 animate-pulse' : 'text-red-500'}`}
-                      fill={gettingLocation === type.toLowerCase() ? 'currentColor' : 'none'}
-                    />
-                  </button>
+                  <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1">
+                    {(type === 'Pickup' ? pickup : drop) && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          type === 'Pickup' ? setPickup('') : setDrop('');
+                          setShowResult(false);
+                        }}
+                        className="p-1 hover:bg-slate-200 rounded-full transition-colors text-slate-400 hover:text-red-500"
+                        title="Clear"
+                      >
+                        <AlertCircle className="w-4 h-4 rotate-45 transform" />
+                      </button>
+                    )}
+                    <button
+                      type="button"
+                      onClick={() => handlePinClick(type.toLowerCase())}
+                      disabled={gettingLocation === type.toLowerCase()}
+                      className="p-1.5 hover:bg-slate-100 rounded-full transition-colors disabled:opacity-50"
+                      title="Use my current location"
+                      aria-label={`Use current location for ${type.toLowerCase()}`}
+                    >
+                      <MapPin
+                        className={`w-5 h-5 ${gettingLocation === type.toLowerCase() ? 'text-red-600 animate-pulse' : 'text-red-500'}`}
+                        fill={gettingLocation === type.toLowerCase() ? 'currentColor' : 'none'}
+                      />
+                    </button>
+                  </div>
                 </div>
               </div>
             ))}
@@ -594,7 +623,7 @@ _Please confirm availability._`;
             <div className="grid grid-cols-2 gap-4">
               {/* Passengers */}
               <div className="relative group">
-                <label htmlFor={`${formId}-passengers`} className="block text-xs font-bold text-slate-600 uppercase mb-1.5">Passengers</label>
+                <label htmlFor={`${formId}-passengers`} className="block text-xs font-bold text-slate-600 uppercase mb-1.5">{isTa ? 'பயணிகள்' : 'Passengers'}</label>
                 <div className="flex items-center bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 focus-within:ring-2 focus-within:ring-indigo-500/20">
                   <Users className="text-indigo-500 mr-3 w-5 h-5" aria-hidden="true" />
                   <select
@@ -603,17 +632,26 @@ _Please confirm availability._`;
                     onChange={(e) => { setPassengers(e.target.value); setShowResult(false); }}
                     className="bg-transparent w-full outline-none text-sm text-slate-700 font-medium appearance-none"
                   >
-                    {['4', '6', '7', '12'].map(n => <option key={n} value={n}>{n}+ Driver</option>)}
+                    {['4', '6', '7', '12'].map(n => <option key={n} value={n}>{n} {isTa ? 'பயணிகள்' : 'Pax'} + {isTa ? 'டிரைவர்' : 'Driver'}</option>)}
                   </select>
                 </div>
               </div>
 
               {/* Vehicle */}
               <div className="relative group">
-                <label htmlFor={`${formId}-vehicle`} className="block text-xs font-bold text-slate-600 uppercase mb-1.5">Vehicle</label>
-                <div className="flex items-center bg-slate-100 border border-slate-200 rounded-xl px-4 py-3">
-                  <Car className="text-slate-500 mr-3 w-5 h-5" aria-hidden="true" />
-                  <select id={`${formId}-vehicle`} value={vehicle} disabled className="bg-transparent w-full outline-none text-sm text-slate-700 font-medium appearance-none cursor-not-allowed">
+                <label htmlFor={`${formId}-vehicle`} className="block text-xs font-bold text-slate-600 uppercase mb-1.5">{isTa ? 'வாகனம்' : 'Vehicle'}</label>
+                <div className="flex items-center bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 focus-within:ring-2 focus-within:ring-indigo-500/20">
+                  {vehicle.includes('Tempo') ? (
+                    <Navigation className="text-indigo-500 mr-3 w-5 h-5" aria-hidden="true" />
+                  ) : (
+                    <Car className="text-indigo-500 mr-3 w-5 h-5" aria-hidden="true" />
+                  )}
+                  <select
+                    id={`${formId}-vehicle`}
+                    value={vehicle}
+                    onChange={(e) => { setVehicle(e.target.value); setShowResult(false); }}
+                    className="bg-transparent w-full outline-none text-sm text-slate-700 font-medium appearance-none cursor-pointer"
+                  >
                     {vehicleOptions.map(v => <option key={v} value={v}>{v}</option>)}
                   </select>
                 </div>
@@ -621,7 +659,7 @@ _Please confirm availability._`;
 
               {/* Name */}
               <div className="relative group col-span-2 md:col-span-1">
-                <label htmlFor={`${formId}-name`} className="block text-xs font-bold text-slate-600 uppercase mb-1.5">Name</label>
+                <label htmlFor={`${formId}-name`} className="block text-xs font-bold text-slate-600 uppercase mb-1.5">{isTa ? 'பெயர்' : 'Name'}</label>
                 <div className={getInputClass('name')}>
                   <User className="text-slate-400 mr-3 w-5 h-5" aria-hidden="true" />
                   <input
@@ -629,7 +667,7 @@ _Please confirm availability._`;
                     type="text"
                     value={name}
                     onChange={(e) => { setName(e.target.value); activeValidate('name', e.target.value); }}
-                    placeholder="Your Name"
+                    placeholder={isTa ? 'உங்கள் பெயர்' : 'Your Name'}
                     className="bg-transparent w-full outline-none text-sm text-slate-700 font-medium"
                   />
                 </div>
@@ -638,7 +676,7 @@ _Please confirm availability._`;
 
               {/* Phone */}
               <div className="relative group col-span-2 md:col-span-1">
-                <label htmlFor={`${formId}-phone`} className="block text-xs font-bold text-slate-600 uppercase mb-1.5">Phone</label>
+                <label htmlFor={`${formId}-phone`} className="block text-xs font-bold text-slate-600 uppercase mb-1.5">{isTa ? 'தொலைபேசி' : 'Phone'}</label>
                 <div className={getInputClass('phone')}>
                   <Phone className="text-slate-400 mr-3 w-5 h-5" aria-hidden="true" />
                   <input
@@ -646,7 +684,7 @@ _Please confirm availability._`;
                     type="tel"
                     value={phone}
                     onChange={(e) => { setPhone(e.target.value); activeValidate('phone', e.target.value); }}
-                    placeholder="Mobile Number"
+                    placeholder={isTa ? 'மொபைல் எண்' : 'Mobile Number'}
                     className="bg-transparent w-full outline-none text-sm text-slate-700 font-medium"
                   />
                 </div>
@@ -656,15 +694,24 @@ _Please confirm availability._`;
               {/* Days Input if Round Trip */}
               {activeTab === 'round' && (
                 <div className="relative group">
-                  <label htmlFor={`${formId}-days`} className="block text-xs font-bold text-slate-600 uppercase mb-1.5">Days</label>
+                  <label htmlFor={`${formId}-days`} className="block text-xs font-bold text-slate-600 uppercase mb-1.5">{isTa ? 'நாட்கள்' : 'Days'}</label>
                   <div className="flex items-center bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 focus-within:ring-2 focus-within:ring-indigo-500/20">
                     <Calendar className="text-indigo-500 mr-3 w-5 h-5" aria-hidden="true" />
                     <input
                       id={`${formId}-days`}
-                      type="number"
-                      min="1"
-                      value={days}
-                      onChange={(e) => setDays(parseInt(e.target.value) || 1)}
+                      type="text"
+                      inputMode="numeric"
+                      value={days || ''}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        if (val === '' || /^\d+$/.test(val)) {
+                          setDays(val === '' ? '' : parseInt(val));
+                        }
+                        setShowResult(false);
+                      }}
+                      onBlur={() => {
+                        if (!days) setDays(1);
+                      }}
                       className="bg-transparent w-full outline-none text-sm text-slate-700 font-medium"
                     />
                   </div>
@@ -676,16 +723,19 @@ _Please confirm availability._`;
               className="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-4 rounded-xl transition-all flex items-center justify-center shadow-lg"
               onClick={() => setShowResult(true)}
             >
-              Calculate Cost <ArrowRight className="w-4 h-4 ml-2" />
+              {isTa ? 'செலவைக் கணக்கிடுங்கள்' : 'Calculate Cost'} <ArrowRight className="w-4 h-4 ml-2" />
             </button>
 
             {/* Results Section */}
             {showResult && (
               <div className="space-y-4 animate-in fade-in slide-in-from-top-4 duration-300">
                 {distance && (
-                  <div className="flex justify-between text-xs text-slate-600 bg-slate-50 p-3 rounded-xl border">
-                    <div><span className="block text-[10px] uppercase font-bold text-slate-400">Distance</span><strong>{distance.toFixed(1)} km</strong></div>
-                    <div><span className="block text-[10px] uppercase font-bold text-slate-400">Time</span><strong>{duration}</strong></div>
+                  <div className="bg-slate-50 p-3 rounded-xl border space-y-2">
+                    <div className="flex justify-between text-xs text-slate-600">
+                      <div><span className="block text-[10px] uppercase font-bold text-slate-400">{isTa ? 'மொத்த தூரம்' : 'Total Distance'}</span><strong>{activeTab === 'round' ? (distance * 2).toFixed(1) : distance.toFixed(1)} km</strong></div>
+                      <div><span className="block text-[10px] uppercase font-bold text-slate-400">{isTa ? 'மதிப்பீட்டு நேரம்' : 'Est. Time'}</span><strong>{activeTab === 'round' ? `${isTa ? 'சுமார்' : 'Approx.'} ${duration} (${isTa ? 'ஒரு வழி' : 'One Way'})` : duration}</strong></div>
+                    </div>
+                    <p className="text-[10px] text-slate-500 italic">*{isTa ? 'டோல் கட்டணம் மற்றும் பார்க்கிங் கட்டணம் கூடுதல்.' : 'Toll charges and parking fees are additional.'}</p>
                   </div>
                 )}
 
@@ -693,11 +743,11 @@ _Please confirm availability._`;
                   <div className="bg-emerald-50 rounded-2xl p-4 border border-emerald-100">
                     <div className="flex justify-between items-end mb-4">
                       <div>
-                        <p className="text-xs text-emerald-700 font-bold uppercase">Total Estimate</p>
+                        <p className="text-xs text-emerald-700 font-bold uppercase">{isTa ? 'மொத்த மதிப்பீடு' : 'Total Estimate'}</p>
                         <p className="text-3xl font-black text-slate-800">₹ {estimate.toLocaleString()}</p>
                       </div>
                       <div className="text-[10px] text-slate-500 text-right">
-                        Rate: ₹{rates[vehicle]}/km
+                        {isTa ? 'கட்டணம்' : 'Rate'}: ₹{rates[vehicle]}/km
                       </div>
                     </div>
 
@@ -705,7 +755,7 @@ _Please confirm availability._`;
                       onClick={handleWhatsApp}
                       className="w-full py-3 bg-[#25D366] hover:bg-[#20bd5a] text-white rounded-xl font-bold flex items-center justify-center gap-2 shadow-sm transition-all active:scale-95"
                     >
-                      <Send className="w-4 h-4" /> Book on WhatsApp
+                      <Send className="w-4 h-4" /> {isTa ? 'வாட்ஸ்அப்பில் முன்பதிவு செய்ய' : 'Book on WhatsApp'}
                     </button>
                   </div>
                 )}
@@ -730,7 +780,9 @@ _Please confirm availability._`;
         tabIndex={-1}
       />
 
-      <h2 className="text-lg font-bold text-center text-gray-800 py-2 border-b border-gray-100">{title}</h2>
+      <h2 className="text-lg font-bold text-center text-gray-800 py-4 border-b border-gray-100">
+        {displayTitle}
+      </h2>
 
       {/* Tabs */}
       <div className="flex border-b border-gray-100">
@@ -744,7 +796,7 @@ _Please confirm availability._`;
               aria-current={activeTab === tab ? 'page' : undefined}
             >
               {tab === 'airport' ? <Plane className="w-3 h-3" /> : tab === 'round' ? <Repeat className="w-3 h-3" /> : <ArrowRight className="w-3 h-3" />}
-              <span>{tab === 'airport' ? 'Airport' : tab === 'round' ? 'Round Trip' : 'One Way'}</span>
+              <span>{tab === 'airport' ? (isTa ? 'ஏர்போர்ட்' : 'Airport') : tab === 'round' ? (isTa ? 'இரு வழி' : 'Round Trip') : (isTa ? 'ஒரு வழி' : 'One Way')}</span>
             </button>
           )
         ))}
@@ -761,7 +813,7 @@ _Please confirm availability._`;
                   className={`px-4 py-1.5 rounded-md transition-all ${airportMode === mode ? 'bg-white text-red-600 shadow-sm' : 'text-gray-600'}`}
                   aria-pressed={airportMode === mode}
                 >
-                  {mode === 'drop' ? 'To Airport' : 'From Airport'}
+                  {mode === 'drop' ? (isTa ? 'ஏர்போர்ட் செல்ல' : 'To Airport') : (isTa ? 'ஏர்போர்ட்டிலிருந்து வர' : 'From Airport')}
                 </button>
               ))}
             </div>
@@ -777,91 +829,171 @@ _Please confirm availability._`;
         <div className="grid grid-cols-2 gap-3">
           {['Pickup', 'Drop'].map((type) => (
             <div key={type} className="col-span-2 relative group">
-              <label htmlFor={`${formId}-mobile-${type}`} className="text-[10px] font-bold text-gray-700 uppercase mb-0.5 block">
-                {type}
+              <label htmlFor={`${stableFormId}-mobile-${type}`} className="text-[10px] font-bold text-gray-700 uppercase mb-0.5 block">
+                {isTa ? (type === 'Pickup' ? 'பிக்கப்' : 'டிராப்') : type}
               </label>
               <div className="relative flex items-center bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 focus-within:ring-1 focus-within:ring-red-500 transition">
                 <input
-                  id={`${formId}-mobile-${type}`}
+                  id={`${stableFormId}-mobile-${type}`}
                   ref={type === 'Pickup' ? pickupInputRef : dropInputRef}
                   value={type === 'Pickup' ? pickup : drop}
-                  onChange={(e) => type === 'Pickup' ? setPickup(e.target.value) : setDrop(e.target.value)}
-                  placeholder="Enter Location"
-                  className="bg-transparent w-full outline-none text-sm text-gray-700 pr-8"
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    type === 'Pickup' ? setPickup(val) : setDrop(val);
+                    setShowResult(false);
+                  }}
+                  placeholder={isTa ? 'இடத்தை உள்ளிடவும்' : `Enter ${type} Location`}
+                  className="bg-transparent w-full outline-none text-sm text-gray-700 pr-16 py-1"
                 />
-                <button
-                  type="button"
-                  onClick={() => handlePinClick(type.toLowerCase())}
-                  disabled={gettingLocation === type.toLowerCase()}
-                  className="absolute right-2 p-1 hover:bg-gray-200 rounded-full transition-colors disabled:opacity-50"
-                  title="Use my location"
-                  aria-label={`Use current location for ${type.toLowerCase()}`}
-                >
-                  <MapPin
-                    className={`w-4 h-4 ${gettingLocation === type.toLowerCase() ? 'text-red-600 animate-pulse' : 'text-red-500'}`}
-                    fill={gettingLocation === type.toLowerCase() ? 'currentColor' : 'none'}
-                  />
-                </button>
+                <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1">
+                  {(type === 'Pickup' ? pickup : drop) && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        type === 'Pickup' ? setPickup('') : setDrop('');
+                        setShowResult(false);
+                      }}
+                      className="p-2 hover:bg-gray-200 rounded-full transition-colors text-gray-400"
+                      aria-label="Clear input"
+                    >
+                      <AlertCircle className="w-4 h-4 rotate-45 transform" />
+                    </button>
+                  )}
+                  <button
+                    type="button"
+                    onClick={() => handlePinClick(type.toLowerCase())}
+                    disabled={gettingLocation === type.toLowerCase()}
+                    className="p-2 hover:bg-gray-200 rounded-full transition-colors disabled:opacity-50"
+                    title="Use location"
+                    aria-label={`Use current location for ${type.toLowerCase()}`}
+                  >
+                    <MapPin
+                      className={`w-5 h-5 ${gettingLocation === type.toLowerCase() ? 'text-red-600 animate-pulse' : 'text-red-500'}`}
+                      fill={gettingLocation === type.toLowerCase() ? 'currentColor' : 'none'}
+                    />
+                  </button>
+                </div>
               </div>
             </div>
           ))}
 
           <div className="col-span-1">
-            <label htmlFor={`${formId}-mobile-name`} className="text-[10px] font-bold text-gray-700 uppercase mb-0.5 block">Name</label>
+            <label htmlFor={`${stableFormId}-mobile-name`} className="text-[10px] font-bold text-gray-700 uppercase mb-0.5 block">{isTa ? 'பெயர்' : 'Name'}</label>
             <input
-              id={`${formId}-mobile-name`}
+              id={`${stableFormId}-mobile-name`}
               value={name}
               onChange={(e) => { setName(e.target.value); activeValidate('name', e.target.value); }}
-              placeholder="Name"
-              className={`w-full bg-gray-50 border rounded-lg px-3 py-2 text-sm outline-none ${errors.name ? 'border-red-500' : 'border-gray-200 focus:ring-1 focus:ring-red-500'}`}
+              placeholder={isTa ? 'பெயர்' : 'Name'}
+              className={`w-full bg-gray-50 border rounded-lg px-3 py-3 text-sm outline-none min-h-[48px] ${errors.name ? 'border-red-500' : 'border-gray-200 focus:ring-1 focus:ring-red-500'}`}
             />
             {errors.name && <p className="text-[8px] text-red-500" role="alert">{errors.name}</p>}
           </div>
 
           <div className="col-span-1">
-            <label htmlFor={`${formId}-mobile-phone`} className="text-[10px] font-bold text-gray-700 uppercase mb-0.5 block">Phone</label>
+            <label htmlFor={`${stableFormId}-mobile-phone`} className="text-[10px] font-bold text-gray-700 uppercase mb-0.5 block">{isTa ? 'தொலைபேசி' : 'Phone'}</label>
             <input
-              id={`${formId}-mobile-phone`}
+              id={`${stableFormId}-mobile-phone`}
               value={phone}
               onChange={(e) => { setPhone(e.target.value); activeValidate('phone', e.target.value); }}
-              placeholder="Mobile"
-              className={`w-full bg-gray-50 border rounded-lg px-3 py-2 text-sm outline-none ${errors.phone ? 'border-red-500' : 'border-gray-200 focus:ring-1 focus:ring-red-500'}`}
+              placeholder={isTa ? 'எண்' : 'Mobile'}
+              className={`w-full bg-gray-50 border rounded-lg px-3 py-3 text-sm outline-none min-h-[48px] ${errors.phone ? 'border-red-500' : 'border-gray-200 focus:ring-1 focus:ring-red-500'}`}
             />
             {errors.phone && <p className="text-[8px] text-red-500" role="alert">{errors.phone}</p>}
           </div>
 
           <div className="col-span-2">
-            <label htmlFor={`${formId}-mobile-date`} className="text-[10px] font-bold text-gray-700 uppercase mb-0.5 block">Date</label>
+            <label htmlFor={`${stableFormId}-mobile-date`} className="text-[10px] font-bold text-gray-700 uppercase mb-0.5 block">{isTa ? 'தேதி' : 'Date'}</label>
             <input
-              id={`${formId}-mobile-date`}
+              id={`${stableFormId}-mobile-date`}
               type="datetime-local"
               value={date}
               onChange={(e) => setDate(e.target.value)}
-              className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-red-500"
+              className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-3 text-sm focus:outline-none focus:ring-1 focus:ring-red-500 min-h-[48px]"
             />
           </div>
+
+          <div className="col-span-1">
+            <label htmlFor={`${stableFormId}-mobile-pax`} className="text-[10px] font-bold text-gray-700 uppercase mb-0.5 block">{isTa ? 'பயணிகள்' : 'Passengers'}</label>
+            <select
+              id={`${stableFormId}-mobile-pax`}
+              value={passengers}
+              onChange={(e) => { setPassengers(e.target.value); setShowResult(false); }}
+              className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-3 text-sm focus:outline-none focus:ring-1 focus:ring-red-500 min-h-[48px] appearance-none"
+            >
+              <option value="4">4 {isTa ? 'பேர்' : 'Pax'}</option>
+              <option value="6">6 {isTa ? 'பேர்' : 'Pax'}</option>
+              <option value="7">7 {isTa ? 'பேர்' : 'Pax'}</option>
+              <option value="12">12 {isTa ? 'பேர்' : 'Pax'}</option>
+            </select>
+          </div>
+
+          <div className="col-span-1">
+            <label htmlFor={`${stableFormId}-mobile-veh`} className="text-[10px] font-bold text-gray-700 uppercase mb-0.5 block">{isTa ? 'வாகனம்' : 'Vehicle'}</label>
+            <select
+              id={`${stableFormId}-mobile-veh`}
+              value={vehicle}
+              onChange={(e) => { setVehicle(e.target.value); setShowResult(false); }}
+              className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-3 text-sm focus:outline-none focus:ring-1 focus:ring-red-500 min-h-[48px] appearance-none"
+            >
+              {vehicleOptions.map(v => <option key={v} value={v}>{v}</option>)}
+            </select>
+          </div>
+
+          {activeTab === 'round' && (
+            <div className="col-span-2">
+              <label htmlFor={`${stableFormId}-mobile-days`} className="text-[10px] font-bold text-gray-700 uppercase mb-0.5 block">{isTa ? 'நாட்கள்' : 'Days'}</label>
+              <input
+                id={`${stableFormId}-mobile-days`}
+                type="number"
+                min="1"
+                value={days}
+                onChange={(e) => { setDays(e.target.value); setShowResult(false); }}
+                className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-3 text-sm focus:outline-none focus:ring-1 focus:ring-red-500 min-h-[48px]"
+              />
+            </div>
+          )}
         </div>
 
-        <div className="bg-emerald-50 rounded-lg p-3 border border-emerald-100 flex justify-between items-center">
-          <div>
-            <p className="text-[10px] text-emerald-700 font-bold uppercase">Estimate</p>
-            <p className="text-xl font-black text-gray-800">₹ {estimate > 0 ? estimate.toLocaleString() : '0'}</p>
-          </div>
-          <button
-            onClick={handleWhatsApp}
-            disabled={estimate === 0}
-            className={`px-4 py-2 rounded-lg font-bold text-xs flex items-center gap-2 ${estimate > 0 ? 'bg-[#25D366] text-white hover:bg-[#20bd5a]' : 'bg-gray-300 text-gray-500'}`}
-          >
-            <Send className="w-3 h-3" /> Book
-          </button>
+        <div className="pt-4">
+          {!showResult ? (
+            <button
+              onClick={() => setShowResult(true)}
+              className="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-4 rounded-xl transition-all flex items-center justify-center shadow-lg active:scale-95 min-h-[56px]"
+            >
+              {isTa ? 'செலவைக் கணக்கிடுங்கள்' : 'Calculate Cost'} <ArrowRight className="w-4 h-4 ml-2" />
+            </button>
+          ) : (
+            <div className="space-y-4 animate-in fade-in slide-in-from-top-2 duration-300">
+              <div className="bg-emerald-50 rounded-xl p-4 border border-emerald-100">
+                <div className="flex justify-between items-center">
+                  <div>
+                    <p className="text-[10px] text-emerald-700 font-bold uppercase">{isTa ? 'மொத்த மதிப்பீடு' : 'Total Estimate'}</p>
+                    <p className="text-2xl font-black text-slate-800">₹ {estimate > 0 ? estimate.toLocaleString() : '0'}</p>
+                  </div>
+                  <div className="text-[10px] text-slate-500 text-right">
+                    {distance ? `${distance.toFixed(1)} km` : ''}
+                  </div>
+                </div>
+                <button
+                  onClick={handleWhatsApp}
+                  disabled={estimate === 0}
+                  className="w-full mt-3 py-4 bg-[#25D366] hover:bg-[#20bd5a] text-white rounded-xl font-bold flex items-center justify-center gap-2 shadow-sm transition-all active:scale-95 min-h-[56px]"
+                >
+                  <Send className="w-4 h-4" /> {isTa ? 'வாட்ஸ்அப்பில் முன்பதிவு செய்ய' : 'Book on WhatsApp'}
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
-      <LocationPicker
-        isOpen={locationPickerOpen}
-        onClose={() => setLocationPickerOpen(false)}
-        onConfirm={handleLocationConfirm}
-        type={pickerField}
-      />
+      {mounted && (
+        <LocationPicker
+          isOpen={locationPickerOpen}
+          onClose={() => setLocationPickerOpen(false)}
+          onConfirm={handleLocationConfirm}
+          type={pickerField}
+        />
+      )}
     </div>
   );
 }

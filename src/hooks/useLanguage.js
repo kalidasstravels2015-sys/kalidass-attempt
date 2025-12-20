@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 
 export const LANGUAGE_EVENT = 'language-change';
 
-export function useLanguage() {
-    const [lang, setLang] = useState('en');
+export function useLanguage(initialLang = 'en') {
+    const [lang, setLang] = useState(initialLang);
 
     useEffect(() => {
         // Initialize from localStorage or body class

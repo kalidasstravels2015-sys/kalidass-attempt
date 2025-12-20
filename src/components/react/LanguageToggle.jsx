@@ -19,11 +19,11 @@ const LanguageToggle = ({ isMobile, currentLang, targetUrl }) => {
             return (
                 <a
                     href={targetUrl}
-                    className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-red-100 bg-red-50 text-red-700 active:bg-red-100 transition-colors shadow-sm no-underline focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+                    className="flex items-center gap-2 px-4 py-2.5 min-h-[48px] rounded-full border border-red-100 bg-red-50 text-red-700 active:bg-red-100 transition-colors shadow-sm no-underline focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
                     aria-label={`Switch to ${lang === 'en' ? 'Tamil' : 'English'}`}
                 >
-                    <span className="text-xs font-bold">{lang === 'en' ? 'தமிழ்' : 'ENG'}</span>
-                    <i className="fa-solid fa-language text-red-500 text-sm" aria-hidden="true"></i>
+                    <span className="text-sm font-bold">{lang === 'en' ? 'தமிழ்' : 'ENG'}</span>
+                    <i className="fa-solid fa-language text-red-500 text-base" aria-hidden="true"></i>
                 </a>
             );
         }
@@ -31,12 +31,12 @@ const LanguageToggle = ({ isMobile, currentLang, targetUrl }) => {
         return (
             <button
                 onClick={toggleLanguage}
-                className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-red-100 bg-red-50 text-red-700 active:bg-red-100 transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+                className="flex items-center gap-2 px-4 py-2.5 min-h-[48px] rounded-full border border-red-100 bg-red-50 text-red-700 active:bg-red-100 transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
                 aria-label={`Switch to ${lang === 'en' ? 'Tamil' : 'English'}`}
             >
-                <span className={`text-xs font-bold ${lang === 'ta' ? '' : 'hidden'}`}>தமிழ்</span>
-                <span className={`text-xs font-bold ${lang === 'en' ? '' : 'hidden'}`}>ENG</span>
-                <i className="fa-solid fa-language text-red-500 text-sm" aria-hidden="true"></i>
+                <span className={`text-sm font-bold ${lang === 'ta' ? '' : 'hidden'}`}>தமிழ்</span>
+                <span className={`text-sm font-bold ${lang === 'en' ? '' : 'hidden'}`}>ENG</span>
+                <i className="fa-solid fa-language text-red-500 text-base" aria-hidden="true"></i>
             </button>
         );
     }

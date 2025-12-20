@@ -1,10 +1,11 @@
 ---
 import QuotationEngine from "./QuotationEngine.jsx";
+const { lang = "en" } = Astro.props;
 ---
 
 <section
     id="booking-panel"
-    class="relative z-20 -mt-32 md:-mt-48 px-4 max-w-3xl mx-auto mb-6 md:mb-20"
+    class="relative z-20 py-16 md:py-24 px-4 max-w-3xl mx-auto scroll-mt-20"
 >
-    <QuotationEngine client:load />
+    <QuotationEngine client:load currentLang={lang} />
 </section>

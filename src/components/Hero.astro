@@ -8,7 +8,7 @@ const heroImages = hero.images ?? [
 ---
 
 <section
-  class="relative min-h-[70dvh] flex items-center justify-center overflow-hidden pb-32"
+  class="relative min-h-[100dvh] flex items-center justify-center overflow-hidden pt-20"
 >
   <!-- Background Slideshow -->
   <div class="absolute inset-0 z-0">
@@ -34,54 +34,84 @@ const heroImages = hero.images ?? [
     </div>
     <div
       class="absolute inset-0"
-      style="background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.5));"
+      style="background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.6));"
     >
     </div>
   </div>
 
-  <div class="relative z-10 max-w-3xl mx-4 sm:mx-auto text-center space-y-6">
+  <div
+    class="relative z-10 max-w-4xl mx-4 sm:mx-auto text-center space-y-8 -mt-12"
+  >
     <div
-      class="inline-flex items-center justify-center gap-2 px-3 py-1 rounded-full bg-black/40 border border-white/10 mb-2"
+      class="inline-flex items-center justify-center gap-2 px-4 py-1.5 rounded-full bg-black/50 border border-white/20 mb-2 shadow-lg"
     >
-      <span class="text-green-400 animate-pulse text-[10px]">●</span>
-      <p class="text-xs font-semibold uppercase tracking-widest text-white">
+      <span class="text-green-500 text-[10px]">●</span>
+      <p
+        class="text-[10px] sm:text-xs font-bold uppercase tracking-[0.2em] text-white/90"
+      >
         <span class="lang-en">Trusted by 1,000+ Families</span>
         <span class="lang-ta">1,000+ குடும்பங்களின் நம்பிக்கை</span>
       </p>
     </div>
 
     <h1
-      class="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-tight drop-shadow-xl mb-4"
+      class="text-5xl sm:text-6xl lg:text-7xl font-black text-white leading-[1.05] tracking-tight drop-shadow-[0_8px_8px_rgba(0,0,0,0.6)] mb-4"
     >
-      <span class="lang-en block">Premium Taxi Service in Chennai</span>
+      <span class="lang-en block">Premium Taxi Service</span>
       <span
-        class="lang-en block text-2xl sm:text-3xl lg:text-4xl text-yellow-300 mt-2 font-bold"
-        >Temple Tours & Corporate Travel</span
+        class="lang-en block text-3xl sm:text-5xl lg:text-5xl text-yellow-400 mt-2 font-black italic tracking-normal"
+        >Chennai & South India</span
       >
 
-      <span class="lang-ta block">சென்னையில் சிறந்த டாக்ஸி சேவை</span>
+      <span class="lang-ta block">சிறந்த டாக்ஸி சேவை</span>
       <span
-        class="lang-ta block text-xl sm:text-2xl lg:text-3xl text-yellow-300 mt-2 font-bold"
-        >கோவில் சுற்றுலா & கார்ப்பரேட் பயணங்கள்</span
+        class="lang-ta block text-2xl sm:text-3xl lg:text-4xl text-yellow-400 mt-2 font-bold"
+        >சென்னை மற்றும் தென்னிந்தியா</span
       >
     </h1>
 
     <p
-      class="text-base sm:text-lg text-white/95 font-medium drop-shadow-md px-4 max-w-2xl mx-auto"
+      class="text-base sm:text-xl text-white font-medium drop-shadow-md px-4 max-w-2xl mx-auto leading-relaxed"
     >
       <span class="lang-en"
-        >Experience safe, reliable, and comfortable outstation cabs, pilgrims
-        packages, and employee transportation with standard rates.</span
+        >Safe, reliable, and professional transportation at transparent rates.
+        Temple tours, airport transfers & corporate travel.</span
       >
       <span class="lang-ta"
-        >பாதுகாப்பான மற்றும் வசதியான வெளியூர் பயணங்கள், ஆன்மீகச் சுற்றுலா
-        மற்றும் அலுவலகப் போக்குவரத்துக்கு எங்களை அணுகவும்.</span
+        >பாதுகாப்பான மற்றும் வசதியான வெளியூர் பயணங்கள் மற்றும் அலுவலகப்
+        போக்குவரத்துக்கு எங்களை அணுகவும்.</span
       >
     </p>
+
+    <div class="pt-6">
+      <a
+        href="#booking-panel"
+        class="inline-flex items-center gap-3 px-10 py-5 bg-red-600 hover:bg-red-700 text-white text-lg font-black rounded-2xl transition-all transform hover:scale-105 active:scale-95 shadow-[0_20px_50px_rgba(220,38,38,0.3)] hover:shadow-[0_20px_50px_rgba(220,38,38,0.5)]"
+      >
+        <span class="lang-en">Book Your Ride Now</span>
+        <span class="lang-ta">முன்பதிவு செய்யுங்கள்</span>
+        <svg
+          class="w-6 h-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+        </svg>
+      </a>
+    </div>
   </div>
 
   <!-- Scroll Indicator -->
-  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+  <a
+    href="#booking-panel"
+    class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce hover:text-yellow-300 transition-colors"
+    aria-label="Scroll to booking form"
+  >
     <svg
       class="w-6 h-6 text-white"
       fill="none"
@@ -94,7 +124,7 @@ const heroImages = hero.images ?? [
         stroke-width="2"
         d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
     </svg>
-  </div>
+  </a>
 </section>
 
 <style is:inline>

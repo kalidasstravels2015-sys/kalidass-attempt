@@ -1,30 +1,47 @@
 import React, { useRef, useState, useEffect } from 'react';
 import siteContent from '../../data/siteContent.json';
 import { useLanguage } from '../../hooks/useLanguage';
+import { ShieldCheck, Users, Briefcase, Zap, Info } from 'lucide-react';
 
 const FleetCard = ({ vehicle, lang, isVisible }) => {
-    // Basic lazy rendering: if hasn't been visible yet, render placeholder or nothing?
-    // But intersection observer on parent should handle when to mount.
-    // If we mount the whole list but use IntersectionObserver on individual items, we can delay *Image* loading and heavy DOM.
-    // Actually, user wants "Lazy load fleet cards on scroll".
+    const isTa = lang === 'ta';
+    const isTempo = vehicle.name.includes('Tempo');
+    const isSUV = vehicle.name.toLowerCase().includes('innova') || vehicle.name.toLowerCase().includes('bolero') || vehicle.name.toLowerCase().includes('sumo');
 
     return (
-        <div className="flex-shrink-0 w-72 snap-center md:w-auto md:snap-align-none transition-opacity duration-500 opacity-100">
-            <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105 h-full flex flex-col">
+        <div className="flex-shrink-0 w-80 snap-center md:w-auto md:snap-align-none transition-opacity duration-500 opacity-100 h-full">
+            <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 h-full flex flex-col">
                 {/* Image */}
-                <div className="relative h-48 overflow-hidden bg-gray-200">
+                <div className="relative h-56 overflow-hidden bg-slate-100">
                     {isVisible && (
                         <>
                             <img
                                 src={vehicle.image}
-                                alt={vehicle.name}
-                                className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                                alt={isTa ? (vehicle.name_ta || vehicle.name) : vehicle.name}
+                                className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
                                 loading="lazy"
                             />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+
+                            {/* Badges */}
+                            <div className="absolute top-4 left-4 flex flex-col gap-2">
+                                {vehicle.details.some(d => d.toLowerCase().includes('sanitized')) && (
+                                    <span className="bg-emerald-500 text-white text-[10px] font-bold px-2 py-1 rounded shadow-sm flex items-center gap-1 w-fit">
+                                        <ShieldCheck className="w-3 h-3" />
+                                        {isTa ? 'சுத்திகரிக்கப்பட்டது' : 'Sanitized Every Trip'}
+                                    </span>
+                                )}
+                                {vehicle.details.some(d => d.toLowerCase().includes('mountain')) && (
+                                    <span className="bg-amber-500 text-white text-[10px] font-bold px-2 py-1 rounded shadow-sm flex items-center gap-1 w-fit">
+                                        <Zap className="w-3 h-3" />
+                                        {isTa ? 'மலைப் பயணம் சிறந்தது' : 'Hill Specialist'}
+                                    </span>
+                                )}
+                            </div>
+
                             <div className="absolute bottom-4 left-4">
-                                <h3 className="text-xl font-bold text-white">
-                                    {lang === 'ta' ? (vehicle.name_ta || vehicle.name) : vehicle.name}
+                                <h3 className="text-2xl font-bold text-white tracking-tight">
+                                    {isTa ? (vehicle.name_ta || vehicle.name) : vehicle.name}
                                 </h3>
                             </div>
                         </>
@@ -32,32 +49,35 @@ const FleetCard = ({ vehicle, lang, isVisible }) => {
                 </div>
 
                 {/* Content */}
-                <div className="p-6 flex-1 flex flex-col justify-between">
-                    {/* Pricing */}
-                    <div className="flex items-center justify-between mb-4 pb-4 border-b border-gray-300">
-                        <div>
-                            <p className="text-sm text-gray-600">{lang === 'ta' ? 'கி.மீ. கட்டணம்' : 'Rate per KM'}</p>
-                            <p className="text-2xl font-bold text-blue-600">{lang === 'ta' ? (vehicle.rate_ta || vehicle.rate) : vehicle.rate}</p>
+                <div className="p-6 flex-1 flex flex-col">
+                    {/* Key Stats */}
+                    <div className="grid grid-cols-2 gap-4 mb-6">
+                        <div className="bg-slate-50 p-3 rounded-xl border border-slate-100">
+                            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">{isTa ? 'கட்டணம்' : 'Starting From'}</p>
+                            <p className="text-xl font-black text-indigo-600 leading-none">{isTa ? (vehicle.rate_ta || vehicle.rate) : vehicle.rate}</p>
                         </div>
-                        <div className="text-right">
-                            <p className="text-sm text-gray-600">{lang === 'ta' ? 'கொள்ளளவு' : 'Capacity'}</p>
-                            <p className="text-lg font-semibold text-gray-900">{lang === 'ta' ? (vehicle.caps_ta || vehicle.caps) : vehicle.caps}</p>
-                            <p className="text-xs text-gray-600">{lang === 'ta' ? (vehicle.bags_ta || vehicle.bags) : vehicle.bags}</p>
+                        <div className="bg-slate-50 p-3 rounded-xl border border-slate-100">
+                            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">{isTa ? 'இருக்கைகள்' : 'Capacity'}</p>
+                            <div className="flex items-center gap-1.5">
+                                <Users className="w-4 h-4 text-slate-600" />
+                                <p className="text-sm font-bold text-slate-700">{isTa ? (vehicle.caps_ta || vehicle.caps) : vehicle.caps}</p>
+                            </div>
                         </div>
                     </div>
 
-                    {/* Features */}
-                    <div className="space-y-2 text-sm text-gray-700">
-                        {vehicle.details.map((feature, idx) => (
-                            <div key={idx} className="flex items-center gap-2">
-                                <svg className="w-4 h-4 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                                </svg>
-                                {/* Note: details might not be bilingual in JSON yet, if not usage fallback */}
-                                {feature}
+                    {/* Features List */}
+                    <div className="space-y-3 flex-1">
+                        {vehicle.details.filter(f => !f.toLowerCase().includes('sanitized')).map((feature, idx) => (
+                            <div key={idx} className="flex items-start gap-3">
+                                <div className="mt-1 bg-indigo-50 p-1 rounded">
+                                    <ShieldCheck className="w-3 h-3 text-indigo-600" />
+                                </div>
+                                <span className="text-sm text-slate-600 font-medium leading-tight">{feature}</span>
                             </div>
                         ))}
                     </div>
+
+                    {/* Action Hint removed per user request */}
                 </div>
             </div>
         </div>
@@ -69,41 +89,42 @@ const FleetRoll = ({ currentLang }) => {
     const isSSR = !!currentLang;
     const contextLang = useLanguage();
     const lang = isSSR ? currentLang : contextLang;
-    const [visibleCount, setVisibleCount] = useState(3); // Start with a few
+    const [activeIndex, setActiveIndex] = useState(0);
     const containerRef = useRef(null);
 
+    const labels = siteContent.ui_labels;
+    const heading = lang === 'ta' ? labels.our_premium_fleet_ta : labels.our_premium_fleet;
+
     useEffect(() => {
-        // Simple intersection observer to load more as we scroll?
-        // Or just load them all but delayed?
-        // "Lazy load fleet cards on scroll" implies infinite scrolling or loading as they come into view.
-        // Since it's a horizontal scroll on mobile and grid on desktop,
-        // let's use IntersectionObserver to detect when the SECTION is visible, then load first batch.
-
-        // Actually, for "Lazy load ... on scroll", optimal is to render placeholders and swap content.
-        // Or incrementally increase `visibleCount` as user scrolls down the page.
-
-        const observer = new IntersectionObserver((entries) => {
-            if (entries[0].isIntersecting) {
-                // fast lazy load: trigger all after a delay or incrementally
-                setVisibleCount(fleet.length);
-                observer.disconnect();
+        const handleScroll = () => {
+            if (containerRef.current) {
+                const { scrollLeft, offsetWidth } = containerRef.current;
+                // On mobile, cards are roughly 320px + 24px gap.
+                // We use offsetWidth to determine the 'page' size.
+                const index = Math.round(scrollLeft / (offsetWidth * 0.85));
+                setActiveIndex(Math.min(index, fleet.length - 1));
             }
-        }, { threshold: 0.1 });
+        };
 
-        if (containerRef.current) {
-            observer.observe(containerRef.current);
+        const container = containerRef.current;
+        if (container) {
+            container.addEventListener('scroll', handleScroll, { passive: true });
         }
 
-        return () => observer.disconnect();
-    }, []);
+        return () => {
+            if (container) {
+                container.removeEventListener('scroll', handleScroll);
+            }
+        };
+    }, [fleet.length]);
 
     return (
-        <section id="fleet" className="py-10 md:py-16 bg-white" ref={containerRef} aria-labelledby="fleet-heading">
+        <section id="fleet" className="py-20 bg-white" ref={containerRef} aria-labelledby="fleet-heading">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Section Header */}
-                <div className="text-center mb-12">
+                <div className="text-center mb-16">
                     <h2 id="fleet-heading" className="text-2xl md:text-4xl font-extrabold text-gray-900 inline-block relative mb-4">
-                        {lang === 'ta' ? 'எங்கள் பிரீமியம் வாகனங்கள்' : 'Our Premium Fleet'}
+                        {heading}
                         <div className="absolute bottom-[-10px] left-1/2 transform -translate-x-1/2 w-20 h-1.5 bg-red-600 rounded-full"></div>
                     </h2>
                     <p className="text-base text-gray-600 max-w-2xl mx-auto mt-4">
@@ -114,26 +135,29 @@ const FleetRoll = ({ currentLang }) => {
                 {/* Fleet Grid/Scroll Container */}
                 <div className="relative">
                     <div
-                        className="flex overflow-x-auto snap-x snap-mandatory pb-6 space-x-4 md:space-x-6 px-4 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-8 md:overflow-visible md:pb-0 scrollbar-hide focus:outline-none focus:ring-2 focus:ring-red-500 rounded-xl"
+                        ref={containerRef}
+                        className="flex overflow-x-auto snap-x snap-mandatory pb-8 space-x-6 px-4 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-8 md:space-x-0 md:overflow-visible md:pb-0 scrollbar-hide focus:outline-none rounded-xl"
                         tabIndex={0}
                         role="region"
                         aria-label="Fleet Gallery"
                     >
-                        {fleet.slice(0, visibleCount).map((vehicle, index) => (
+                        {fleet.map((vehicle, index) => (
                             <FleetCard key={index} vehicle={vehicle} lang={lang} isVisible={true} />
                         ))}
-                        {/* Skeletons for remaing if needed, but we just lazy append so it's fine */}
                     </div>
 
                     {/* Scroll Indicators (Mobile Only) */}
                     <div className="flex justify-center mt-6 space-x-2 md:hidden" aria-hidden="true">
-                        {fleet.slice(0, visibleCount).map((_, index) => (
-                            <div key={index} className="w-2 h-2 rounded-full bg-gray-300"></div>
+                        {fleet.map((_, index) => (
+                            <div
+                                key={index}
+                                className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${activeIndex === index ? 'bg-red-600 w-6' : 'bg-slate-300'}`}
+                            ></div>
                         ))}
                     </div>
                 </div>
             </div>
-            <style>{`
+            <style jsx>{`
         .scrollbar-hide {
             -ms-overflow-style: none;
             scrollbar-width: none;
